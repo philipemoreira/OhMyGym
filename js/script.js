@@ -277,9 +277,19 @@ document.addEventListener("DOMContentLoaded", function () {
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
+  // OBS (04/09/2026): ".plano-card" não entra aqui de propósito — os cards
+  // de plano agora moram dentro de um carrossel horizontal no celular
+  // (".planos__grid"), e cards fora da parte visível do carrossel ficam
+  // com a posição real fora da largura da tela (mesmo estando na mesma
+  // altura vertical). Como o IntersectionObserver olha a interseção com a
+  // TELA TODA (não só o eixo vertical), um card "escondido" pro lado nunca
+  // era considerado visível — só aparecia depois de arrastar/clicar a seta
+  // até ele. Corrigido observando o carrossel inteiro (".planos__grid") em
+  // vez de cada card: aí todos os planos aparecem juntos ao descer a
+  // página, independente de já ter navegado o carrossel ou não.
   const elementosParaRevelar = document.querySelectorAll(
     ".section-heading, .card-diferencial, .card-modalidade-destaque, " +
-    ".grade-horarios__dia, .plano-card, .planos__oferta"
+    ".grade-horarios__dia, .planos__grid"
   );
 
   if (

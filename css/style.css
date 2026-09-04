@@ -770,6 +770,14 @@ h1, h2, h3 {
   box-shadow: 0 14px 34px -16px rgba(110, 33, 56, 0.65);
 }
 
+/* Ícone do card (halter com mão): mesmo componente ".card-diferencial__icon"
+   já usado nos cards de Diferenciais, com a mesma variante clara-sobre-vinho
+   que o card de destaque de lá usa (fundo vinho sólido pede ícone branco) */
+.card-modalidade-destaque .card-diferencial__icon {
+  background-color: rgba(255, 255, 255, 0.18);
+  color: var(--cor-branco);
+}
+
 .card-modalidade-destaque__texto h3 {
   color: var(--cor-branco);
   font-size: 1.5rem;
@@ -1225,10 +1233,7 @@ h1, h2, h3 {
   width: 1.1em;
   height: 1.1em;
   flex-shrink: 0;
-  fill: none;
-  stroke: var(--cor-rosa-queimado);
-  stroke-width: 1.6;
-  stroke-linejoin: round;
+  fill: var(--cor-rosa-queimado);
 }
 
 /* "Oferta do momento": espaço reservado, com a mesma linguagem visual
