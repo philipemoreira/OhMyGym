@@ -129,74 +129,132 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* -------------------------------------------------------------------
-     FILTRO DA GRADE DE HORÁRIOS (seção Modalidades)
+     FILTRO DE MODALIDADES (seção Modalidades)
      - Cada botão em ".filtro-modalidades" tem um atributo "data-filtro"
-       (ex: "jump", "pilates-solo").
+       (ex: "jump", "pilates-solo", "musculacao", "todos").
      - Cada aula na grade (cada <li>) tem o mesmo atributo, indicando de
        qual modalidade ela é.
-     - Ao clicar num botão, escondemos (via [hidden]) toda aula cujo
-       "data-filtro" não bate com o escolhido, e escondemos o card do
-       dia inteiro se nenhuma aula dele sobrar visível. O botão "Todos"
-       (data-filtro="todos") volta a mostrar tudo.
+     - "Musculação" é o filtro ATIVO POR PADRÃO (pedido do Philipe,
+       04/09/2026): em vez da grade de aulas, mostra o card de horário de
+       funcionamento (".horario-funcionamento"), porque musculação é
+       treino livre, não tem aula com hora marcada. Os outros filtros
+       (inclusive "Todos") mostram a grade normal, escondendo (via
+       [hidden]) toda aula cujo "data-filtro" não bate com o escolhido, e
+       escondendo o card do dia inteiro se nenhuma aula dele sobrar
+       visível.
+     - O texto acima do conteúdo (".filtro-modalidades__descricao") muda
+       junto, explicando a modalidade escolhida (ou uma frase de
+       motivação em "Todos") — ver "aplicarFiltro" abaixo.
+     - "aplicarFiltro" fica numa função à parte (em vez de só dentro do
+       clique) pra poder ser chamada também 1x no carregamento da
+       página, aplicando o filtro padrão ("musculacao") sem precisar de
+       clique nenhum.
      ------------------------------------------------------------------- */
   const botoesFiltro = document.querySelectorAll(".filtro-modalidades__btn");
   const grade = document.querySelector(".grade-horarios");
   const mensagemVazia = document.getElementById("grade-vazio");
+  const horarioFuncionamento = document.getElementById("horario-funcionamento");
+  const descricaoFiltro = document.getElementById("filtro-descricao");
+
+  // Texto que aparece acima do conteúdo, de acordo com a modalidade
+  // escolhida — pedido do Philipe (04/09/2026). OBS: texto de rascunho,
+  // dá pra revisar/ajustar com a Milena depois.
+  const descricoesModalidade = {
+    todos: "Cada aula tem seu ritmo — escolha a sua e comece hoje mesmo a se movimentar do seu jeito.",
+    musculacao: "Treino livre, no seu tempo, com orientação da equipe sempre que você precisar. Confira abaixo os horários de funcionamento da academia.",
+    jump: "Aula de alta energia em cima do mini trampolim: queima calorias, melhora o condicionamento físico e ainda protege as articulações.",
+    funcional: "Treino dinâmico que usa o peso do próprio corpo pra ganhar força, resistência e condicionamento em pouco tempo de aula.",
+    "pilates-solo": "Aula focada em postura, força do core e flexibilidade, sem impacto e no seu ritmo.",
+    ritmos: "Aula de dança fitness que mistura ritmos variados — treina o corpo inteiro se divertindo.",
+    "ritmos-gospel": "Aula de dança com músicas gospel, unindo fé, energia e queima de calorias.",
+    "ballet-fitness": "Aula inspirada no ballet clássico, trabalhando alongamento, postura e força pra mulheres adultas.",
+    "ballet-infantil": "Aula de ballet pensada pras pequenas, com coordenação, postura e muita diversão.",
+  };
 
   if (botoesFiltro.length && grade) {
-    botoesFiltro.forEach(function (botao) {
-      botao.addEventListener("click", function () {
-        const filtroEscolhido = botao.dataset.filtro;
+    function aplicarFiltro(filtroEscolhido) {
+      // Marca visualmente qual botão está ativo no momento
+      botoesFiltro.forEach(function (b) {
+        b.classList.toggle("is-ativo", b.dataset.filtro === filtroEscolhido);
+      });
 
-        // Marca visualmente qual botão está ativo no momento
-        botoesFiltro.forEach(function (b) {
-          b.classList.remove("is-ativo");
-        });
-        botao.classList.add("is-ativo");
+      // Troca o texto de acordo com a modalidade escolhida
+      if (descricaoFiltro) {
+        descricaoFiltro.textContent =
+          descricoesModalidade[filtroEscolhido] || "";
+      }
 
-        // Aplica um "fade" rápido antes de trocar o conteúdo, só pra
-        // suavizar a troca visual (a classe é removida logo em seguida)
-        grade.classList.add("is-filtrando");
+      if (filtroEscolhido === "musculacao") {
+        // Musculação não tem grade de aulas com hora marcada — mostra
+        // os horários de funcionamento no lugar
+        grade.hidden = true;
+        if (mensagemVazia) {
+          mensagemVazia.hidden = true;
+        }
+        if (horarioFuncionamento) {
+          horarioFuncionamento.hidden = false;
+        }
+        return;
+      }
 
-        window.setTimeout(function () {
-          let existeAlgumaAulaVisivel = false;
+      if (horarioFuncionamento) {
+        horarioFuncionamento.hidden = true;
+      }
+      grade.hidden = false;
 
-          // Passa por cada dia da semana...
-          const dias = grade.querySelectorAll(".grade-horarios__dia");
-          dias.forEach(function (dia) {
-            let diaTemAulaVisivel = false;
+      // Aplica um "fade" rápido antes de trocar o conteúdo, só pra
+      // suavizar a troca visual (a classe é removida logo em seguida)
+      grade.classList.add("is-filtrando");
 
-            // ...e por cada aula dentro do dia, decidindo se ela
-            // deve aparecer ou não com o filtro escolhido
-            const aulas = dia.querySelectorAll("li[data-filtro]");
-            aulas.forEach(function (aula) {
-              const combina =
-                filtroEscolhido === "todos" ||
-                aula.dataset.filtro === filtroEscolhido;
+      window.setTimeout(function () {
+        let existeAlgumaAulaVisivel = false;
 
-              aula.hidden = !combina;
-              if (combina) {
-                diaTemAulaVisivel = true;
-                existeAlgumaAulaVisivel = true;
-              }
-            });
+        // Passa por cada dia da semana...
+        const dias = grade.querySelectorAll(".grade-horarios__dia");
+        dias.forEach(function (dia) {
+          let diaTemAulaVisivel = false;
 
-            // Se nenhuma aula desse dia sobrou visível, esconde o card
-            // do dia inteiro (evita mostrar um card vazio)
-            dia.hidden = !diaTemAulaVisivel;
+          // ...e por cada aula dentro do dia, decidindo se ela
+          // deve aparecer ou não com o filtro escolhido
+          const aulas = dia.querySelectorAll("li[data-filtro]");
+          aulas.forEach(function (aula) {
+            const combina =
+              filtroEscolhido === "todos" ||
+              aula.dataset.filtro === filtroEscolhido;
+
+            aula.hidden = !combina;
+            if (combina) {
+              diaTemAulaVisivel = true;
+              existeAlgumaAulaVisivel = true;
+            }
           });
 
-          // Se o filtro escolhido não bateu com nenhuma aula da grade
-          // inteira (ex: modalidade ainda sem horário fixo cadastrado),
-          // mostra a mensagem explicando isso em vez de deixar em branco
-          if (mensagemVazia) {
-            mensagemVazia.hidden = existeAlgumaAulaVisivel;
-          }
+          // Se nenhuma aula desse dia sobrou visível, esconde o card
+          // do dia inteiro (evita mostrar um card vazio)
+          dia.hidden = !diaTemAulaVisivel;
+        });
 
-          grade.classList.remove("is-filtrando");
-        }, 150);
+        // Se o filtro escolhido não bateu com nenhuma aula da grade
+        // inteira (ex: modalidade ainda sem horário fixo cadastrado),
+        // mostra a mensagem explicando isso em vez de deixar em branco
+        if (mensagemVazia) {
+          mensagemVazia.hidden = existeAlgumaAulaVisivel;
+        }
+
+        grade.classList.remove("is-filtrando");
+      }, 150);
+    }
+
+    botoesFiltro.forEach(function (botao) {
+      botao.addEventListener("click", function () {
+        aplicarFiltro(botao.dataset.filtro);
       });
     });
+
+    // Aplica o filtro padrão ("Musculação") já no carregamento, sem
+    // precisar de clique — é isso que faz o horário de funcionamento já
+    // aparecer assim que a seção entra na tela (pedido do Philipe)
+    aplicarFiltro("musculacao");
   }
 
   /* -------------------------------------------------------------------
@@ -289,7 +347,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // página, independente de já ter navegado o carrossel ou não.
   const elementosParaRevelar = document.querySelectorAll(
     ".section-heading, .card-diferencial, .card-modalidade-destaque, " +
-    ".grade-horarios__dia, .planos__grid"
+    ".grade-horarios__dia, .horario-funcionamento, .planos__grid"
   );
 
   if (

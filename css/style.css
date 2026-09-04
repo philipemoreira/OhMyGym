@@ -1005,6 +1005,110 @@ h1, h2, h3 {
   text-align: center;
 }
 
+/* Texto que muda de acordo com a modalidade escolhida no filtro (ex:
+   explica o que é o "Jump" quando esse filtro está ativo) — em "Todos"
+   entra uma frase de motivação. Pedido do Philipe (04/09/2026). O
+   "fade" reaproveita a mesma ideia/tempo do ".grade-horarios.is-filtrando"
+   pra trocar o texto em sincronia com o resto do conteúdo. */
+.filtro-modalidades__descricao {
+  max-width: 56ch;
+  margin: -1.25rem auto 2rem;
+  color: var(--cor-vinho-medio);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  text-align: center;
+  transition: opacity 0.15s ease;
+}
+
+.filtro-modalidades__descricao.is-filtrando {
+  opacity: 0.35;
+}
+
+/* Card de "Horário de funcionamento": aparece no lugar da grade de aulas
+   quando o filtro "Musculação" está ativo (padrão da seção — ver HTML).
+   Usa o mesmo estilo "vinho sólido" do card de destaque logo acima, pra
+   ficar igualmente chamativo — pedido explícito do Philipe (04/09/2026):
+   "tem que estar bem visto, escondido ninguém vai saber". */
+.horario-funcionamento {
+  margin-bottom: 1.25rem;
+  padding: 2rem;
+  border-radius: var(--raio-padrao);
+  background-color: var(--cor-vinho-principal);
+  box-shadow: 0 14px 34px -16px rgba(110, 33, 56, 0.65);
+}
+
+.horario-funcionamento[hidden] {
+  display: none;
+}
+
+.horario-funcionamento__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+}
+
+.horario-funcionamento__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.18);
+  color: var(--cor-branco);
+}
+
+.horario-funcionamento__icon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.horario-funcionamento__cabecalho h3 {
+  color: var(--cor-branco);
+  font-size: 1.25rem;
+}
+
+.horario-funcionamento__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.horario-funcionamento__lista li {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.85rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.horario-funcionamento__lista li:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+
+.horario-funcionamento__dia {
+  color: var(--cor-branco);
+  font-weight: 600;
+}
+
+.horario-funcionamento__hora {
+  color: var(--cor-branco);
+  opacity: 0.92;
+  text-align: right;
+}
+
+.horario-funcionamento__hora small {
+  display: block;
+  margin-top: 0.15rem;
+  opacity: 0.8;
+  font-size: 0.75rem;
+  font-weight: 400;
+}
+
 /* Grade de horários: 1 card por dia da semana. No mobile empilha em
    1 coluna; ganha mais colunas conforme a tela cresce (media queries).
    A transição de opacidade suaviza a troca de conteúdo quando um
@@ -1014,6 +1118,17 @@ h1, h2, h3 {
   grid-template-columns: 1fr;
   gap: 1.25rem;
   transition: opacity 0.15s ease;
+}
+
+/* Precisa ser explícito: como ".grade-horarios" já define "display: grid"
+   acima, isso teria prioridade sobre o "display: none" padrão do
+   navegador pro atributo "[hidden]" (mesma pegadinha documentada em
+   ".grade-horarios__dia[hidden]" logo abaixo) — sem essa regra, a grade
+   continuaria aparecendo mesmo com "hidden" no HTML/JS (é o que esconde
+   a grade quando o filtro "Musculação", ativo por padrão, está
+   selecionado). */
+.grade-horarios[hidden] {
+  display: none;
 }
 
 /* Classe adicionada por um instante via JavaScript no momento de trocar
@@ -1548,6 +1663,15 @@ h1, h2, h3 {
 
   .grade-horarios {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Horário de funcionamento: a partir daqui a lista vira 2 colunas
+     (Segunda a sexta / Sábado numa linha, Domingo / Feriados na outra)
+     em vez de 4 linhas empilhadas — cabe melhor numa tela mais larga */
+  .horario-funcionamento__lista {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 2.5rem;
   }
 
   /* Galeria de fotos do espaço kids: a partir daqui a tela já é larga o
