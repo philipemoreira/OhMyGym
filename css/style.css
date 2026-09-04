@@ -808,11 +808,13 @@ h1, h2, h3 {
   max-width: 60ch;
 }
 
-/* Reaproveita a etiqueta ".card-diferencial__tag" (já com fundo/tamanho
-   certos) pra marcar "Modalidade em destaque" aqui também */
-.card-modalidade-destaque .card-diferencial__tag {
-  margin-bottom: 0.75rem;
-}
+/* A etiqueta ".card-diferencial__tag" (já reaproveitada aqui) fica
+   dentro do wrapper ".card-modalidade-destaque__cabecalho" (ver acima),
+   que já cuida da margem/alinhamento — por isso NÃO tem mais uma regra
+   de margin-bottom separada aqui. (Antes tinha uma regra extra nesse
+   lugar que ficava brigando com o "margin-bottom: 0" do cabecalho —
+   como as duas tinham a mesma especificidade, a de baixo no arquivo
+   vencia e desalinhava o ícone com a etiqueta de novo. Removida.) */
 
 /* Filtro de modalidades: botões tipo "pill" que, ao clicar, filtram a
    grade de horários logo abaixo (lógica em script.js). Visualmente
@@ -1205,6 +1207,14 @@ h1, h2, h3 {
   opacity: 0.85;
 }
 
+/* Rótulo "Formas de pagamento:" acima da lista de formas aceitas —
+   pedido do Philipe (04/09/2026) pra deixar claro que aquela linha é
+   sobre pagamento, já que antes ela vinha sem nenhuma introdução */
+.plano-card__taxa-pagamento-label {
+  margin: 0.6rem 0 0.1rem;
+  opacity: 0.85;
+}
+
 .plano-card__taxa-pagamento {
   margin: 0;
   font-weight: 600;
@@ -1351,6 +1361,20 @@ h1, h2, h3 {
   font-size: 0.9rem;
   max-width: 52ch;
   margin-inline: auto;
+}
+
+/* Linha divisória entre o grupo de musculação e o grupo "só aula" —
+   fina, discreta, na cor da marca — separa visualmente os dois grupos
+   de planos antes do título "Prefere só as aulas?" (pedido do
+   Philipe, 04/09/2026). Reset do estilo padrão de <hr> do navegador
+   pra controlar cor/espessura/espaçamento igual ao resto do site. */
+.planos__divisor {
+  width: 100%;
+  max-width: 640px;
+  height: 1px;
+  margin: 0 auto 2rem;
+  border: none;
+  background-color: rgba(110, 33, 56, 0.16);
 }
 
 /* Título do 2º grupo de planos (Oh My Move + Ballet): esses dois são
