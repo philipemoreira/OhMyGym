@@ -310,6 +310,15 @@ h1, h2, h3 {
   width: 100%;
 }
 
+/* Wrapper do ícone de WhatsApp mobile + hambúrguer — mantém os dois
+   grudados um no outro à direita do cabeçalho (ver comentário no
+   HTML) */
+.site-header__acoes-mobile {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
 /* Botão "hambúrguer" — só aparece em telas pequenas (ver media query) */
 .nav-toggle {
   display: none;
@@ -340,6 +349,90 @@ h1, h2, h3 {
 }
 .nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) {
   transform: translateY(-7.5px) rotate(-45deg);
+}
+
+/* Ícone de WhatsApp do cabeçalho mobile — só aparece em telas pequenas
+   (ver media query), do lado do hambúrguer. Escondido por padrão aqui
+   porque, no desktop, o botão "Falar no WhatsApp" comum já resolve
+   (".site-header__cta"). Mesma cor vinho dos outros botões de
+   WhatsApp do site (o site nunca usa o verde oficial do WhatsApp, pra
+   manter tudo dentro da paleta da marca). */
+.site-header__whatsapp-mobile {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+  transition: background-color 0.2s ease;
+}
+
+.site-header__whatsapp-mobile:hover {
+  background-color: var(--cor-vinho-escuro);
+}
+
+.site-header__whatsapp-mobile svg {
+  width: 21px;
+  height: 21px;
+}
+
+/* Confirmação antes de abrir o WhatsApp (só pro ícone do cabeçalho
+   mobile — ver comentário no HTML). Fica por cima de tudo, cobrindo a
+   tela inteira com um fundo escurecido; a caixinha em si usa a mesma
+   linguagem visual (cantos arredondados, cores da marca) do resto do
+   site. Escondida por padrão via "display: none"; o JavaScript alterna
+   a classe ".is-aberto" pra mostrar/esconder (ver script.js). */
+.confirmar-whatsapp {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+  background-color: rgba(43, 16, 22, 0.55);
+}
+
+.confirmar-whatsapp.is-aberto {
+  display: flex;
+}
+
+.confirmar-whatsapp__caixa {
+  width: 100%;
+  max-width: 360px;
+  padding: 1.75rem;
+  border-radius: var(--raio-padrao);
+  background-color: var(--cor-branco);
+  text-align: center;
+  box-shadow: 0 20px 45px -15px rgba(43, 16, 22, 0.5);
+}
+
+.confirmar-whatsapp__titulo {
+  margin-bottom: 0.5rem;
+  color: var(--cor-vinho-escuro);
+  font-family: var(--fonte-titulo);
+  font-size: 1.15rem;
+  font-weight: 600;
+}
+
+.confirmar-whatsapp__texto {
+  margin-bottom: 1.5rem;
+  color: var(--cor-vinho-medio);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.confirmar-whatsapp__botoes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.confirmar-whatsapp__botoes .btn {
+  width: 100%;
 }
 
 
@@ -1568,6 +1661,10 @@ h1, h2, h3 {
    mostra o botão "hambúrguer" no lugar dele */
 @media (max-width: 899px) {
   .nav-toggle {
+    display: flex;
+  }
+
+  .site-header__whatsapp-mobile {
     display: flex;
   }
 

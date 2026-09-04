@@ -407,4 +407,61 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  /* -------------------------------------------------------------------
+     CONFIRMAÇÃO ANTES DE ABRIR O WHATSAPP (ícone do cabeçalho mobile)
+     - Só o ícone novo do cabeçalho (".site-header__whatsapp-mobile")
+       passa por essa confirmação — os outros botões "Falar no
+       WhatsApp" do site (cabeçalho desktop, menu mobile aberto,
+       cards de plano) continuam indo direto, sem confirmar nada,
+       como sempre foi. Pedido do Philipe (04/09/2026): como esse
+       ícone fica bem coladinho no hambúrguer, achou melhor confirmar
+       antes de sair do site sem querer, com o dedo.
+     - O link em si já tem o href certo (funciona normal se o
+       JavaScript não carregar); aqui a gente só intercepta o clique,
+       mostra a caixinha de confirmação, e só abre o WhatsApp de
+       verdade se a visitante confirmar.
+     ------------------------------------------------------------------- */
+  const linkWhatsappMobile = document.getElementById("whatsapp-mobile-topo");
+  const caixaConfirmarWhatsapp = document.getElementById("confirmar-whatsapp");
+  const botaoConfirmarAceitar = document.getElementById("confirmar-whatsapp-aceitar");
+  const botaoConfirmarCancelar = document.getElementById("confirmar-whatsapp-cancelar");
+
+  if (linkWhatsappMobile && caixaConfirmarWhatsapp && botaoConfirmarAceitar && botaoConfirmarCancelar) {
+    const linkWhatsappDestino = linkWhatsappMobile.getAttribute("href");
+
+    function abrirConfirmacao(evento) {
+      evento.preventDefault();
+      caixaConfirmarWhatsapp.classList.add("is-aberto");
+      caixaConfirmarWhatsapp.setAttribute("aria-hidden", "false");
+    }
+
+    function fecharConfirmacao() {
+      caixaConfirmarWhatsapp.classList.remove("is-aberto");
+      caixaConfirmarWhatsapp.setAttribute("aria-hidden", "true");
+    }
+
+    linkWhatsappMobile.addEventListener("click", abrirConfirmacao);
+
+    botaoConfirmarAceitar.addEventListener("click", function () {
+      fecharConfirmacao();
+      window.open(linkWhatsappDestino, "_blank", "noopener");
+    });
+
+    botaoConfirmarCancelar.addEventListener("click", fecharConfirmacao);
+
+    // Clicar no fundo escurecido (fora da caixinha) também cancela
+    caixaConfirmarWhatsapp.addEventListener("click", function (evento) {
+      if (evento.target === caixaConfirmarWhatsapp) {
+        fecharConfirmacao();
+      }
+    });
+
+    // Tecla Esc também cancela, caso a caixinha esteja aberta
+    document.addEventListener("keydown", function (evento) {
+      if (evento.key === "Escape" && caixaConfirmarWhatsapp.classList.contains("is-aberto")) {
+        fecharConfirmacao();
+      }
+    });
+  }
+
 });
