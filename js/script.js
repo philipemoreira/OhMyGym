@@ -142,9 +142,15 @@ document.addEventListener("DOMContentLoaded", function () {
        [hidden]) toda aula cujo "data-filtro" não bate com o escolhido, e
        escondendo o card do dia inteiro se nenhuma aula dele sobrar
        visível.
-     - O texto acima do conteúdo (".filtro-modalidades__descricao") muda
-       junto, explicando a modalidade escolhida (ou uma frase de
-       motivação em "Todos") — ver "aplicarFiltro" abaixo.
+     - O card de destaque logo ACIMA do filtro (".card-modalidade-destaque",
+       o mesmo que já existia mostrando "Musculação") muda de conteúdo
+       junto com o filtro escolhido: título e texto passam a falar da
+       modalidade clicada (ex: clicou em "Jump", o card conta o que é o
+       Jump), e a etiqueta "Modalidade em destaque" some — ela só aparece
+       quando "Musculação" (o filtro padrão) está selecionada, já que só
+       ela é de fato a modalidade em destaque da academia. Em "Todos" o
+       card mostra uma frase de motivação no lugar do texto. Pedido do
+       Philipe (04/09/2026) — ver "aplicarFiltro" abaixo.
      - "aplicarFiltro" fica numa função à parte (em vez de só dentro do
        clique) pra poder ser chamada também 1x no carregamento da
        página, aplicando o filtro padrão ("musculacao") sem precisar de
@@ -154,21 +160,64 @@ document.addEventListener("DOMContentLoaded", function () {
   const grade = document.querySelector(".grade-horarios");
   const mensagemVazia = document.getElementById("grade-vazio");
   const horarioFuncionamento = document.getElementById("horario-funcionamento");
-  const descricaoFiltro = document.getElementById("filtro-descricao");
+  const destaqueTexto = document.querySelector(".card-modalidade-destaque__texto");
+  const destaqueTitulo = document.getElementById("modalidade-destaque-titulo");
+  const destaqueDescricao = document.getElementById("modalidade-destaque-texto");
+  const destaqueTag = document.getElementById("modalidade-destaque-tag");
 
-  // Texto que aparece acima do conteúdo, de acordo com a modalidade
-  // escolhida — pedido do Philipe (04/09/2026). OBS: texto de rascunho,
-  // dá pra revisar/ajustar com a Milena depois.
-  const descricoesModalidade = {
-    todos: "Cada aula tem seu ritmo — escolha a sua e comece hoje mesmo a se movimentar do seu jeito.",
-    musculacao: "Treino livre, no seu tempo, com orientação da equipe sempre que você precisar. Confira abaixo os horários de funcionamento da academia.",
-    jump: "Aula de alta energia em cima do mini trampolim: queima calorias, melhora o condicionamento físico e ainda protege as articulações.",
-    funcional: "Treino dinâmico que usa o peso do próprio corpo pra ganhar força, resistência e condicionamento em pouco tempo de aula.",
-    "pilates-solo": "Aula focada em postura, força do core e flexibilidade, sem impacto e no seu ritmo.",
-    ritmos: "Aula de dança fitness que mistura ritmos variados — treina o corpo inteiro se divertindo.",
-    "ritmos-gospel": "Aula de dança com músicas gospel, unindo fé, energia e queima de calorias.",
-    "ballet-fitness": "Aula inspirada no ballet clássico, trabalhando alongamento, postura e força pra mulheres adultas.",
-    "ballet-infantil": "Aula de ballet pensada pras pequenas, com coordenação, postura e muita diversão.",
+  // Título + texto do card de destaque, de acordo com a modalidade
+  // escolhida no filtro — pedido do Philipe (04/09/2026). "destaque: true"
+  // é só pra "musculacao" (mantém a etiqueta "Modalidade em destaque"
+  // visível); nas outras, a etiqueta some. OBS: textos de "jump" em
+  // diante (e o de "todos") são rascunho meu — dá pra revisar/ajustar
+  // com a Milena depois; o de "musculacao" é o texto original já
+  // aprovado, mantido como estava.
+  const conteudoModalidade = {
+    todos: {
+      titulo: "Todas as modalidades",
+      texto: "Cada aula tem seu ritmo — escolha a sua e comece hoje mesmo a se movimentar do seu jeito.",
+      destaque: false,
+    },
+    musculacao: {
+      titulo: "Musculação",
+      texto: "O coração da Oh My Gym: nossa maior estrutura, com treino livre dentro do horário de funcionamento e acompanhamento da equipe o tempo todo. Pra quem quer treinar de verdade, ganhar força e transformar o corpo no seu ritmo.",
+      destaque: true,
+    },
+    jump: {
+      titulo: "Jump",
+      texto: "Aula de alta energia em cima do mini trampolim: queima calorias, melhora o condicionamento físico e ainda protege as articulações.",
+      destaque: false,
+    },
+    funcional: {
+      titulo: "Funcional",
+      texto: "Treino dinâmico que usa o peso do próprio corpo pra ganhar força, resistência e condicionamento em pouco tempo de aula.",
+      destaque: false,
+    },
+    "pilates-solo": {
+      titulo: "Pilates solo",
+      texto: "Aula focada em postura, força do core e flexibilidade, sem impacto e no seu ritmo.",
+      destaque: false,
+    },
+    ritmos: {
+      titulo: "Ritmos",
+      texto: "Aula de dança fitness que mistura ritmos variados — treina o corpo inteiro se divertindo.",
+      destaque: false,
+    },
+    "ritmos-gospel": {
+      titulo: "Ritmos gospel",
+      texto: "Aula de dança com músicas gospel, unindo fé, energia e queima de calorias.",
+      destaque: false,
+    },
+    "ballet-fitness": {
+      titulo: "Ballet fitness",
+      texto: "Aula inspirada no ballet clássico, trabalhando alongamento, postura e força pra mulheres adultas.",
+      destaque: false,
+    },
+    "ballet-infantil": {
+      titulo: "Ballet infantil",
+      texto: "Aula de ballet pensada pras pequenas, com coordenação, postura e muita diversão.",
+      destaque: false,
+    },
   };
 
   if (botoesFiltro.length && grade) {
@@ -178,10 +227,23 @@ document.addEventListener("DOMContentLoaded", function () {
         b.classList.toggle("is-ativo", b.dataset.filtro === filtroEscolhido);
       });
 
-      // Troca o texto de acordo com a modalidade escolhida
-      if (descricaoFiltro) {
-        descricaoFiltro.textContent =
-          descricoesModalidade[filtroEscolhido] || "";
+      // Troca o título/texto do card de destaque de acordo com a
+      // modalidade escolhida, com um "fade" rápido pra suavizar a troca
+      const conteudo = conteudoModalidade[filtroEscolhido];
+      if (conteudo && destaqueTitulo && destaqueDescricao) {
+        if (destaqueTexto) {
+          destaqueTexto.classList.add("is-mudando");
+        }
+        window.setTimeout(function () {
+          destaqueTitulo.textContent = conteudo.titulo;
+          destaqueDescricao.textContent = conteudo.texto;
+          if (destaqueTag) {
+            destaqueTag.hidden = !conteudo.destaque;
+          }
+          if (destaqueTexto) {
+            destaqueTexto.classList.remove("is-mudando");
+          }
+        }, 150);
       }
 
       if (filtroEscolhido === "musculacao") {
