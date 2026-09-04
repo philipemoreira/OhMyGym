@@ -368,8 +368,8 @@
       <!-- Card de destaque: Musculação (treino livre) -->
       <div class="card-modalidade-destaque">
         <div class="card-modalidade-destaque__texto">
-          <div class="card-modalidade-destaque__cabecalho">
-          <span class="card-diferencial__icon">
+          <div class="card-modalidade-destaque__cabecalho" id="modalidade-destaque-cabecalho">
+          <span class="card-diferencial__icon" id="modalidade-destaque-icon">
             <!-- Ícone oficial "halter com mão" do manual de identidade visual
                  da marca (mesmo padrão de ícone já usado nos cards da seção
                  Diferenciais) — pedido do Philipe (04/09/2026) pra melhorar
@@ -380,18 +380,29 @@
           </span>
           <span class="card-diferencial__tag" id="modalidade-destaque-tag">Modalidade em destaque</span>
           </div>
-          <!-- Título e texto abaixo mudam de acordo com o filtro escolhido
-               logo abaixo (ver ".filtro-modalidades" e script.js) — pedido
-               do Philipe (04/09/2026): ao clicar em cada modalidade, esse
-               card passa a falar sobre ELA (título + texto), e a etiqueta
-               "Modalidade em destaque" some (só aparece de volta quando
-               "Musculação" — o filtro padrão — está selecionado). Em
-               "Todos" entra uma frase de motivação no lugar do texto.
+          <!-- Ícone, título e texto abaixo mudam de acordo com o filtro
+               escolhido logo abaixo (ver ".filtro-modalidades" e script.js)
+               — pedido do Philipe (04/09/2026): ao clicar em cada
+               modalidade, esse card passa a falar sobre ELA (ícone +
+               título + texto), e a etiqueta "Modalidade em destaque" some
+               (só aparece de volta quando "Musculação" — o filtro padrão —
+               está selecionada). Em "Todos" entra uma frase de motivação
+               no lugar do texto.
+               Layout diferente conforme a modalidade (pedido do Philipe,
+               04/09/2026, 2ª rodada): em "Musculação" o ícone continua em
+               cima, junto da etiqueta (".card-modalidade-destaque__cabecalho"
+               acima) — layout original. Nas outras modalidades (sem
+               etiqueta), o ícone "desce" e fica ao lado esquerdo do nome
+               da modalidade — o script.js MOVE o mesmo elemento de ícone
+               entre os dois lugares (não duplica), trocando também o
+               desenho do ícone (SVG) pra um diferente por modalidade.
                Conteúdo inicial já corresponde ao filtro padrão
                ("Musculação"). OBS: os textos das outras modalidades e o de
-               motivação são rascunho — ver "descricoesModalidade" no
+               motivação são rascunho — ver "conteudoModalidade" no
                script.js. -->
-          <h3 id="modalidade-destaque-titulo">Musculação</h3>
+          <div class="card-modalidade-destaque__titulo-linha" id="modalidade-destaque-titulo-linha">
+            <h3 id="modalidade-destaque-titulo">Musculação</h3>
+          </div>
           <p id="modalidade-destaque-texto">
             O coração da Oh My Gym: nossa maior estrutura, com treino livre
             dentro do horário de funcionamento e acompanhamento da equipe o

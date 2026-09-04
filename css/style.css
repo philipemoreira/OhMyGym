@@ -899,6 +899,47 @@ h1, h2, h3 {
   margin-bottom: 0;
 }
 
+/* Precisa ser explícito: como ".card-modalidade-destaque__cabecalho" já
+   define "display: flex" acima, isso teria prioridade sobre o
+   "display: none" padrão do navegador pro atributo "[hidden]" (mesma
+   pegadinha documentada em ".grade-horarios[hidden]" mais abaixo). Usado
+   pra esconder essa linha inteira (ícone + etiqueta) quando a modalidade
+   escolhida NÃO é "Musculação" — nesse caso o ícone se muda pra dentro de
+   ".card-modalidade-destaque__titulo-linha" (ver abaixo) e não sobra nada
+   pra mostrar aqui em cima. */
+.card-modalidade-destaque__cabecalho[hidden] {
+  display: none;
+}
+
+/* Linha com o ícone ao lado do título — pedido do Philipe (04/09/2026,
+   2ª rodada): nas modalidades que NÃO são "Musculação" (sem a etiqueta
+   "Modalidade em destaque"), o ícone não fica mais sozinho lá em cima
+   (".card-modalidade-destaque__cabecalho"); ele desce e fica ao lado
+   esquerdo do nome da modalidade. Em "Musculação" essa div só tem o
+   título dentro (o ícone continua em cima, no cabeçalho) — o "display:
+   flex" aqui não muda nada visualmente nesse caso, só entra em ação
+   quando o ícone é movido pra dentro dela via JavaScript. */
+.card-modalidade-destaque__titulo-linha {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Ícone um pouco menor aqui do que no cabeçalho (46px lá em cima vs 38px
+   aqui), pra ficar proporcional ao lado do texto do título em vez de
+   competir com ele */
+.card-modalidade-destaque__titulo-linha .card-diferencial__icon {
+  margin-bottom: 0;
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+}
+
+.card-modalidade-destaque__titulo-linha .card-diferencial__icon svg {
+  width: 19px;
+  height: 19px;
+}
+
 /* Transição suave quando o título/texto trocam de conteúdo (ao escolher
    outro filtro de modalidade abaixo, ver script.js) — mesma ideia/tempo
    do "fade" já usado na grade de horários (".grade-horarios.is-filtrando"). */
