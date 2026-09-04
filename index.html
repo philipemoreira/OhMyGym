@@ -469,8 +469,13 @@
         </p>
       </div>
 
-      <!-- Grade com os 3 planos de MUSCULAÇÃO (fidelidades diferentes) -->
-      <div class="planos__grid">
+      <!-- Grade com os 3 planos de MUSCULAÇÃO (fidelidades diferentes).
+           No celular vira carrossel (1 card por vez, com seta + bolinhas
+           pra navegar — pedido do Philipe pra não ficar gigante de tanto
+           rolar) — a partir de 640px volta a ser grade normal lado a
+           lado (ver media queries no CSS). O "data-carrossel" liga esse
+           grid aos controles logo abaixo dele via script.js. -->
+      <div class="planos__grid" data-carrossel="musculacao">
 
         <!-- OH MY START — mensal -->
         <div class="plano-card">
@@ -548,18 +553,44 @@
 
       </div>
 
+      <!-- Seta + bolinhas do carrossel de musculação (só aparecem no
+           celular — em telas maiores a grade já mostra os 3 juntos, então
+           os controles somem via CSS). Os botões de bolinha (".planos__ponto")
+           são gerados aqui um por card; como são só 3, é tranquilo escrever
+           os 3 na mão em vez de gerar por JS. -->
+      <div class="planos__controles" data-carrossel="musculacao">
+        <button type="button" class="planos__seta planos__seta--prev" aria-label="Ver plano anterior">‹</button>
+        <div class="planos__pontos">
+          <button type="button" class="planos__ponto is-ativo" aria-label="Ir para o plano Oh My Start"></button>
+          <button type="button" class="planos__ponto" aria-label="Ir para o plano Oh My Shape"></button>
+          <button type="button" class="planos__ponto" aria-label="Ir para o plano Oh My Evolution"></button>
+        </div>
+        <button type="button" class="planos__seta planos__seta--next" aria-label="Ver próximo plano">›</button>
+      </div>
+
       <!-- Título do 2º grupo: deixa claro que esses 2 planos são à
-           parte dos de musculação acima — só aulas, sem musculação -->
+           parte dos de musculação acima — só aulas, sem musculação.
+           O coraçãozinho (ícone de linha, do manual de identidade) é um
+           primeiro uso mais deliberado dos elementos de apoio da marca,
+           puxando a cor rosa-queimado que até então só aparecia diluída
+           nos degradês entre seções (pedido do Philipe, 04/09/2026, de
+           usar mais esses elementos). -->
       <div class="planos__grupo-titulo">
-        <h3 class="planos__grupo-titulo-nome">Prefere só as aulas?</h3>
+        <h3 class="planos__grupo-titulo-nome">
+          <svg class="planos__grupo-titulo-icone" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M12 20.8c-.3 0-.6-.1-.8-.3C7.4 17.4 3 13.6 3 9.5 3 6.9 5 5 7.5 5c1.5 0 2.9.7 3.8 1.9C12.2 5.7 13.6 5 15.1 5 17.6 5 19.6 6.9 19.6 9.5c0 4.1-4.4 7.9-8.2 11-.2.2-.5.3-.8.3z" />
+          </svg>
+          Prefere só as aulas?
+        </h3>
         <p class="planos__grupo-titulo-texto">
           Esses dois planos são à parte, só de aulas funcionais/coletivas — sem musculação.
         </p>
       </div>
 
       <!-- Grade com os 2 planos "SÓ AULA" (Oh My Move + Ballet) — grade
-           menor e centralizada, separada da grade de musculação acima -->
-      <div class="planos__grid planos__grid--aulas">
+           menor e centralizada, separada da grade de musculação acima.
+           Mesmo tratamento de carrossel no celular que a grade de cima. -->
+      <div class="planos__grid planos__grid--aulas" data-carrossel="aulas">
 
         <!-- OH MY MOVE — só aulas coletivas, sem musculação -->
         <div class="plano-card">
@@ -608,6 +639,17 @@
           </a>
         </div>
 
+      </div>
+
+      <!-- Seta + bolinhas do carrossel de "só aula" (mesma lógica do de
+           musculação acima, só que com 2 bolinhas em vez de 3) -->
+      <div class="planos__controles" data-carrossel="aulas">
+        <button type="button" class="planos__seta planos__seta--prev" aria-label="Ver plano anterior">‹</button>
+        <div class="planos__pontos">
+          <button type="button" class="planos__ponto is-ativo" aria-label="Ir para o plano Oh My Move"></button>
+          <button type="button" class="planos__ponto" aria-label="Ir para o plano Ballet"></button>
+        </div>
+        <button type="button" class="planos__seta planos__seta--next" aria-label="Ver próximo plano">›</button>
       </div>
 
       <!-- Nota de matrícula e formas de pagamento, comum a todos os

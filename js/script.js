@@ -315,4 +315,86 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
+  // ===========================================================================
+  // CARROSSEL DOS PLANOS (só existe visualmente no celular — ver CSS)
+  // Liga cada grade de planos (".planos__grid[data-carrossel]") aos seus
+  // controles (".planos__controles[data-carrossel]") pelo mesmo nome
+  // ("musculacao" ou "aulas"): clicar na seta rola pro card vizinho, clicar
+  // numa bolinha vai direto pro card daquela posição, e rolar com o dedo
+  // atualiza sozinho qual bolinha fica acesa.
+  // ===========================================================================
+  const gradesDeCarrossel = document.querySelectorAll(".planos__grid[data-carrossel]");
+
+  gradesDeCarrossel.forEach(function (grade) {
+    const nome = grade.dataset.carrossel;
+    const controles = document.querySelector('.planos__controles[data-carrossel="' + nome + '"]');
+    if (!controles) return;
+
+    const botaoAnterior = controles.querySelector(".planos__seta--prev");
+    const botaoProximo = controles.querySelector(".planos__seta--next");
+    const bolinhas = Array.from(controles.querySelectorAll(".planos__ponto"));
+    const cards = Array.from(grade.children);
+
+    // Descobre qual card está mais perto do centro visível do carrossel
+    // agora — é o que a gente considera "o card atual"
+    function indiceAtual() {
+      const centroVisivel = grade.scrollLeft + grade.clientWidth / 2;
+      let indiceMaisPerto = 0;
+      let menorDistancia = Infinity;
+
+      cards.forEach(function (card, indice) {
+        const centroCard = card.offsetLeft + card.offsetWidth / 2;
+        const distancia = Math.abs(centroCard - centroVisivel);
+        if (distancia < menorDistancia) {
+          menorDistancia = distancia;
+          indiceMaisPerto = indice;
+        }
+      });
+
+      return indiceMaisPerto;
+    }
+
+    // Rola suavemente até o card do índice pedido
+    function irParaCard(indice) {
+      const alvo = cards[indice];
+      if (!alvo) return;
+      alvo.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+
+    // Acende a bolinha do card atual e apaga as outras
+    function atualizarBolinhas() {
+      const atual = indiceAtual();
+      bolinhas.forEach(function (bolinha, indice) {
+        bolinha.classList.toggle("is-ativo", indice === atual);
+      });
+    }
+
+    if (botaoAnterior) {
+      botaoAnterior.addEventListener("click", function () {
+        irParaCard(Math.max(0, indiceAtual() - 1));
+      });
+    }
+
+    if (botaoProximo) {
+      botaoProximo.addEventListener("click", function () {
+        irParaCard(Math.min(cards.length - 1, indiceAtual() + 1));
+      });
+    }
+
+    bolinhas.forEach(function (bolinha, indice) {
+      bolinha.addEventListener("click", function () {
+        irParaCard(indice);
+      });
+    });
+
+    // Enquanto o usuário arrasta o carrossel com o dedo, vai atualizando
+    // a bolinha acesa — com um pequeno atraso (debounce) pra não ficar
+    // recalculando a cada pixel rolado, só quando o dedo já "assentou"
+    let temporizadorScroll;
+    grade.addEventListener("scroll", function () {
+      clearTimeout(temporizadorScroll);
+      temporizadorScroll = setTimeout(atualizarBolinhas, 100);
+    });
+  });
+
 });

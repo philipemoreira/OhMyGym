@@ -1006,34 +1006,50 @@ h1, h2, h3 {
   z-index: 1;
 }
 
-/* Grade dos 5 planos — 1 coluna no mobile, mais colunas conforme a
-   tela cresce (ver media queries logo abaixo) */
+/* Grade dos planos — NO CELULAR vira carrossel horizontal (1 card por
+   vez, com scroll-snap + seta/bolinhas em ".planos__controles" logo
+   abaixo no HTML): muitos cards empilhados deixavam a página gigante
+   de tanto rolar (pedido do Philipe, 04/09/2026). A partir de 640px
+   volta a virar grade normal lado a lado (ver media queries). Padding
+   lateral de 6% deixa um "gostinho" do próximo card aparecendo na
+   borda, reforçando que dá pra continuar navegando. */
 .planos__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
-  margin-bottom: 2.5rem;
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  gap: 1.25rem;
+  margin-bottom: 1.5rem;
+  padding: 0.5rem 6% 1rem;
+}
+
+.planos__grid::-webkit-scrollbar {
+  display: none;
 }
 
 /* Cada card de plano: mesma linguagem visual dos cards de diferenciais
-   (fundo, sombra, cantos, hover) — "display: flex" com o botão de
+   (fundo, cantos arredondados) — "display: flex" com o botão de
    WhatsApp lá embaixo (margin-top: auto) garante que o botão sempre
    fica alinhado na base do card, mesmo quando um plano tem mais itens
-   na lista do que os outros */
+   na lista do que os outros. "flex: 0 0 88%" + "scroll-snap-align"
+   fazem cada card ocupar quase a largura toda do carrossel no celular
+   (só o suficiente pra card seguinte espiar na borda) — em telas
+   maiores isso é ignorado porque o pai vira "display: grid" (ver media
+   queries). NENHUMA sombra/hover aqui na base de propósito: é a mesma
+   lição do bug do carrossel de filtros (seção 7) — "overflow-x: auto"
+   + cantos arredondados + sombra rendeririam errado no Safari mobile.
+   Sombra e hover só entram a partir de 640px, onde o carrossel já não
+   existe mais (ver ".plano-card" dentro do media query). */
 .plano-card {
   display: flex;
   flex-direction: column;
+  flex: 0 0 88%;
   min-width: 0;
   padding: 2rem 1.75rem;
   border-radius: var(--raio-padrao);
   background-color: var(--cor-fundo-claro);
-  box-shadow: 0 10px 30px -20px rgba(43, 16, 22, 0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.plano-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 34px -18px rgba(43, 16, 22, 0.45);
+  scroll-snap-align: center;
 }
 
 .plano-card__nome {
@@ -1109,10 +1125,11 @@ h1, h2, h3 {
 
 /* Card em destaque (Oh My Shape — melhor custo-benefício, segundo a
    Milena): mesmo tratamento visual dos outros itens em destaque do
-   site (fundo vinho sólido + texto branco), pra saltar aos olhos */
+   site (fundo vinho sólido + texto branco), pra saltar aos olhos. A
+   sombra dele mora só a partir de 640px, pelo mesmo motivo do
+   ".plano-card" acima (nada de sombra dentro do carrossel mobile). */
 .plano-card--destaque {
   background-color: var(--cor-vinho-principal);
-  box-shadow: 0 14px 34px -16px rgba(110, 33, 56, 0.65);
 }
 
 .plano-card--destaque .plano-card__nome,
@@ -1138,6 +1155,80 @@ h1, h2, h3 {
    aqui — só precisa de uma margem embaixo pra não colar no título */
 .plano-card--destaque .card-diferencial__tag {
   margin-bottom: 1rem;
+}
+
+/* Controles do carrossel de planos (seta + bolinhas) — só existem no
+   celular, onde os planos viram carrossel (ver ".planos__grid" acima);
+   a partir de 640px a grade já mostra tudo de uma vez, então esses
+   controles somem (ver media query). Ficam centralizados embaixo da
+   grade correspondente, nunca em cima dos cards, pra não esconder
+   conteúdo nem correr risco do bug de sombra do Safari mobile. */
+.planos__controles {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+.planos__seta {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.planos__seta:active {
+  background-color: var(--cor-vinho-escuro);
+}
+
+.planos__pontos {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+/* Bolinha de posição: a ativa fica mais comprida (vira uma "pílula")
+   em vez de só mudar de cor — deixa mais visível qual card tá sendo
+   visto, mesmo pra quem não presta muita atenção na cor */
+.planos__ponto {
+  width: 0.55rem;
+  height: 0.55rem;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background-color: rgba(110, 33, 56, 0.25);
+  transition: width 0.2s ease, background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.planos__ponto.is-ativo {
+  width: 1.4rem;
+  background-color: var(--cor-vinho-principal);
+}
+
+/* Ícone de coração (linha, do manual de identidade) ao lado do título
+   do grupo "só aula" — primeiro uso mais deliberado dos elementos de
+   apoio da marca no site (pedido do Philipe, 04/09/2026). Usa a cor
+   rosa-queimado, que até aqui só aparecia diluída nos degradês entre
+   seções — agora ganha um uso sólido de verdade. */
+.planos__grupo-titulo-icone {
+  width: 1.1em;
+  height: 1.1em;
+  flex-shrink: 0;
+  fill: none;
+  stroke: var(--cor-rosa-queimado);
+  stroke-width: 1.6;
+  stroke-linejoin: round;
 }
 
 /* "Oferta do momento": espaço reservado, com a mesma linguagem visual
@@ -1174,6 +1265,10 @@ h1, h2, h3 {
 }
 
 .planos__grupo-titulo-nome {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   margin-bottom: 0.4rem;
   color: var(--cor-vinho-escuro);
   font-size: 1.15rem;
@@ -1242,8 +1337,41 @@ h1, h2, h3 {
     grid-template-columns: repeat(2, 1fr);
   }
 
+  /* A partir daqui a tela já cabe os planos lado a lado, então o
+     carrossel do celular vira grade normal de novo: desliga o scroll
+     horizontal/scroll-snap, tira o padding lateral que dava o "gostinho"
+     do próximo card, e restaura o espaçamento de baixo original */
   .planos__grid {
+    display: grid;
     grid-template-columns: repeat(2, 1fr);
+    overflow-x: visible;
+    padding: 0;
+    margin-bottom: 2.5rem;
+  }
+
+  /* Sem carrossel, os controles (seta + bolinhas) não fazem mais
+     sentido — somem a partir daqui */
+  .planos__controles {
+    display: none;
+  }
+
+  /* Card de plano: volta a ocupar o espaço normal da grade (em vez do
+     "flex: 0 0 88%" do carrossel) e ganha de volta a sombra/hover —
+     sem risco do bug do Safari mobile aqui, porque o pai não tem mais
+     "overflow-x: auto" nesta largura de tela */
+  .plano-card {
+    flex: initial;
+    box-shadow: 0 10px 30px -20px rgba(43, 16, 22, 0.4);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .plano-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 34px -18px rgba(43, 16, 22, 0.45);
+  }
+
+  .plano-card--destaque {
+    box-shadow: 0 14px 34px -16px rgba(110, 33, 56, 0.65);
   }
 
   .grade-horarios {
