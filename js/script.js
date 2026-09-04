@@ -168,10 +168,14 @@ document.addEventListener("DOMContentLoaded", function () {
   // Título + texto do card de destaque, de acordo com a modalidade
   // escolhida no filtro — pedido do Philipe (04/09/2026). "destaque: true"
   // é só pra "musculacao" (mantém a etiqueta "Modalidade em destaque"
-  // visível); nas outras, a etiqueta some. OBS: textos de "jump" em
-  // diante (e o de "todos") são rascunho meu — dá pra revisar/ajustar
-  // com a Milena depois; o de "musculacao" é o texto original já
-  // aprovado, mantido como estava.
+  // visível); nas outras, a etiqueta some.
+  // Padrão do texto (pedido do Philipe): em cada modalidade específica,
+  // explica rapidamente o que é a aula e fecha com uma frase curta de
+  // motivação; em "Todos" (sem modalidade específica escolhida) é só
+  // a frase de motivação, sem explicação.
+  // OBS: todos os textos abaixo (inclusive o de "musculacao", reescrito
+  // pra seguir esse mesmo padrão de "explicação + motivação") são
+  // rascunho meu — dá pra revisar/ajustar com a Milena depois.
   const conteudoModalidade = {
     todos: {
       titulo: "Todas as modalidades",
@@ -180,42 +184,42 @@ document.addEventListener("DOMContentLoaded", function () {
     },
     musculacao: {
       titulo: "Musculação",
-      texto: "O coração da Oh My Gym: nossa maior estrutura, com treino livre dentro do horário de funcionamento e acompanhamento da equipe o tempo todo. Pra quem quer treinar de verdade, ganhar força e transformar o corpo no seu ritmo.",
+      texto: "O coração da Oh My Gym: nossa maior estrutura, com treino livre dentro do horário de funcionamento e acompanhamento da equipe o tempo todo, pra quem quer treinar de verdade e transformar o corpo no seu ritmo. Sua força começa aqui.",
       destaque: true,
     },
     jump: {
       titulo: "Jump",
-      texto: "Aula de alta energia em cima do mini trampolim: queima calorias, melhora o condicionamento físico e ainda protege as articulações.",
+      texto: "Aula de alta energia em cima do mini trampolim: queima calorias, melhora o condicionamento físico e ainda protege as articulações. Bora suar a camisa com o pé no ar!",
       destaque: false,
     },
     funcional: {
       titulo: "Funcional",
-      texto: "Treino dinâmico que usa o peso do próprio corpo pra ganhar força, resistência e condicionamento em pouco tempo de aula.",
+      texto: "Treino dinâmico que usa o peso do próprio corpo pra ganhar força, resistência e condicionamento em pouco tempo de aula. Supere seus limites a cada repetição.",
       destaque: false,
     },
     "pilates-solo": {
       titulo: "Pilates solo",
-      texto: "Aula focada em postura, força do core e flexibilidade, sem impacto e no seu ritmo.",
+      texto: "Aula focada em postura, força do core e flexibilidade, sem impacto e no seu ritmo. Equilíbrio de corpo e mente, um movimento de cada vez.",
       destaque: false,
     },
     ritmos: {
       titulo: "Ritmos",
-      texto: "Aula de dança fitness que mistura ritmos variados — treina o corpo inteiro se divertindo.",
+      texto: "Aula de dança fitness que mistura ritmos variados, treinando o corpo inteiro enquanto você se diverte. Solte a energia e dance com a gente!",
       destaque: false,
     },
     "ritmos-gospel": {
       titulo: "Ritmos gospel",
-      texto: "Aula de dança com músicas gospel, unindo fé, energia e queima de calorias.",
+      texto: "Aula de dança com músicas gospel, unindo fé, energia e queima de calorias. Movimente o corpo e renove as energias.",
       destaque: false,
     },
     "ballet-fitness": {
       titulo: "Ballet fitness",
-      texto: "Aula inspirada no ballet clássico, trabalhando alongamento, postura e força pra mulheres adultas.",
+      texto: "Aula inspirada no ballet clássico, trabalhando alongamento, postura e força pra mulheres adultas. Elegância e força em cada passo.",
       destaque: false,
     },
     "ballet-infantil": {
       titulo: "Ballet infantil",
-      texto: "Aula de ballet pensada pras pequenas, com coordenação, postura e muita diversão.",
+      texto: "Aula de ballet pensada pras pequenas, com coordenação, postura e muita diversão. Os primeiros passos de uma grande bailarina.",
       destaque: false,
     },
   };
