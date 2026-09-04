@@ -778,6 +778,24 @@ h1, h2, h3 {
   color: var(--cor-branco);
 }
 
+/* Cabeçalho (ícone + etiqueta "Modalidade em destaque") em linha,
+   centralizados verticalmente entre si — antes eles ficavam soltos em
+   fluxo normal dentro de ".card-modalidade-destaque__texto" (sem
+   flex/centralização), o que deixava os dois desalinhados. Pedido do
+   Philipe (04/09/2026, via print): "Deixa mais centralizado o emoji
+   com a palavra em destaque". */
+.card-modalidade-destaque__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.card-modalidade-destaque__cabecalho .card-diferencial__icon,
+.card-modalidade-destaque__cabecalho .card-diferencial__tag {
+  margin-bottom: 0;
+}
+
 .card-modalidade-destaque__texto h3 {
   color: var(--cor-branco);
   font-size: 1.5rem;
@@ -1050,6 +1068,7 @@ h1, h2, h3 {
    Sombra e hover só entram a partir de 640px, onde o carrossel já não
    existe mais (ver ".plano-card" dentro do media query). */
 .plano-card {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex: 0 0 88%;
@@ -1058,6 +1077,39 @@ h1, h2, h3 {
   border-radius: var(--raio-padrao);
   background-color: var(--cor-fundo-claro);
   scroll-snap-align: center;
+}
+
+/* Adesivo decorativo (ícone do manual de identidade) no canto de cada
+   card — kettlebell nos planos de musculação, corda de pular nos
+   planos "só aula". Fica bem sutil (opacidade baixa) e fora do fluxo
+   normal do card ("position: absolute"), então não empurra nenhum
+   texto nem interfere no alinhamento do botão lá embaixo. Pedido do
+   Philipe (04/09/2026): "tenta colocar alguns adesivo ou elemento
+   para dar uma decorada" nos planos. */
+.plano-card__adesivo {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 30px;
+  height: 30px;
+  color: var(--cor-vinho-principal);
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+.plano-card--destaque .plano-card__adesivo {
+  /* Nesse card a etiqueta "Melhor custo-benefício" já ocupa o canto
+     superior direito, então o adesivo desce um pouco pra não disputar
+     espaço com ela */
+  top: 4.5rem;
+  color: var(--cor-branco);
+  opacity: 0.16;
+}
+
+.plano-card__adesivo svg {
+  width: 100%;
+  height: 100%;
+  display: block;
 }
 
 .plano-card__nome {
@@ -1124,6 +1176,47 @@ h1, h2, h3 {
   color: var(--cor-vinho-medio);
   font-size: 0.8rem;
   font-style: italic;
+}
+
+/* Taxa de matrícula + formas de pagamento, agora dentro de cada card
+   (antes era um banner único, ".planos__nota", embaixo de todos os
+   planos — o Philipe achou feio como bloco separado e pediu, em
+   04/09/2026, pra repetir essa informação em cada plano em vez disso).
+   Fica com uma linha fina em cima pra separar visualmente da lista/
+   texto adicional, sem virar um bloco chamativo. */
+.plano-card__taxa {
+  margin-bottom: 1.5rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid rgba(110, 33, 56, 0.14);
+  color: var(--cor-vinho-medio);
+  font-size: 0.78rem;
+  line-height: 1.5;
+}
+
+.plano-card__taxa-linha {
+  margin: 0 0 0.15rem;
+}
+
+.plano-card__taxa-linha strong {
+  color: var(--cor-vinho-principal);
+}
+
+.plano-card__taxa-obs {
+  opacity: 0.85;
+}
+
+.plano-card__taxa-pagamento {
+  margin: 0;
+  font-weight: 600;
+}
+
+.plano-card--destaque .plano-card__taxa {
+  border-top-color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.plano-card--destaque .plano-card__taxa-linha strong {
+  color: var(--cor-branco);
 }
 
 .plano-card .btn {
@@ -1285,49 +1378,6 @@ h1, h2, h3 {
   line-height: 1.5;
 }
 
-/* Nota de matrícula/pagamento, comum a todos os planos — banner com
-   fundo vinho sólido (mesma cor do card em destaque) pra chamar mais
-   atenção do que um texto simples embaixo dos planos; empilhado no
-   celular, lado a lado a partir do tablet (ver media query) */
-.planos__nota {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 1.25rem;
-  margin-top: 0.5rem;
-  padding: 1.75rem;
-  border-radius: var(--raio-padrao);
-  background-color: var(--cor-vinho-principal);
-  text-align: center;
-}
-
-.planos__nota-item {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-
-.planos__nota-valor {
-  font-family: var(--fonte-titulo);
-  color: var(--cor-branco);
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-.planos__nota-label {
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 0.8rem;
-}
-
-/* Linha divisória entre os dois itens da nota — fina, horizontal no
-   celular (empilhado) e vertical a partir do tablet (lado a lado) */
-.planos__nota-divisor {
-  width: 3rem;
-  height: 1px;
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
-
 /* =====================================================================
    9. RESPONSIVIDADE (media queries)
    Abordagem mobile-first: os estilos acima já valem para telas pequenas.
@@ -1381,19 +1431,6 @@ h1, h2, h3 {
 
   .grade-horarios {
     grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Nota de matrícula/pagamento: a partir daqui já cabe lado a lado
-     em vez de empilhado, com a linha divisória virando vertical */
-  .planos__nota {
-    flex-direction: row;
-    justify-content: center;
-    gap: 3rem;
-  }
-
-  .planos__nota-divisor {
-    width: 1px;
-    height: 2.5rem;
   }
 
   /* Galeria de fotos do espaço kids: a partir daqui a tela já é larga o
