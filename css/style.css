@@ -1,0 +1,1448 @@
+/* =====================================================================
+   OH MY GYM — FOLHA DE ESTILOS PRINCIPAL
+   Organização deste arquivo (nessa ordem):
+     1. Variáveis globais (cores, fontes, espaçamentos)
+     2. Reset básico / estilos gerais do site
+     3. Classes utilitárias reaproveitáveis (container, botões)
+     4. Cabeçalho / menu de navegação
+     5. Seção Hero (abertura do site)
+     6. Seção Diferenciais (cards do "por que Oh My Gym")
+     7. Seção Modalidades (aulas + grade de horários)
+     8. Seção Planos (cards de preço + oferta do momento)
+     9. Media queries (ajustes de responsividade)
+     10. "Revelar ao rolar" (experimental)
+   ===================================================================== */
+
+
+/* =====================================================================
+   1. VARIÁVEIS GLOBAIS
+   Cores extraídas do manual de identidade visual da Oh My Gym.
+   Centralizar aqui facilita trocar qualquer cor/fonte no site inteiro
+   de uma vez só, sem precisar caçar valor por valor no CSS.
+   ===================================================================== */
+:root {
+  /* Paleta de vinhos (identidade oficial da marca) */
+  --cor-vinho-escuro:   #5A1231; /* vinho mais escuro, usado em fundos fortes */
+  --cor-vinho-principal:#6E2138; /* vinho principal, cor de destaque da marca */
+  --cor-vinho-medio:    #883647; /* vinho médio, usado em textos/detalhes */
+  --cor-rosa-queimado:  #A6525C; /* rosa-queimado, tom intermediário */
+  --cor-rosa-claro:     #EDC1BD; /* rosa claro, usado em detalhes suaves */
+  --cor-fundo-claro:    #FCEEEB; /* off-white rosado, fundo padrão claro do site */
+  --cor-branco:         #FFFFFF;
+  --cor-texto:          #2B1016; /* quase-preto levemente vinho, pra textos longos */
+
+  /* Tipografia
+     - Domine substitui a fonte oficial "Recoleta" (não disponível no
+       Google Fonts) — usada em títulos e frases de destaque.
+     - Parkinsans é a fonte de apoio oficial da marca — usada em textos
+       corridos, menus e botões. */
+  --fonte-titulo: 'Domine', Georgia, serif;
+  --fonte-corpo: 'Parkinsans', Arial, sans-serif;
+
+  /* Espaçamento padrão entre seções da página */
+  --espaco-secao: clamp(3.5rem, 6vw, 6.5rem);
+
+  /* Largura máxima do conteúdo (evita linhas de texto gigantes em telas largas) */
+  --largura-maxima: 1200px;
+
+  /* Cantos arredondados padrão, usados em botões/cards no site inteiro */
+  --raio-padrao: 14px;
+}
+
+
+/* =====================================================================
+   2. RESET BÁSICO / ESTILOS GERAIS
+   Regras que valem pro site inteiro, pra garantir uma base consistente
+   em qualquer navegador e já deixar tudo responsivo por padrão.
+   ===================================================================== */
+
+/* Faz padding/border entrarem na largura do elemento, em vez de somar */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove margens padrão do navegador que atrapalham o layout */
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  /* Rolagem suave ao clicar em links do menu (ex: "Ver planos") */
+  scroll-behavior: smooth;
+  /* Compensa a altura do cabeçalho fixo, pra seção não ficar escondida atrás dele */
+  scroll-padding-top: 90px;
+  width: 100%;
+  /* NOTA IMPORTANTE (corrigido no bloco 2): tínhamos "overflow-x: hidden"
+     aqui e no body pra evitar rolagem horizontal causada por um bug do
+     menu mobile (já corrigido — era o "backdrop-filter" do cabeçalho,
+     ver comentário em ".site-header" mais abaixo). Só que "overflow-x"
+     em html/body, em alguns navegadores, acaba criando um novo
+     "contexto de rolagem" que quebra o cabeçalho "sticky" (ele parava
+     de acompanhar a rolagem da página corretamente). Como o bug
+     original já foi corrigido na raiz, removemos o overflow-x daqui —
+     testado de novo em várias larguras de tela, com o menu mobile
+     aberto, e sem nenhuma rolagem horizontal mesmo sem essa regra. */
+}
+
+body {
+  font-family: var(--fonte-corpo);
+  color: var(--cor-texto);
+  background-color: var(--cor-branco);
+  line-height: 1.6;
+  width: 100%;
+}
+
+img {
+  /* Nenhuma imagem deve estourar a largura do elemento pai */
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+h1, h2, h3 {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-vinho-escuro);
+  line-height: 1.15;
+}
+
+
+/* =====================================================================
+   3. CLASSES UTILITÁRIAS
+   Pequenas classes reaproveitadas em várias seções do site.
+   ===================================================================== */
+
+/* Centraliza o conteúdo e limita a largura máxima, com respiro lateral
+   nas telas menores. Praticamente toda seção do site vai usar isso. */
+.container {
+  width: 100%;
+  max-width: var(--largura-maxima);
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+}
+
+/* Estilo base dos botões do site (herdado por todas as variações abaixo) */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.6rem;
+  border-radius: var(--raio-padrao);
+  font-family: var(--fonte-corpo);
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+/* Botão principal (WhatsApp) — cor sólida de destaque, usado nas
+   principais chamadas para ação do site */
+.btn--whatsapp {
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+  box-shadow: 0 8px 20px -8px rgba(110, 33, 56, 0.6);
+}
+
+.btn--whatsapp:hover {
+  background-color: var(--cor-vinho-escuro);
+}
+
+/* Botão secundário (contorno), usado para ações de menor destaque,
+   como "Ver planos" */
+.btn--outline {
+  background-color: transparent;
+  color: var(--cor-vinho-principal);
+  border: 1.5px solid var(--cor-vinho-principal);
+}
+
+.btn--outline:hover {
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+}
+
+/* Botão branco sólido — usado em cima de fundos escuros/vinho (ex: o
+   card de plano em destaque), onde o "btn--whatsapp" (também vinho)
+   ficaria sem contraste nenhum */
+.btn--white {
+  background-color: var(--cor-branco);
+  color: var(--cor-vinho-principal);
+}
+
+.btn--white:hover {
+  background-color: var(--cor-rosa-claro);
+}
+
+
+/* =====================================================================
+   4. CABEÇALHO / MENU DE NAVEGAÇÃO
+   ===================================================================== */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background-color: rgba(252, 238, 235, 0.98); /* --cor-fundo-claro quase opaco */
+  border-bottom: 1px solid rgba(90, 18, 49, 0.08);
+  /* Observação: propositalmente NÃO usamos "backdrop-filter" aqui.
+     Ele parece só um efeito visual (desfoque do que passa atrás do
+     cabeçalho), mas tecnicamente cria um novo "containing block" pra
+     elementos com position:fixed dentro do cabeçalho — e o menu mobile
+     (.nav-menu) é "fixed" e fica dentro do cabeçalho. Isso quebrava o
+     menu mobile (ele parava de cobrir a tela inteira corretamente).
+     Testado e confirmado — por isso o fundo aqui é quase opaco em vez
+     de usar blur. */
+  /* Anima a "encolhida" do cabeçalho ao rolar a página (ver
+     ".site-header.is-encolhido" abaixo e o scroll listener no
+     script.js) e também a sombra, que aparece só quando encolhido */
+  transition: box-shadow 0.25s ease;
+}
+
+/* Classe adicionada via JavaScript quando a página é rolada pra baixo
+   (ver script.js) — dá uma sombra sutil pra separar o cabeçalho
+   "flutuando" do conteúdo, já que ele fica menor e mais discreto */
+.site-header.is-encolhido {
+  box-shadow: 0 8px 24px -18px rgba(43, 16, 22, 0.5);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-block: 0.85rem;
+  /* Anima a redução do espaçamento vertical quando o cabeçalho encolhe */
+  transition: padding-block 0.25s ease;
+}
+
+/* Estado "encolhido": cabeçalho mais baixo, ocupando menos espaço da
+   tela enquanto a visitante rola a página pra baixo */
+.site-header.is-encolhido .site-header__inner {
+  padding-block: 0.45rem;
+}
+
+.site-header__logo img {
+  height: 34px;
+  width: auto;
+  /* Anima o tamanho da logo junto com o cabeçalho encolhendo, e também
+     o "crescer/encolher" ao passar o mouse / clicar (ver regras
+     ".site-header__logo:hover" e ":active" logo abaixo) */
+  transition: height 0.25s ease, transform 0.15s ease;
+}
+
+.site-header.is-encolhido .site-header__logo img {
+  height: 26px;
+}
+
+/* Animação de "clique" na logo: cresce um pouco ao passar o mouse
+   (mostra que é clicável) e "afunda" no momento do clique, dando
+   feedback visual claro de que algo vai acontecer */
+.site-header__logo:hover img {
+  transform: scale(1.06);
+}
+
+.site-header__logo:active img {
+  transform: scale(0.94);
+}
+
+/* Botão de WhatsApp dentro do menu mobile — só aparece quando o menu
+   está aberto em telas pequenas (ver media query mais abaixo) */
+.nav-menu__cta {
+  display: none;
+  margin-top: 2rem;
+}
+
+/* Menu de navegação (links). No mobile começa escondido — vira um
+   painel que desliza quando o botão "hambúrguer" é clicado. */
+.nav-menu__list {
+  display: flex;
+  align-items: center;
+  gap: 1.75rem;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.nav-menu__list a {
+  position: relative;
+  padding-block: 0.25rem;
+}
+
+/* Sublinhado animado ao passar o mouse em cima de um link do menu */
+.nav-menu__list a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--cor-vinho-principal);
+  transition: width 0.2s ease;
+}
+
+.nav-menu__list a:hover::after {
+  width: 100%;
+}
+
+/* Indicador de "seção atual": a classe "is-atual" é adicionada via
+   JavaScript (ver script.js) no link cuja seção está sendo vista no
+   momento, conforme a visitante rola a página — o sublinhado some de
+   um link e aparece no outro à medida que ela passa de seção em seção. */
+.nav-menu__list a.is-atual {
+  color: var(--cor-vinho-principal);
+  font-weight: 600;
+}
+
+.nav-menu__list a.is-atual::after {
+  width: 100%;
+}
+
+/* Botão "hambúrguer" — só aparece em telas pequenas (ver media query) */
+.nav-toggle {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 40px;
+  height: 40px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-toggle__bar {
+  width: 100%;
+  height: 2.5px;
+  background-color: var(--cor-vinho-escuro);
+  border-radius: 2px;
+  transition: transform 0.25s ease, opacity 0.25s ease;
+}
+
+/* Estado "menu aberto": transforma as 3 barrinhas em um "X" */
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(1) {
+  transform: translateY(7.5px) rotate(45deg);
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(2) {
+  opacity: 0;
+}
+.nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) {
+  transform: translateY(-7.5px) rotate(-45deg);
+}
+
+
+/* =====================================================================
+   5. SEÇÃO HERO
+   ===================================================================== */
+
+/* Seção inteira ocupa a altura da tela (pedido do Philipe, 03/09/2026:
+   "preencher a tela", sem deixar brecha mostrando o início da próxima
+   seção) — "100svh" é a altura "pequena" da viewport (desconta barra de
+   endereço do navegador no celular); "100vh" é o reforço pra navegadores
+   mais antigos que não conhecem "svh". Centraliza o conteúdo verticalmente
+   já que agora a seção pode ficar mais alta que o conteúdo em si. */
+.hero {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+  min-height: 100svh;
+  background-color: var(--cor-vinho-escuro); /* cor de fallback enquanto a foto carrega */
+  padding-block: var(--espaco-secao);
+}
+
+/* A foto (assets/images/hero-mulher-bone-branco.jpg, escolhida pelo
+   Philipe) fica no ::before, cobrindo a seção inteira, com dois efeitos
+   por cima pedidos por ele:
+   1) Gradiente nos tons de ROSA da marca (não vinho) — mais forte à
+      esquerda, onde fica o texto, mais suave à direita.
+   2) "filter: blur()" deixa a foto com efeito fosco/desfocado (pedido:
+      "não tão nítida"), pra ela funcionar mais como uma textura de fundo
+      do que como uma foto nítida chamando atenção.
+   O ::before é desenhado um pouco maior que a seção (inset negativo) e
+   o "overflow: hidden" no .hero (acima) esconde essa sobra — sem isso, o
+   blur deixaria uma borda mais clara/"desbotada" nas bordas da seção. */
+.hero::before {
+  content: "";
+  position: absolute;
+  inset: -20px;
+  z-index: 0;
+  background-image:
+    linear-gradient(
+      100deg,
+      rgba(166, 82, 92, 0.92) 0%,
+      rgba(166, 82, 92, 0.82) 32%,
+      rgba(166, 82, 92, 0.55) 62%,
+      rgba(237, 193, 189, 0.4) 100%
+    ),
+    url("../assets/images/hero-mulher-bone-branco.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  /* Foco no rosto/parte de cima da foto, que é o que importa aqui */
+  background-position: center 15%;
+  /* Efeito fosco/desfocado (pedido do Philipe) — reduzido de 6px pra 3px
+     em 03/09/2026 porque com 6px não dava pra ler "Oh my Gym" no boné.
+     3px já suaviza a foto (continua com efeito de textura, não nítida
+     "chamando atenção"), mas deixa a logo legível. */
+  filter: blur(3px);
+}
+
+/* Todo o conteúdo do hero fica acima do fundo/gradiente (z-index: 1) */
+.hero__inner {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.5rem;
+  text-align: left;
+  max-width: 640px;
+}
+
+/* Selinho "academia 100% feminina" acima do título — fundo "vidro fosco"
+   (branco bem transparente + leve desfoque) pra funcionar bem em cima de
+   qualquer parte da foto, clara ou escura */
+.hero__badge {
+  display: inline-block;
+  padding: 0.4rem 1rem;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(6px);
+  color: var(--cor-branco);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.hero__title {
+  color: var(--cor-branco);
+  font-size: clamp(2.5rem, 6vw, 4.25rem);
+  font-weight: 600;
+}
+
+.hero__subtitle {
+  max-width: 42ch;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+/* O botão "Ver planos" (contorno) precisa de uma versão clara aqui dentro
+   do hero, já que agora o fundo é escuro (foto + gradiente) — em vez do
+   contorno vinho padrão (que sumiria em cima do fundo escuro), usa
+   contorno branco. Só vale dentro do hero; o resto do site continua
+   usando o padrão de .btn--outline normalmente. */
+.hero .btn--outline {
+  color: var(--cor-branco);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+.hero .btn--outline:hover {
+  background-color: var(--cor-branco);
+  color: var(--cor-vinho-principal);
+}
+
+
+/* =====================================================================
+   6. SEÇÃO DIFERENCIAIS
+   Cards curtos explicando o que diferencia a Oh My Gym. O card de
+   "espaço kids" é o destaque (a própria Milena disse que é o maior
+   diferencial), por isso ele tem um estilo visual separado dos outros.
+   ===================================================================== */
+
+/* "position: relative" + "overflow: hidden" aqui só existem por causa
+   do ".diferenciais::before" logo abaixo (a transição sutil em rosa) —
+   se ele for removido, esses dois também podem sair. */
+.diferenciais {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--cor-branco);
+  padding-block: var(--espaco-secao);
+}
+
+/* Transição sutil em rosa entre as seções (experimental — pedido do
+   Philipe, 03/09/2026: "só para eu ver como vai ficar"). Em vez do
+   corte seco de cor entre o vinho do Hero e o branco dos Diferenciais,
+   um degradê bem suave nos tons rosa-queimado/rosa-claro da marca
+   "escorre" por cima do topo da seção, esmaecendo até ficar
+   transparente. É só um efeito visual (não tem texto/conteúdo), fica
+   atrás de tudo. Se ele não gostar, é só apagar este bloco (e o
+   ".modalidades::before" mais abaixo) — nada mais no site depende
+   disso. */
+.diferenciais::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 260px;
+  z-index: 0;
+  background-image: linear-gradient(
+    180deg,
+    rgba(166, 82, 92, 0.16) 0%,
+    rgba(237, 193, 189, 0.12) 45%,
+    rgba(237, 193, 189, 0) 100%
+  );
+  pointer-events: none;
+}
+
+/* Todo o conteúdo real da seção fica acima da transição (z-index: 1) */
+.diferenciais > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Cabeçalho reutilizável para seções de conteúdo (título + subtítulo
+   centralizados) — usado aqui e também na seção Modalidades logo abaixo */
+.section-heading {
+  max-width: 640px;
+  margin-inline: auto;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+
+/* Pequena etiqueta acima do título da seção (ex: "Por que Oh My Gym") */
+.section-heading__eyebrow {
+  display: inline-block;
+  margin-bottom: 0.75rem;
+  color: var(--cor-vinho-principal);
+  font-weight: 600;
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.section-heading__title {
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
+  margin-bottom: 0.75rem;
+}
+
+.section-heading__subtitle {
+  color: var(--cor-vinho-medio);
+  font-size: 1rem;
+}
+
+/* Grade dos cards de diferenciais — 1 coluna no mobile, mais colunas
+   conforme a tela cresce (ver media queries lá embaixo) */
+.diferenciais__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* Estilo base de cada card (compartilhado pelo card normal e pelo de destaque) */
+.card-diferencial {
+  /* "min-width: 0" evita que o card force a grade de fora (.diferenciais__grid)
+     a ficar mais larga que a tela — sem isso, o conteúdo de dentro (como a
+     galeria de fotos do espaço kids) tentava manter sua largura "ideal" e
+     empurrava o card pra fora da viewport no celular (bug real, encontrado
+     e corrigido durante o teste de responsividade desse ajuste) */
+  min-width: 0;
+  padding: 2rem 1.75rem;
+  border-radius: var(--raio-padrao);
+  background-color: var(--cor-fundo-claro);
+  box-shadow: 0 10px 30px -20px rgba(43, 16, 22, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card-diferencial:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px -18px rgba(43, 16, 22, 0.45);
+}
+
+/* Círculo com o ícone (SVG) no topo de cada card */
+.card-diferencial__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1.25rem;
+  border-radius: 50%;
+  background-color: rgba(110, 33, 56, 0.1);
+  color: var(--cor-vinho-principal);
+}
+
+.card-diferencial__icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.card-diferencial__title {
+  font-size: 1.15rem;
+  margin-bottom: 0.6rem;
+}
+
+.card-diferencial__text {
+  color: var(--cor-vinho-medio);
+  font-size: 0.95rem;
+}
+
+/* Card em destaque (espaço kids): fundo vinho sólido + texto branco,
+   pra saltar aos olhos como o maior diferencial da academia */
+.card-diferencial--destaque {
+  background-color: var(--cor-vinho-principal);
+  box-shadow: 0 14px 34px -16px rgba(110, 33, 56, 0.65);
+}
+
+.card-diferencial--destaque .card-diferencial__icon {
+  background-color: rgba(255, 255, 255, 0.18);
+  color: var(--cor-branco);
+}
+
+.card-diferencial--destaque .card-diferencial__title,
+.card-diferencial--destaque .card-diferencial__text {
+  color: var(--cor-branco);
+}
+
+.card-diferencial--destaque .card-diferencial__text {
+  opacity: 0.92;
+}
+
+/* Etiqueta "O maior diferencial" acima do título do card de destaque */
+.card-diferencial__tag {
+  display: inline-block;
+  margin-bottom: 0.6rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.2);
+  color: var(--cor-branco);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* Galeria de fotos do espaço kids, dentro do card de destaque (pedido do
+   Philipe, 03/09/2026). Enquanto não chegam as fotos reais da Milena, são
+   só "molduras" vazias.
+   - No CELULAR (base, mobile-first): vira um CARROSSEL — rolagem
+     horizontal com "encaixe" (scroll-snap), em vez de grade. Foi um
+     pedido específico do Philipe (03/09/2026): em grade 2×2 a galeria
+     ocupava altura demais na tela pequena; em carrossel, ocupa só a
+     altura de uma linha, e a pessoa arrasta o dedo pro lado pra ver as
+     outras fotos.
+   - A partir de telas médias (640px+, ver media query na seção 8), a
+     tela já tem largura de sobra, então volta a virar uma grade normal
+     (4 molduras numa linha só) — carrossel deixa de fazer sentido aí. */
+.card-diferencial__galeria {
+  display: flex;
+  gap: 0.85rem;
+  margin-top: 1.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 0.1rem;
+  padding-bottom: 0.15rem;
+  /* Esconde a barra de rolagem visualmente (o gesto de arrastar continua
+     funcionando normal) — fica mais parecido com um carrossel "de app"
+     do que com uma lista comum com scrollbar aparecendo embaixo */
+  scrollbar-width: none; /* Firefox */
+}
+
+.card-diferencial__galeria::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* Legenda pequena, só aparece no celular, avisando que dá pra arrastar
+   a galeria pro lado — some a partir de 640px porque lá a galeria já
+   vira grade fixa (sem nada pra arrastar) */
+.card-diferencial__galeria-dica {
+  margin-top: 0.6rem;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+/* Cada moldura: borda tracejada "vidro fosco" sobre o fundo vinho do
+   card, com um ícone de foto e o texto "Foto em breve" no centro — bem
+   parecido com o placeholder "Foto da oficina em breve" que o Philipe
+   mostrou como referência (site NovaHidráulica).
+   No celular, cada moldura ocupa boa parte da largura do card (mas não
+   tudo), pra já dar uma "espiadinha" da próxima e deixar claro que dá
+   pra arrastar — e "encaixa" certinho na tela graças ao scroll-snap. */
+.card-diferencial__moldura {
+  /* "min-width: 0" pelo mesmo motivo do comentário em ".card-diferencial"
+     acima — permite o texto "Foto em breve" quebrar linha em vez de forçar
+     a moldura (e tudo em volta) a ficar larga demais pro celular */
+  min-width: 0;
+  flex: 0 0 auto;
+  width: 42%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  aspect-ratio: 4 / 3;
+  padding: 0.75rem;
+  border-radius: calc(var(--raio-padrao) - 4px);
+  border: 1.5px dashed rgba(255, 255, 255, 0.4);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.card-diferencial__moldura:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+
+.card-diferencial__moldura svg {
+  width: 26px;
+  height: 26px;
+}
+
+.card-diferencial__moldura span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+
+/* =====================================================================
+   7. SEÇÃO MODALIDADES
+   Musculação vem em destaque (pedido específico da Milena — é o
+   "coração da academia"). Depois vem a lista das outras modalidades
+   (aulas coletivas) e a grade de horários, organizada por dia da
+   semana em formato de "card" pra empilhar bem em qualquer tela.
+   ===================================================================== */
+
+/* Mesma lógica/comentário do ".diferenciais" acima — só existe por
+   causa do ".modalidades::before" logo abaixo */
+.modalidades {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--cor-fundo-claro);
+  padding-block: var(--espaco-secao);
+}
+
+/* Continuação da mesma transição sutil em rosa (ver comentário
+   completo em ".diferenciais::before" acima) — aqui, como o fundo já
+   é rosa clarinho, o degradê usa o rosa-queimado, mais escuro, pra
+   ainda dar uma sensação de transição entre as seções */
+.modalidades::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 220px;
+  z-index: 0;
+  background-image: linear-gradient(
+    180deg,
+    rgba(166, 82, 92, 0.14) 0%,
+    rgba(166, 82, 92, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.modalidades > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Card de destaque da Musculação — mesma linguagem visual do card
+   de destaque da seção Diferenciais, pra manter consistência */
+.card-modalidade-destaque {
+  margin-bottom: 2.5rem;
+  padding: 2.25rem;
+  border-radius: var(--raio-padrao);
+  background-color: var(--cor-vinho-principal);
+  box-shadow: 0 14px 34px -16px rgba(110, 33, 56, 0.65);
+}
+
+.card-modalidade-destaque__texto h3 {
+  color: var(--cor-branco);
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.card-modalidade-destaque__texto p {
+  color: var(--cor-branco);
+  opacity: 0.92;
+  max-width: 60ch;
+}
+
+/* Reaproveita a etiqueta ".card-diferencial__tag" (já com fundo/tamanho
+   certos) pra marcar "Modalidade em destaque" aqui também */
+.card-modalidade-destaque .card-diferencial__tag {
+  margin-bottom: 0.75rem;
+}
+
+/* Filtro de modalidades: botões tipo "pill" que, ao clicar, filtram a
+   grade de horários logo abaixo (lógica em script.js). Visualmente
+   parecidos com a lista de tags que existia antes, mas agora são
+   <button> de verdade (clicáveis, acessíveis via teclado). */
+/* No CELULAR (base, mobile-first): os filtros viram um carrossel de
+   rolagem horizontal com "encaixe" (mesmo padrão já usado na galeria
+   do espaço kids) — pedido do Philipe (03/09/2026) porque, com
+   "flex-wrap", os 8 botões quebravam em 3 linhas e ficavam com uma
+   cara bagunçada no mobile. A partir de 640px (ver seção 8) a tela já
+   tem espaço de sobra pra caber tudo numa linha só, então volta a ser
+   "flex-wrap: wrap" normal (sem nada pra arrastar). */
+.filtro-modalidades {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.75rem;
+  /* Sem margem embaixo aqui (o "padding-bottom" logo abaixo já cria
+     esse respiro) — no celular, a dica "Arraste para o lado" entra
+     logo em seguida (ver ".filtro-modalidades__dica"), que cuida do
+     resto do espaçamento até a grade de horários */
+  margin-bottom: 0;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+  scroll-padding-inline: 0.1rem;
+  /* Histórico do ajuste (03/09/2026): tentamos primeiro resolver um
+     bug de sombra cortando (em cima/embaixo, depois nas laterais)
+     aumentando o padding aqui. Não resolveu de vez — no Safari do
+     iPhone a combinação "overflow-x: auto" + sombra nos botões dava
+     um bug de renderização à parte (a sombra virava um retângulo
+     cinza duro, feio mesmo). A causa raiz foi removida direto nos
+     botões (sem "box-shadow" no celular, ver ".filtro-modalidades__btn"
+     abaixo), então esse padding menor aqui é só um respiro visual
+     normal, não precisa mais compensar sombra cortando. */
+  padding: 4px 2px;
+  /* Esconde a barra de rolagem visualmente (o gesto de arrastar
+     continua funcionando normal) — mesma técnica da galeria do
+     espaço kids */
+  scrollbar-width: none; /* Firefox */
+}
+
+.filtro-modalidades::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* SEM sombra aqui na base/mobile — motivo (03/09/2026): dentro do
+   carrossel (".filtro-modalidades" com "overflow-x: auto"), a sombra
+   dava bug feio especificamente no Safari do iPhone (aparecia como um
+   retângulo cinza duro atrás do botão, em vez de sombra suave — bug
+   de renderização do WebKit quando "overflow" + "border-radius" +
+   "box-shadow" se combinam dentro de um container com scroll). Já
+   tentamos ajustar padding pra resolver, mas o bug era específico do
+   Safari mobile (no PC/Chrome nunca apareceu) e não some só com
+   espaço. Mais simples e confiável: sem sombra no celular (onde tem
+   scroll), com sombra normal a partir de 640px (ver seção 8), onde os
+   botões já não ficam dentro de um container com overflow. */
+.filtro-modalidades__btn {
+  padding: 0.6rem 1.25rem;
+  border: 1.5px solid transparent;
+  border-radius: 999px;
+  background-color: var(--cor-branco);
+  color: var(--cor-vinho-escuro);
+  font-family: var(--fonte-corpo);
+  font-weight: 500;
+  font-size: 0.9rem;
+  cursor: pointer;
+  /* Não deixa o botão encolher dentro do carrossel (senão o texto
+     quebraria linha e ficaria feio) — sempre no tamanho natural dele */
+  flex: 0 0 auto;
+  scroll-snap-align: start;
+  /* Anima cor de fundo/texto ao passar o mouse ou tocar — dá feedback
+     claro de que o botão é clicável, sem o "crescimento"/sombra que
+     causava o bug no celular (ver comentário acima) */
+  transition: background-color 0.2s ease, color 0.2s ease,
+              border-color 0.2s ease;
+}
+
+/* Estado ativo (modalidade selecionada no momento): preenche com a cor
+   principal da marca, igual aos outros destaques do site */
+.filtro-modalidades__btn.is-ativo {
+  background-color: var(--cor-vinho-principal);
+  border-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+}
+
+/* Dica "Arraste para o lado", só no celular (onde o filtro é um
+   carrossel de verdade) — mesma ideia da dica da galeria do espaço
+   kids. Pedido do Philipe (03/09/2026): deixar esse gesto óbvio pra
+   quem não perceber sozinho que dá pra arrastar. Puxa a margem pra
+   cima da grade de horários (que vem logo depois) pra não sobrar
+   espaço demais entre os dois. */
+.filtro-modalidades__dica {
+  margin-bottom: 2.5rem;
+  color: rgba(90, 18, 49, 0.55);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+/* Grade de horários: 1 card por dia da semana. No mobile empilha em
+   1 coluna; ganha mais colunas conforme a tela cresce (media queries).
+   A transição de opacidade suaviza a troca de conteúdo quando um
+   filtro de modalidade é aplicado (ver script.js). */
+.grade-horarios {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
+  transition: opacity 0.15s ease;
+}
+
+/* Classe adicionada por um instante via JavaScript no momento de trocar
+   o filtro — cria o "fade" rápido de saída/entrada do conteúdo */
+.grade-horarios.is-filtrando {
+  opacity: 0.35;
+}
+
+.grade-horarios__dia {
+  padding: 1.5rem;
+  border-radius: var(--raio-padrao);
+  background-color: var(--cor-branco);
+  box-shadow: 0 10px 30px -20px rgba(43, 16, 22, 0.4);
+}
+
+/* Esconde por completo o card de um dia quando nenhuma aula dele
+   passa no filtro atual (ex: filtrando por "Jump", a Segunda some
+   porque não tem Jump nesse dia) */
+.grade-horarios__dia[hidden] {
+  display: none;
+}
+
+.grade-horarios__dia h4 {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-vinho-escuro);
+  font-size: 1.05rem;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px solid rgba(90, 18, 49, 0.12);
+}
+
+.grade-horarios__dia ul {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.grade-horarios__dia li {
+  display: flex;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: var(--cor-texto);
+}
+
+/* Esconde uma aula específica que não bate com o filtro atual */
+.grade-horarios__dia li[hidden] {
+  display: none;
+}
+
+/* Horário de cada aula, em destaque na cor da marca */
+.grade-horarios__dia li span {
+  min-width: 3.2rem;
+  color: var(--cor-vinho-principal);
+  font-weight: 600;
+}
+
+/* Mensagem de "nenhuma aula encontrada" — só aparece quando um filtro
+   não bate com nenhum horário da grade (ver #grade-vazio no HTML) */
+.grade-horarios__vazio {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: var(--raio-padrao);
+  background-color: var(--cor-branco);
+  color: var(--cor-vinho-medio);
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.grade-horarios__vazio a {
+  color: var(--cor-vinho-principal);
+  font-weight: 600;
+  text-decoration: underline;
+}
+
+
+/* =====================================================================
+   8. SEÇÃO PLANOS
+   Cards de preço dos 5 planos + espaço reservado da "oferta do
+   momento" + nota de matrícula/pagamento. Conteúdo real confirmado
+   pela Milena (ver claude/respostas-milena-oh-my-gym.md no projeto).
+   ===================================================================== */
+
+/* Mesma lógica de "position: relative" + "overflow: hidden" das outras
+   seções — só existe por causa do ".planos::before" logo abaixo (a
+   mesma transição sutil em rosa, ver comentário completo em
+   ".diferenciais::before") */
+.planos {
+  position: relative;
+  overflow: hidden;
+  background-color: var(--cor-branco);
+  padding-block: var(--espaco-secao);
+}
+
+.planos::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto 0;
+  height: 260px;
+  z-index: 0;
+  background-image: linear-gradient(
+    180deg,
+    rgba(166, 82, 92, 0.14) 0%,
+    rgba(237, 193, 189, 0.1) 45%,
+    rgba(237, 193, 189, 0) 100%
+  );
+  pointer-events: none;
+}
+
+.planos > .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* Grade dos 5 planos — 1 coluna no mobile, mais colunas conforme a
+   tela cresce (ver media queries logo abaixo) */
+.planos__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Cada card de plano: mesma linguagem visual dos cards de diferenciais
+   (fundo, sombra, cantos, hover) — "display: flex" com o botão de
+   WhatsApp lá embaixo (margin-top: auto) garante que o botão sempre
+   fica alinhado na base do card, mesmo quando um plano tem mais itens
+   na lista do que os outros */
+.plano-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 2rem 1.75rem;
+  border-radius: var(--raio-padrao);
+  background-color: var(--cor-fundo-claro);
+  box-shadow: 0 10px 30px -20px rgba(43, 16, 22, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.plano-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px -18px rgba(43, 16, 22, 0.45);
+}
+
+.plano-card__nome {
+  font-size: 1.3rem;
+  margin-bottom: 0.2rem;
+  color: var(--cor-vinho-escuro);
+}
+
+.plano-card__periodo {
+  margin-bottom: 1.5rem;
+  color: var(--cor-vinho-medio);
+  font-size: 0.85rem;
+}
+
+.plano-card__preco {
+  display: flex;
+  align-items: baseline;
+  gap: 0.35rem;
+  margin-bottom: 1.5rem;
+}
+
+.plano-card__valor {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-vinho-principal);
+  font-size: 1.9rem;
+  font-weight: 600;
+}
+
+.plano-card__unidade {
+  color: var(--cor-vinho-medio);
+  font-size: 0.9rem;
+}
+
+/* Lista de benefícios de cada plano — cada item ganha um "check" (✓)
+   antes do texto via ::before, em vez de bullet padrão de lista */
+.plano-card__lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin-bottom: 1.5rem;
+  padding: 0;
+  list-style: none;
+  flex-grow: 1;
+}
+
+.plano-card__lista li {
+  position: relative;
+  padding-left: 1.5rem;
+  color: var(--cor-texto);
+  font-size: 0.9rem;
+  line-height: 1.4;
+}
+
+.plano-card__lista li::before {
+  content: "✓";
+  position: absolute;
+  left: 0;
+  color: var(--cor-vinho-principal);
+  font-weight: 700;
+}
+
+.plano-card__adicional {
+  margin-bottom: 1.5rem;
+  color: var(--cor-vinho-medio);
+  font-size: 0.8rem;
+  font-style: italic;
+}
+
+.plano-card .btn {
+  margin-top: auto;
+  width: 100%;
+}
+
+/* Card em destaque (Oh My Shape — melhor custo-benefício, segundo a
+   Milena): mesmo tratamento visual dos outros itens em destaque do
+   site (fundo vinho sólido + texto branco), pra saltar aos olhos */
+.plano-card--destaque {
+  background-color: var(--cor-vinho-principal);
+  box-shadow: 0 14px 34px -16px rgba(110, 33, 56, 0.65);
+}
+
+.plano-card--destaque .plano-card__nome,
+.plano-card--destaque .plano-card__valor {
+  color: var(--cor-branco);
+}
+
+.plano-card--destaque .plano-card__periodo,
+.plano-card--destaque .plano-card__unidade,
+.plano-card--destaque .plano-card__adicional {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.plano-card--destaque .plano-card__lista li {
+  color: var(--cor-branco);
+}
+
+.plano-card--destaque .plano-card__lista li::before {
+  color: var(--cor-rosa-claro);
+}
+
+/* A etiqueta ".card-diferencial__tag" (já existente) é reaproveitada
+   aqui — só precisa de uma margem embaixo pra não colar no título */
+.plano-card--destaque .card-diferencial__tag {
+  margin-bottom: 1rem;
+}
+
+/* "Oferta do momento": espaço reservado, com a mesma linguagem visual
+   dos outros placeholders do site (borda tracejada) — pedido da
+   Milena pra ficar fácil de atualizar quando ela definir a promoção */
+.planos__oferta {
+  padding: 1.75rem;
+  margin-bottom: 2rem;
+  border: 1.5px dashed var(--cor-rosa-queimado);
+  border-radius: var(--raio-padrao);
+  background-color: var(--cor-fundo-claro);
+  text-align: center;
+}
+
+.planos__oferta-tag {
+  background-color: rgba(166, 82, 92, 0.14) !important;
+  color: var(--cor-vinho-principal) !important;
+}
+
+.planos__oferta-texto {
+  color: var(--cor-vinho-medio);
+  font-size: 0.9rem;
+  max-width: 52ch;
+  margin-inline: auto;
+}
+
+/* Título do 2º grupo de planos (Oh My Move + Ballet): esses dois são
+   só de aula, sem musculação, então ganham uma explicação curta acima
+   pra ficar claro que não é "sobrou espaço", é um grupo diferente */
+.planos__grupo-titulo {
+  max-width: 46ch;
+  margin: 0 auto 2rem;
+  text-align: center;
+}
+
+.planos__grupo-titulo-nome {
+  margin-bottom: 0.4rem;
+  color: var(--cor-vinho-escuro);
+  font-size: 1.15rem;
+}
+
+.planos__grupo-titulo-texto {
+  color: var(--cor-vinho-medio);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Nota de matrícula/pagamento, comum a todos os planos — banner com
+   fundo vinho sólido (mesma cor do card em destaque) pra chamar mais
+   atenção do que um texto simples embaixo dos planos; empilhado no
+   celular, lado a lado a partir do tablet (ver media query) */
+.planos__nota {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+  margin-top: 0.5rem;
+  padding: 1.75rem;
+  border-radius: var(--raio-padrao);
+  background-color: var(--cor-vinho-principal);
+  text-align: center;
+}
+
+.planos__nota-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.planos__nota-valor {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-branco);
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.planos__nota-label {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.8rem;
+}
+
+/* Linha divisória entre os dois itens da nota — fina, horizontal no
+   celular (empilhado) e vertical a partir do tablet (lado a lado) */
+.planos__nota-divisor {
+  width: 3rem;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+
+/* =====================================================================
+   9. RESPONSIVIDADE (media queries)
+   Abordagem mobile-first: os estilos acima já valem para telas pequenas.
+   Aqui a gente só ADICIONA ajustes conforme a tela cresce.
+   ===================================================================== */
+
+/* A partir de telas médias (tablets), centraliza o texto do hero
+   ficou bom já no mobile, mas o menu completo ainda não cabe */
+@media (min-width: 640px) {
+  /* Cards de diferenciais, planos e horários ganham 2 colunas a partir daqui */
+  .diferenciais__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .planos__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .grade-horarios {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Nota de matrícula/pagamento: a partir daqui já cabe lado a lado
+     em vez de empilhado, com a linha divisória virando vertical */
+  .planos__nota {
+    flex-direction: row;
+    justify-content: center;
+    gap: 3rem;
+  }
+
+  .planos__nota-divisor {
+    width: 1px;
+    height: 2.5rem;
+  }
+
+  /* Galeria de fotos do espaço kids: a partir daqui a tela já é larga o
+     bastante pras 4 molduras caberem numa linha só sem precisar de
+     carrossel — volta a virar uma grade normal (desliga o comportamento
+     de rolagem/scroll-snap do celular e reseta a largura de cada
+     moldura, que no celular era 42% pra caber só ~2 por vez) */
+  .card-diferencial__galeria {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    overflow-x: visible;
+  }
+
+  .card-diferencial__moldura {
+    width: auto;
+  }
+
+  /* A dica de "arraste pro lado" só faz sentido no celular (onde é
+     carrossel de verdade) — some a partir daqui */
+  .card-diferencial__galeria-dica {
+    display: none;
+  }
+
+  /* Filtro de modalidades: a partir daqui a tela já cabe os 8 botões
+     numa linha só (ou no máximo quebra 1x de forma organizada), então
+     volta a ser "flex-wrap" normal em vez de carrossel */
+  .filtro-modalidades {
+    flex-wrap: wrap;
+    overflow-x: visible;
+    margin-bottom: 3rem;
+    padding: 0;
+  }
+
+  /* Sombra + animação de "crescer" ao passar o mouse/clicar só entram
+     a partir daqui (telas maiores): sem "overflow-x: auto" mais (ver
+     acima), não tem container com scroll cortando nada, então a
+     sombra funciona normal — inclusive sem o bug de renderização que
+     dava no carrossel do Safari mobile (ver comentário em
+     ".filtro-modalidades__btn" na seção 6). */
+  .filtro-modalidades__btn {
+    box-shadow: 0 6px 18px -14px rgba(43, 16, 22, 0.5);
+    transition: background-color 0.2s ease, color 0.2s ease,
+                border-color 0.2s ease, transform 0.15s ease,
+                box-shadow 0.2s ease;
+  }
+
+  .filtro-modalidades__btn:hover {
+    transform: translateY(-2px) scale(1.03);
+    box-shadow: 0 10px 22px -14px rgba(43, 16, 22, 0.6);
+  }
+
+  .filtro-modalidades__btn:active {
+    transform: scale(0.97);
+  }
+
+  .filtro-modalidades__btn.is-ativo {
+    box-shadow: 0 10px 24px -12px rgba(110, 33, 56, 0.6);
+  }
+
+  /* A dica de "arraste pro lado" só faz sentido no celular (onde o
+     filtro é carrossel de verdade) — some a partir daqui */
+  .filtro-modalidades__dica {
+    display: none;
+  }
+}
+
+/* A partir daqui (telas grandes / desktop): mostra o menu completo,
+   esconde o botão hambúrguer, e coloca hero em duas colunas lado a lado */
+@media (min-width: 900px) {
+  /* Cards de diferenciais: o card de destaque (espaço kids) ocupa a
+     largura toda, os outros 3 dividem uma linha de 3 colunas */
+  .diferenciais__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .card-diferencial--destaque {
+    grid-column: 1 / -1;
+  }
+
+  /* Planos: 3 colunas (o card de destaque fica no meio da 1ª linha,
+     na ordem natural em que já está no HTML — sem precisar de
+     "grid-column" especial como no card de diferenciais, porque aqui
+     os 5 planos são pra COMPARAR lado a lado, não um se sobrepor aos
+     outros) */
+  .planos__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Grade dos 2 planos "só aula" (Oh My Move + Ballet): NÃO segue as
+     3 colunas do grid acima (só tem 2 cards — virar 3 colunas deixaria
+     um espaço vazio, o problema original que motivou separar os
+     grupos). Em vez disso vira uma grade de 2 colunas, centralizada,
+     com a MESMA largura de coluna do grid de 3 acima — assim os cards
+     ficam visualmente alinhados/consistentes com os planos de cima
+     mesmo sendo um grupo à parte. A conta do max-width: pega a largura
+     de 2 colunas + 1 gap do grid de 3 colunas (gap: 1.5rem, igual ao
+     ".planos__grid") */
+  .planos__grid--aulas {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: calc((200% - 1.5rem) / 3);
+    margin-inline: auto;
+  }
+
+  /* Grade de horários: os 5 dias cabem numa linha só em telas largas */
+  .grade-horarios {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+/* Abaixo de telas grandes (tablet/celular): esconde o menu completo e
+   mostra o botão "hambúrguer" no lugar dele */
+@media (max-width: 899px) {
+  .nav-toggle {
+    display: flex;
+  }
+
+  .site-header__cta {
+    display: none; /* no mobile, o botão de WhatsApp fica só dentro do menu aberto */
+  }
+
+  .nav-menu {
+    position: fixed;
+    inset: 0;
+    /* Começa logo abaixo do cabeçalho. Usa a variável --altura-cabecalho
+       (atualizada via JS em script.js) em vez de um valor fixo, porque
+       agora o cabeçalho muda de altura ao encolher no scroll — um valor
+       fixo deixaria um vão (ou sobreposição) entre o cabeçalho e o menu
+       dependendo do estado dele no momento em que é aberto. */
+    top: var(--altura-cabecalho, 66px);
+    background-color: var(--cor-fundo-claro);
+    transform: translateX(100%);
+    transition: transform 0.3s ease, top 0.25s ease;
+    padding: 2rem 1.5rem;
+  }
+
+  /* Classe adicionada via JavaScript quando o menu está aberto */
+  .nav-menu.is-open {
+    transform: translateX(0);
+  }
+
+  .nav-menu__list {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.5rem;
+    font-size: 1.1rem;
+  }
+
+  /* Mostra o botão de WhatsApp dentro do menu mobile aberto */
+  .nav-menu__cta {
+    display: inline-flex;
+  }
+}
+
+
+/* =====================================================================
+   10. "REVELAR AO ROLAR" (experimental — pedido do Philipe, 03/09/2026)
+   Lógica de quando cada elemento ganha essas classes fica em script.js
+   ("REVELAR AO ROLAR"). Aqui é só a parte visual:
+   - ".reveal" = estado inicial (escondido, um pouco mais baixo)
+   - ".reveal--visivel" = estado final, depois que o elemento entra na
+     tela (visível, na posição normal, com transição suave)
+   Ele pediu pra testar "só pra ver como fica" — se não gostar, é só
+   remover essa seção inteira (e o bloco correspondente em script.js)
+   que tudo volta a aparecer direto, sem animação. */
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal--visivel {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Quem tem "menos movimento" ativado no sistema (por enjoo/desconforto
+   com animação) não vê essa transição — os elementos já aparecem
+   direto no lugar certo, sem o efeito de "subir e aparecer" */
+@media (prefers-reduced-motion: reduce) {
+  .reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
