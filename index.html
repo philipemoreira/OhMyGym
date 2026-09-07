@@ -224,6 +224,14 @@
 
         <!-- Card em destaque: espaço kids (maior diferencial, segundo a Milena) -->
         <div class="card-diferencial card-diferencial--destaque">
+          <!-- Ícone + etiqueta "O maior diferencial" agrupados num
+               wrapper flex centralizado verticalmente, mesma correção já
+               aplicada no card de destaque de Modalidades (pedido do
+               Philipe, 04/09/2026, 3ª rodada: "o outro que disse pra
+               você deixar alinhado também não está alinhado") — antes
+               ícone e etiqueta eram só elementos soltos em fluxo normal,
+               sem controle de alinhamento vertical entre si. -->
+          <div class="card-diferencial__cabecalho">
           <span class="card-diferencial__icon">
             <!-- Ícone oficial "corações" do manual de identidade visual da marca
                  (extraído do PDF em vetor puro) — usado aqui pra representar
@@ -235,6 +243,7 @@
             </svg>
           </span>
           <span class="card-diferencial__tag">O maior diferencial</span>
+          </div>
           <h3 class="card-diferencial__title">Espaço kids com monitora</h3>
           <p class="card-diferencial__text">
             Sem rede de apoio pra deixar os filhos? Aqui eles ficam seguros e

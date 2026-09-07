@@ -463,8 +463,8 @@ document.addEventListener("DOMContentLoaded", function () {
      "conforme for descendo as coisas vão aparecendo").
      - Elemento pedido é experimental ("só pra ver como fica") — por
        isso ficou tudo concentrado aqui embaixo, fácil de remover: se
-       ele não gostar, é só apagar esse bloco inteiro (e a classe
-       ".reveal" / ".reveal.is-visivel" no style.css, seção 9) que o
+       ele não gostar, é só apagar esse bloco inteiro (e as classes
+       ".reveal" / ".reveal--visivel" no style.css, seção 9) que o
        site volta a mostrar tudo direto, sem animação.
      - Como funciona: cabeçalhos de seção, cards de diferenciais, o
        card de "modalidade em destaque" e os cards de horário por dia
@@ -480,24 +480,65 @@ document.addEventListener("DOMContentLoaded", function () {
        ligada no sistema (por enjoo/desconforto com animação) já vê
        tudo aparecendo direto, sem o efeito — tratado aqui e também via
        CSS (seção 9).
+     - EFEITO CASCATA (pedido do Philipe, 05/09/2026: viu num outro site
+       os elementos "aparecendo um de cada vez, meio rápido", em vez de
+       tudo de uma vez, e deu o filtro de modalidades como exemplo) —
+       "também pra testar": dentro de um GRUPO de itens lado a lado
+       (botões de filtro, cards de diferenciais, dias da grade de
+       horário, cards de plano), cada item ganha um atrasinho um pouco
+       maior que o anterior antes de aparecer, dando esse efeito de
+       "chuvinha" descendo em vez de tudo surgir junto. Na prática, cada
+       item recebe uma variável CSS "--atraso-cascata" com a sua posição
+       (0, 1, 2...) dentro do grupo, e quem transforma isso num atraso de
+       verdade é o CSS (ver ".reveal" no style.css) — aqui é só a conta de
+       "que posição cada item ocupa". Elemento sozinho (sem grupo, tipo o
+       card de "modalidade em destaque") simplesmente não recebe essa
+       variável e usa o valor padrão (0 = sem atraso extra).
      ------------------------------------------------------------------- */
   const prefereMenosMovimento = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   ).matches;
 
-  // OBS (04/09/2026): ".plano-card" não entra aqui de propósito — os cards
-  // de plano agora moram dentro de um carrossel horizontal no celular
-  // (".planos__grid"), e cards fora da parte visível do carrossel ficam
-  // com a posição real fora da largura da tela (mesmo estando na mesma
-  // altura vertical). Como o IntersectionObserver olha a interseção com a
-  // TELA TODA (não só o eixo vertical), um card "escondido" pro lado nunca
-  // era considerado visível — só aparecia depois de arrastar/clicar a seta
-  // até ele. Corrigido observando o carrossel inteiro (".planos__grid") em
-  // vez de cada card: aí todos os planos aparecem juntos ao descer a
-  // página, independente de já ter navegado o carrossel ou não.
+  // Numera cada item dentro do seu próprio grupo (0, 1, 2...) pra virar o
+  // atraso da cascata lá no CSS. Cada grupo listado aqui é um NodeList
+  // separado, então a numeração de um grupo não emenda na do outro (ex:
+  // os cards de "só aula" recomeçam do 0, não continuam a partir de onde
+  // o grupo de musculação parou).
+  function numerarGrupoParaCascata(itens) {
+    itens.forEach(function (item, indice) {
+      item.style.setProperty("--atraso-cascata", indice);
+    });
+  }
+
+  // Revela 1 elemento (fade + sobe pro lugar) e, assim que a transição
+  // termina, tira a classe ".reveal" dele — só ela carrega o "transition"
+  // pensado pra essa entrada (ver nota grande em ".reveal" no style.css);
+  // tirando ela depois, o elemento volta a usar o PRÓPRIO "transition" de
+  // hover/clique normalmente (em vez de ficar preso no "transition" da
+  // entrada pro resto da vida da página).
+  function revelarElemento(elemento) {
+    elemento.classList.add("reveal--visivel");
+    elemento.addEventListener(
+      "transitionend",
+      function () {
+        elemento.classList.remove("reveal");
+      },
+      { once: true }
+    );
+  }
+
+  numerarGrupoParaCascata(
+    document.querySelectorAll(".diferenciais__grid > .card-diferencial")
+  );
+  numerarGrupoParaCascata(
+    document.querySelectorAll(".grade-horarios > .grade-horarios__dia")
+  );
+
+  // Elementos "avulsos" ou já cobertos pela numeração acima — cada um
+  // observado individualmente, revela assim que ENTRA ELE MESMO na tela.
   const elementosParaRevelar = document.querySelectorAll(
     ".section-heading, .card-diferencial, .card-modalidade-destaque, " +
-    ".grade-horarios__dia, .horario-funcionamento, .planos__grid"
+    ".grade-horarios__dia, .horario-funcionamento"
   );
 
   if (
@@ -514,7 +555,7 @@ document.addEventListener("DOMContentLoaded", function () {
         entradas.forEach(function (entrada) {
           if (!entrada.isIntersecting) return;
 
-          entrada.target.classList.add("reveal--visivel");
+          revelarElemento(entrada.target);
           // Já apareceu uma vez — não precisa continuar observando
           observador.unobserve(entrada.target);
         });
@@ -532,6 +573,69 @@ document.addEventListener("DOMContentLoaded", function () {
       observadorRevelar.observe(elemento);
     });
   }
+
+  /* -------------------------------------------------------------------
+     REVELAR EM GRUPO (filtro de modalidades + cards de plano)
+     Esses dois grupos moram dentro de um carrossel com rolagem
+     horizontal no celular (".filtro-modalidades" e ".planos__grid", ver
+     CSS "overflow-x: auto") — um item que está "fora da tela" pro lado
+     (ainda não arrastou até ele) fica com a posição real fora da largura
+     da tela, mesmo estando na altura certa. Se cada botão/card fosse
+     observado individualmente, esses que começam escondidos pro lado
+     nunca cruzariam a interseção sozinhos (só depois de arrastar/clicar
+     até eles). Por isso aqui a gente observa o CONTAINER inteiro (o
+     carrossel), e quando ELE entra na tela, revela todos os itens de
+     dentro de uma vez (com a cascata de cada um, claro) — resolve o
+     mesmo jeito que já era feito só com ".planos__grid" antes de existir
+     a cascata (ver histórico em versões anteriores deste arquivo).
+     ------------------------------------------------------------------- */
+  function revelarGrupoAoEntrarNaTela(containers, seletorItens) {
+    if (
+      !containers.length ||
+      !("IntersectionObserver" in window) ||
+      prefereMenosMovimento
+    ) {
+      return;
+    }
+
+    containers.forEach(function (container) {
+      const itens = container.querySelectorAll(seletorItens);
+      numerarGrupoParaCascata(itens);
+      itens.forEach(function (item) {
+        item.classList.add("reveal");
+      });
+    });
+
+    const observador = new IntersectionObserver(
+      function (entradas, observadorAtual) {
+        entradas.forEach(function (entrada) {
+          if (!entrada.isIntersecting) return;
+
+          entrada.target
+            .querySelectorAll(seletorItens)
+            .forEach(revelarElemento);
+          observadorAtual.unobserve(entrada.target);
+        });
+      },
+      {
+        threshold: 0.15,
+        rootMargin: "0px 0px -60px 0px",
+      }
+    );
+
+    containers.forEach(function (container) {
+      observador.observe(container);
+    });
+  }
+
+  revelarGrupoAoEntrarNaTela(
+    document.querySelectorAll(".filtro-modalidades"),
+    ".filtro-modalidades__btn"
+  );
+  revelarGrupoAoEntrarNaTela(
+    document.querySelectorAll(".planos__grid"),
+    ".plano-card"
+  );
 
   // ===========================================================================
   // CARROSSEL DOS PLANOS (só existe visualmente no celular — ver CSS)

@@ -713,6 +713,27 @@ h1, h2, h3 {
   opacity: 0.92;
 }
 
+/* Cabeçalho (ícone + etiqueta "O maior diferencial") em linha,
+   centralizados verticalmente entre si — mesmo problema e mesma correção
+   já aplicada no card de destaque de Modalidades (ver
+   ".card-modalidade-destaque__cabecalho" mais abaixo): sem esse wrapper
+   flex, ícone e etiqueta ficavam soltos em fluxo normal (elementos
+   inline lado a lado alinham pela linha de base por padrão, não pelo
+   centro), o que deixava os dois visivelmente desalinhados. Pedido do
+   Philipe (04/09/2026, 3ª rodada, via print): "o outro que disse pra
+   você deixar alinhado também não está alinhado". */
+.card-diferencial__cabecalho {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.9rem;
+}
+
+.card-diferencial__cabecalho .card-diferencial__icon,
+.card-diferencial__cabecalho .card-diferencial__tag {
+  margin-bottom: 0;
+}
+
 /* Etiqueta "O maior diferencial" acima do título do card de destaque */
 .card-diferencial__tag {
   display: inline-block;
@@ -923,6 +944,10 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   gap: 0.75rem;
+  /* O respiro antes do parágrafo abaixo mora AQUI (na div), não no "h3"
+     (ver comentário embaixo, em ".card-modalidade-destaque__texto h3",
+     do motivo) */
+  margin-bottom: 0.75rem;
 }
 
 /* Ícone um pouco menor aqui do que no cabeçalho (46px lá em cima vs 38px
@@ -954,7 +979,22 @@ h1, h2, h3 {
 .card-modalidade-destaque__texto h3 {
   color: var(--cor-branco);
   font-size: 1.5rem;
-  margin-bottom: 0.75rem;
+  /* "line-height: 1" (em vez do padrão herdado, bem mais folgado) deixa
+     a caixa do texto mais próxima do tamanho visual da letra — ajuda o
+     ícone a centralizar bem com ela quando fica ao lado do título (ver
+     ".card-modalidade-destaque__titulo-linha" acima). */
+  line-height: 1;
+  /* IMPORTANTE: a margem de baixo (o respiro antes do parágrafo) NÃO fica
+     aqui no "h3" — fica em ".card-modalidade-destaque__titulo-linha"
+     (a div que embrulha ele, ver acima). Motivo: quando o ícone fica do
+     lado do título, os dois viram itens de uma linha flex, e o
+     "align-items: center" do flex centraliza pela CAIXA COM MARGEM de
+     cada item — uma margem de baixo aqui empurraria o texto pra cima
+     dentro dessa caixa (a margem "conta" como espaço reservado embaixo),
+     descentralizando ele em relação ao ícone. Sem margem aqui, e com ela
+     na div (que não participa desse cálculo, só o conteúdo dela), o
+     efeito visual final é o mesmo respiro de sempre antes do parágrafo,
+     mas sem quebrar a centralização com o ícone. */
 }
 
 .card-modalidade-destaque__texto p {
@@ -1824,6 +1864,35 @@ h1, h2, h3 {
   }
 }
 
+/* Telas bem grandes (monitor de 24"+ ou parecido): sem isso, o site
+   ficava "travado" numa largura de 1200px desde 900px de tela em
+   diante, então num monitor bem maior sobrava bastante espaço vazio
+   nas laterais — o conteúdo parecia pequeno, meio perdido no meio de
+   uma telona (pedido do Philipe, 05/09/2026: "meu monitor de casa é
+   24pl [...] o site aqui está parecendo menor [...] quero que arrume
+   isso, para se ajustar em todos os tamanhos de tela").
+   A partir daqui a largura máxima do conteúdo (".container", ver
+   variável "--largura-maxima" lá no topo do arquivo) cresce mais duas
+   vezes, em telas progressivamente maiores — assim o site vai
+   ocupando mais a tela conforme ela cresce, em vez de ficar "flutuando"
+   sempre do mesmo tamanho. Continua seguro pra leitura: os parágrafos
+   de texto têm seu próprio limite de largura em "ch" (ver os vários
+   "max-width: NNch" espalhados no arquivo), então não viram linhas
+   gigantes só porque o container ficou mais largo — quem ganha mais
+   espaço de verdade são os cards/grades (Diferenciais, Modalidades,
+   Planos), que ficam mais "respirados" em vez de esticados. */
+@media (min-width: 1600px) {
+  :root {
+    --largura-maxima: 1400px;
+  }
+}
+
+@media (min-width: 1920px) {
+  :root {
+    --largura-maxima: 1600px;
+  }
+}
+
 /* Abaixo de telas grandes (tablet/celular): esconde o menu completo e
    mostra o botão "hambúrguer" no lugar dele */
 @media (max-width: 899px) {
@@ -1877,16 +1946,42 @@ h1, h2, h3 {
    10. "REVELAR AO ROLAR" (experimental — pedido do Philipe, 03/09/2026)
    Lógica de quando cada elemento ganha essas classes fica em script.js
    ("REVELAR AO ROLAR"). Aqui é só a parte visual:
-   - ".reveal" = estado inicial (escondido, um pouco mais baixo)
-   - ".reveal--visivel" = estado final, depois que o elemento entra na
-     tela (visível, na posição normal, com transição suave)
+   - ".reveal" = estado inicial (escondido, um pouco mais baixo) + a
+     transição em si, que só existe enquanto dura essa entrada
+   - ".reveal--visivel" = estado final (visível, na posição normal)
    Ele pediu pra testar "só pra ver como fica" — se não gostar, é só
    remover essa seção inteira (e o bloco correspondente em script.js)
-   que tudo volta a aparecer direto, sem animação. */
+   que tudo volta a aparecer direto, sem animação.
+
+   "--atraso-cascata": efeito cascata (pedido do Philipe, 05/09/2026) —
+   dentro de um grupo lado a lado (botões de filtro, cards de
+   diferenciais, dias da grade, cards de plano), cada item ganha essa
+   variável com a sua posição no grupo (0, 1, 2...), calculada em
+   script.js — aqui a gente só transforma essa posição num atraso de
+   verdade antes de começar a aparecer. Item sem grupo (não recebe a
+   variável) usa o valor padrão (0 = sem atraso extra, aparece na hora).
+
+   NOTA IMPORTANTE sobre o "transition" ficar só aqui na ".reveal" (e não
+   direto no ".reveal--visivel"): assim que a entrada termina, o
+   script.js REMOVE a classe ".reveal" do elemento (fica só a
+   ".reveal--visivel", que segura o valor final mas não define nenhum
+   "transition"). Isso é de propósito: vários elementos que recebem esse
+   efeito (cards de diferenciais, cards de plano, botões de filtro) já
+   têm o PRÓPRIO "transition" pra hover/clique (ver ".card-diferencial",
+   ".plano-card", ".filtro-modalidades__btn" mais acima) — se a
+   ".reveal" continuasse "grudada" pra sempre, o "transition" dela
+   (pensado só pra essa entrada) ficaria competindo com o "transition"
+   de hover de cada um pra sempre, e como são o mesmo tanto de
+   especificidade, quem viesse depois no arquivo ganhava e "engolia" o
+   outro por completo (não dá pra somar dois "transition" do mesmo jeito
+   que soma classe) — na prática o hover ficava "seco", sem suavizar.
+   Removendo a ".reveal" depois que a entrada acaba, cada elemento volta
+   a usar o próprio "transition" normal do dia a dia. */
 .reveal {
   opacity: 0;
   transform: translateY(24px);
   transition: opacity 0.6s ease, transform 0.6s ease;
+  transition-delay: calc(var(--atraso-cascata, 0) * 90ms);
 }
 
 .reveal--visivel {
