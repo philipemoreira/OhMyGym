@@ -1980,8 +1980,15 @@ h1, h2, h3 {
 .reveal {
   opacity: 0;
   transform: translateY(24px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
-  transition-delay: calc(var(--atraso-cascata, 0) * 90ms);
+  /* Duração e espaçamento da cascata aumentados (pedido do Philipe,
+     07/09/2026: "está muito rápido, as vezes nem percebe que está
+     aparecendo como uma cachoeira") — era 0.6s de duração + 90ms de
+     atraso entre item e item; agora cada item demora um pouco mais pra
+     aparecer (0.8s) E o intervalo entre um item e o próximo também
+     cresceu (180ms), pra dar tempo do olho acompanhar a sequência em
+     vez de quase tudo surgir junto. */
+  transition: opacity 0.8s ease, transform 0.8s ease;
+  transition-delay: calc(var(--atraso-cascata, 0) * 180ms);
 }
 
 .reveal--visivel {
