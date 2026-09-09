@@ -775,14 +775,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // "Apaga" a seta do lado que não tem mais pra onde ir (primeira foto
-    // = sem seta "anterior" ativa; última foto = sem seta "próxima" ativa)
+    // = sem seta "anterior" ativa; última foto = sem seta "próxima" ativa).
+    // Além de comparar pelo ÍNDICE (que cobre o caso normal, 1 foto por
+    // vez), também confere a POSIÇÃO do scroll nas pontas: quando cabem
+    // várias fotos por vez lado a lado (tablet/desktop na seção
+    // Estrutura), o centro do último item pode nunca ficar exatamente no
+    // meio da tela — o scroll para antes, no fim de verdade do
+    // carrossel — então só o índice nunca bateria "última foto" e a
+    // seta "próxima" ficaria ativa pra sempre, mesmo sem ter mais pra
+    // onde ir. A margem de 1px é só tolerância de arredondamento.
     function atualizarSetas() {
       const atual = indiceAtual();
+      const scrollMaximo = trilha.scrollWidth - trilha.clientWidth;
+      const noInicio = trilha.scrollLeft <= 1;
+      const noFim = trilha.scrollLeft >= scrollMaximo - 1;
       if (botaoAnterior) {
-        botaoAnterior.classList.toggle("is-desativada", atual === 0);
+        botaoAnterior.classList.toggle("is-desativada", atual === 0 || noInicio);
       }
       if (botaoProximo) {
-        botaoProximo.classList.toggle("is-desativada", atual === itens.length - 1);
+        botaoProximo.classList.toggle(
+          "is-desativada",
+          atual === itens.length - 1 || noFim
+        );
       }
     }
 

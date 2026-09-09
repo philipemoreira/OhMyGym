@@ -2111,28 +2111,31 @@ h1, h2, h3 {
 
 /* Envolve o carrossel + as duas setas — precisa de "position: relative"
    pra elas ficarem POR CIMA da foto (mesmo padrão da galeria do espaço
-   kids, ver ".card-diferencial__carrossel" na seção 6). Só existe de
-   verdade no CELULAR — a partir de 640px vira grade normal, sem setas
-   (ver media queries abaixo). */
+   kids, ver ".card-diferencial__carrossel" na seção 6). */
 .estrutura__carrossel {
   position: relative;
 }
 
-/* Grade de ambientes — NO CELULAR (base, mobile-first) vira CARROSSEL:
-   rolagem horizontal com "encaixe" (scroll-snap) + setas clicáveis,
-   mesmo padrão já usado na galeria do espaço kids e no filtro de
-   modalidades.
-   A partir de telas médias (640px+, ver media queries abaixo) volta a
-   virar uma grade normal — lá já tem espaço de sobra, carrossel deixa
-   de fazer sentido. */
+/* Grade de ambientes — CARROSSEL EM TODAS AS TELAS (celular, tablet e
+   desktop): rolagem horizontal com "encaixe" (scroll-snap) + setas
+   clicáveis. Decisão tomada em 09/09/2026: no início essa seção virava
+   uma grade normal (várias fileiras) a partir de telas médias — mas com
+   8 ambientes numa grade de 3 colunas, sobrava sempre uma fileira
+   incompleta (2 fotos) no final, alinhada torta ("ficou sobrando duas
+   embaixo", como o Philipe reparou). Virando carrossel em qualquer
+   tamanho de tela, esse problema desaparece de vez (nunca tem fileira
+   incompleta, porque só existe 1 fileira) e a seção fica bem mais
+   compacta, sem perder o efeito de foto grande — só muda quantas fotos
+   aparecem de uma vez (ver ".estrutura__item" abaixo e as media
+   queries no fim desta seção). */
 .estrutura__grid {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  /* Padding lateral (~8%) garante a "espiadinha" da foto vizinha
-     aparecendo nas bordas, tanto no início quanto no fim do carrossel —
-     mesmo raciocínio/comentário completo em ".card-diferencial__galeria"
+  /* Padding lateral garante a "espiadinha" da foto vizinha aparecendo
+     nas bordas, tanto no início quanto no fim do carrossel — mesmo
+     raciocínio/comentário completo em ".card-diferencial__galeria"
      (seção 6) */
   scroll-padding-inline: 8%;
   padding-inline: 8%;
@@ -2149,11 +2152,12 @@ h1, h2, h3 {
 
 /* Fotos maiores no celular: de 44% pra 84% da largura do carrossel
    (pedido do Philipe, 09/09/2026: "as fotos... está muito pequeno...
-   oque acha de aumentar para ter mais visibilidade da foto") — agora só
+   oque acha de aumentar para ter mais visibilidade da foto") — só
    aparece 1 foto grande em destaque por vez, com "scroll-snap-align:
-   center" (era "start") + o padding-inline acima garantindo a
-   espiadinha das vizinhas dos dois lados, em vez de ~2 fotos pequenas
-   lado a lado como antes. */
+   center" + o padding-inline acima garantindo a espiadinha das vizinhas
+   dos dois lados. A partir daqui, telas maiores mostram mais fotos de
+   uma vez lado a lado (ver media queries abaixo) — sempre do mesmo
+   jeito "grande + espiadinha", só aumentando quantas cabem por vez. */
 .estrutura__item {
   /* "min-width: 0" pelo mesmo motivo já documentado em ".card-diferencial"
      (seção 6) — permite a legenda quebrar linha em vez de forçar o item
@@ -2276,38 +2280,28 @@ h1, h2, h3 {
   pointer-events: none;
 }
 
-/* A partir de tablets, a tela já tem largura de sobra: o carrossel do
-   celular volta a virar uma grade normal (desliga rolagem/scroll-snap,
-   reseta a largura de cada item e esconde as setas) — mesma lógica já
-   usada na galeria do espaço kids e no filtro de modalidades ao cruzar
-   esse mesmo breakpoint. Também aproveitado pra diminuir o número de
-   colunas (3 em vez de 4 no desktop) — mesmo pedido de "aumentar o
-   tamanho das fotos" vale pra telas grandes também: menos colunas =
-   cada foto fica maior. */
+/* A partir de tablets, o carrossel CONTINUA carrossel (decisão de
+   09/09/2026 — ver comentário completo em ".estrutura__grid" acima):
+   só muda quantas fotos cabem lado a lado de uma vez, estreitando
+   ".estrutura__item" aos poucos. A dica "Arraste para o lado" some
+   (a partir daqui o mouse também consegue usar as setas, que continuam
+   visíveis e funcionando em qualquer tamanho de tela — diferente da
+   galeria do espaço kids, cujas setas somem no grid porque lá a grade
+   volta ao normal; aqui ela nunca volta). */
 @media (min-width: 640px) {
-  .estrutura__grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    overflow-x: visible;
-    padding-inline: 0;
-    padding-bottom: 0;
-  }
-
   .estrutura__item {
-    width: auto;
+    /* ~44% mostra 2 fotos por vez (com espiadinha de uma terceira) */
+    width: 44%;
   }
 
   .estrutura__dica {
     display: none;
   }
-
-  .estrutura__seta {
-    display: none;
-  }
 }
 
 @media (min-width: 900px) {
-  .estrutura__grid {
-    grid-template-columns: repeat(3, 1fr);
+  .estrutura__item {
+    /* ~29% mostra 3 fotos por vez (com espiadinha de uma quarta) */
+    width: 29%;
   }
 }
