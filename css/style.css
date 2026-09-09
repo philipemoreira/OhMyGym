@@ -2006,3 +2006,153 @@ h1, h2, h3 {
     transition: none;
   }
 }
+
+
+/* =====================================================================
+   11. SEÇÃO ESTRUTURA (Bloco 4 do site)
+   Galeria mostrando os ambientes da academia. As fotos reais já foram
+   tiradas pelo fotógrafo, mas a Milena ainda não avaliou elas (está de
+   férias, 08/09/2026) — por isso, por enquanto, cada ambiente é só uma
+   "moldura" pronta (mesmo padrão visual da galeria do espaço kids, na
+   seção Diferenciais, só que aqui em fundo claro em vez de vinho sólido,
+   já que essa seção não fica dentro de um card escuro). Trocado por uma
+   seção nova (em vez de reaproveitar dentro da seção 8) porque este é o
+   próprio Bloco 4, com cabeçalho e conteúdo dela mesma. Fica isolada
+   aqui embaixo (com suas próprias media queries) pra não precisar mexer
+   na seção 9 (responsividade compartilhada) — mais fácil de achar e
+   ajustar tudo desse bloco num lugar só. */
+.estrutura {
+  background-color: var(--cor-fundo-claro);
+  padding-block: var(--espaco-secao);
+}
+
+/* Grade de ambientes — NO CELULAR (base, mobile-first) vira CARROSSEL:
+   rolagem horizontal com "encaixe" (scroll-snap), mesmo padrão já usado
+   na galeria do espaço kids e no filtro de modalidades. Ajuste pedido
+   pelo Philipe (09/09/2026: "no celular agora melhor carrosel para as
+   fotos") — no início essa seção usava uma grade normal quebrando linha
+   (2 colunas), mas ficava com 4 linhas de molduras empilhadas, ocupando
+   bastante altura de tela; em carrossel, ocupa só a altura de uma linha,
+   e a pessoa arrasta o dedo pro lado pra ver os outros ambientes.
+   A partir de telas médias (640px+, ver media queries abaixo) volta a
+   virar uma grade normal — lá já tem espaço de sobra, carrossel deixa
+   de fazer sentido. */
+.estrutura__grid {
+  display: flex;
+  gap: 1.1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 0.1rem;
+  padding-bottom: 0.15rem;
+  /* Esconde a barra de rolagem visualmente (o gesto de arrastar continua
+     funcionando normal) — mesmo motivo/comentário completo em
+     ".card-diferencial__galeria" (seção 6) */
+  scrollbar-width: none; /* Firefox */
+}
+
+.estrutura__grid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+.estrutura__item {
+  /* "min-width: 0" pelo mesmo motivo já documentado em ".card-diferencial"
+     (seção 6) — permite a legenda quebrar linha em vez de forçar o item
+     (e o carrossel inteiro) a ficar largo demais pro celular */
+  min-width: 0;
+  flex: 0 0 auto;
+  width: 44%;
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+/* Moldura em si: mesmo espírito da galeria do espaço kids (borda
+   tracejada + ícone de foto + "Foto em breve"), mas em versão CLARA —
+   aqui fica direto no fundo rosa-claríssimo da seção, não dentro de um
+   card vinho sólido, então a borda/ícone usam o vinho da marca em vez
+   de branco translúcido. */
+.estrutura__moldura {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  aspect-ratio: 4 / 3;
+  padding: 0.75rem;
+  border-radius: var(--raio-padrao);
+  border: 1.5px dashed rgba(110, 33, 56, 0.35);
+  background-color: rgba(255, 255, 255, 0.6);
+  color: var(--cor-vinho-medio);
+  text-align: center;
+  /* Mesmo efeito de hover leve dos outros cards do site (levanta um
+     pouco + sombra), cumprindo o "efeitos visuais/hover" combinado no
+     pacote pra essa seção — mesmo antes das fotos reais chegarem, já
+     fica com a mesma sensação de interatividade do resto do site */
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+              border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.estrutura__moldura:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px -20px rgba(43, 16, 22, 0.35);
+  border-color: rgba(110, 33, 56, 0.55);
+  background-color: rgba(255, 255, 255, 0.85);
+}
+
+.estrutura__moldura svg {
+  width: 28px;
+  height: 28px;
+}
+
+.estrutura__moldura span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+/* Legenda com o nome do ambiente, embaixo da moldura */
+.estrutura__legenda {
+  color: var(--cor-vinho-escuro);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+/* Legenda pequena, só no celular, avisando que o carrossel acima é
+   arrastável — some a partir de 640px (mesma lógica/comentário completo
+   em ".card-diferencial__galeria-dica", seção 6) */
+.estrutura__dica {
+  margin-top: 0.85rem;
+  color: var(--cor-vinho-medio);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* A partir de tablets, a tela já tem largura de sobra: o carrossel do
+   celular volta a virar uma grade normal (desliga rolagem/scroll-snap e
+   reseta a largura de cada item, que no celular era 44% pra caber ~2 por
+   vez) — mesma lógica já usada na galeria do espaço kids e no filtro de
+   modalidades ao cruzar esse mesmo breakpoint. */
+@media (min-width: 640px) {
+  .estrutura__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+    padding-bottom: 0;
+  }
+
+  .estrutura__item {
+    width: auto;
+  }
+
+  .estrutura__dica {
+    display: none;
+  }
+}
+
+@media (min-width: 900px) {
+  .estrutura__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}

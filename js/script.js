@@ -533,6 +533,15 @@ document.addEventListener("DOMContentLoaded", function () {
   numerarGrupoParaCascata(
     document.querySelectorAll(".grade-horarios > .grade-horarios__dia")
   );
+  // A grade de ambientes da seção Estrutura (".estrutura__grid") NÃO
+  // entra na numeração/observação individual aqui — desde o ajuste de
+  // 09/09/2026 ela virou carrossel no celular (mesmo "overflow-x: auto"
+  // do filtro de modalidades e da galeria do espaço kids), então precisa
+  // da função "revelarGrupoAoEntrarNaTela" logo abaixo (observa o
+  // CONTAINER inteiro, não cada item sozinho) — ver o comentário grande
+  // ali explicando por quê. Numerar/observar aqui também causaria o
+  // mesmo bug já corrigido antes nos planos (itens escondidos pro lado
+  // no carrossel nunca "entrando" na tela sozinhos).
 
   // Elementos "avulsos" ou já cobertos pela numeração acima — cada um
   // observado individualmente, revela assim que ENTRA ELE MESMO na tela.
@@ -635,6 +644,10 @@ document.addEventListener("DOMContentLoaded", function () {
   revelarGrupoAoEntrarNaTela(
     document.querySelectorAll(".planos__grid"),
     ".plano-card"
+  );
+  revelarGrupoAoEntrarNaTela(
+    document.querySelectorAll(".estrutura__grid"),
+    ".estrutura__item"
   );
 
   // ===========================================================================
