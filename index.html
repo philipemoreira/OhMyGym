@@ -257,42 +257,54 @@
                "Foto em breve". Assim que a Milena mandar as fotos reais,
                é só trocar cada <div class="card-diferencial__moldura"> por
                uma <img>, sem precisar mexer em mais nada do layout.
-               No celular vira carrossel (arrasta pro lado); a partir de
-               telas médias volta a virar uma grade normal (ver CSS,
-               seção 6 e seção 8) — pedido do Philipe (03/09/2026). -->
-          <div class="card-diferencial__galeria" aria-hidden="true">
-            <div class="card-diferencial__moldura">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                <circle cx="8.5" cy="10" r="1.5"></circle>
-                <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-              </svg>
-              <span>Foto em breve</span>
+               No celular vira carrossel (arrasta pro lado OU clica na
+               seta); a partir de telas médias volta a virar uma grade
+               normal (ver CSS, seção 6 e seção 8).
+               Fotos maiores + setas laterais: ajuste pedido pelo Philipe
+               (09/09/2026, "aumentar o tamanho das fotos" + "deixar uma
+               seta ao lado esquerdo da foto e ao lado direito, e uma
+               breve mostrinha lateral da próxima foto") — mesmo padrão
+               aplicado também na galeria da seção Estrutura logo abaixo
+               no site. -->
+          <div class="card-diferencial__carrossel">
+            <button type="button" class="card-diferencial__seta card-diferencial__seta--prev" aria-label="Ver foto anterior">‹</button>
+
+            <div class="card-diferencial__galeria" aria-hidden="true">
+              <div class="card-diferencial__moldura">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                  <circle cx="8.5" cy="10" r="1.5"></circle>
+                  <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
+                </svg>
+                <span>Foto em breve</span>
+              </div>
+              <div class="card-diferencial__moldura">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                  <circle cx="8.5" cy="10" r="1.5"></circle>
+                  <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
+                </svg>
+                <span>Foto em breve</span>
+              </div>
+              <div class="card-diferencial__moldura">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                  <circle cx="8.5" cy="10" r="1.5"></circle>
+                  <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
+                </svg>
+                <span>Foto em breve</span>
+              </div>
+              <div class="card-diferencial__moldura">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                  <circle cx="8.5" cy="10" r="1.5"></circle>
+                  <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
+                </svg>
+                <span>Foto em breve</span>
+              </div>
             </div>
-            <div class="card-diferencial__moldura">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                <circle cx="8.5" cy="10" r="1.5"></circle>
-                <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-              </svg>
-              <span>Foto em breve</span>
-            </div>
-            <div class="card-diferencial__moldura">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                <circle cx="8.5" cy="10" r="1.5"></circle>
-                <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-              </svg>
-              <span>Foto em breve</span>
-            </div>
-            <div class="card-diferencial__moldura">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                <circle cx="8.5" cy="10" r="1.5"></circle>
-                <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-              </svg>
-              <span>Foto em breve</span>
-            </div>
+
+            <button type="button" class="card-diferencial__seta card-diferencial__seta--next" aria-label="Ver próxima foto">›</button>
           </div>
 
           <!-- Dica só visível no celular (some em telas médias+ via CSS),
@@ -901,12 +913,18 @@
         </p>
       </div>
 
-      <!-- Grade de ambientes — 2 colunas no celular, mais colunas conforme
-           a tela cresce (ver media queries no style.css, seção 9). Não é
-           carrossel: como são só molduras (sem fotos reais ainda), a
-           grade pode quebrar linha normalmente sem precisar de rolagem
-           horizontal. -->
-      <div class="estrutura__grid">
+      <!-- Grade de ambientes — NO CELULAR vira carrossel (foto grande em
+           destaque, com seta de cada lado + espiadinha da vizinha nas
+           bordas); a partir de telas médias volta a virar grade normal,
+           com mais colunas conforme a tela cresce (ver media queries no
+           style.css, seção 11). Fotos maiores + setas laterais: ajuste
+           pedido pelo Philipe (09/09/2026, "aumentar o tamanho das
+           fotos" + "deixar uma seta ao lado esquerdo da foto e ao lado
+           direito, e uma breve mostrinha lateral da próxima foto"). -->
+      <div class="estrutura__carrossel">
+        <button type="button" class="estrutura__seta estrutura__seta--prev" aria-label="Ver ambiente anterior">‹</button>
+
+        <div class="estrutura__grid">
 
         <!-- Ambiente: Fachada -->
         <div class="estrutura__item">
@@ -1012,6 +1030,9 @@
           <p class="estrutura__legenda">Vestiário</p>
         </div>
 
+        </div>
+
+        <button type="button" class="estrutura__seta estrutura__seta--next" aria-label="Ver próximo ambiente">›</button>
       </div>
 
       <!-- Dica só visível no celular (some em telas médias+ via CSS),

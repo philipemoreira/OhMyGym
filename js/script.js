@@ -732,6 +732,94 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 
+  // ===========================================================================
+  // CARROSSEL COM SETAS LATERAIS (galeria do espaço kids + Estrutura)
+  // Pedido do Philipe (09/09/2026): "deixar uma seta ao lado esquerdo da
+  // foto e ao lado direito, e uma breve mostrinha lateral da proxima foto
+  // para quando for apertar na seta" — uma foto grande em destaque, com
+  // seta de cada lado (clicável) pra navegar, e a foto vizinha "espiando"
+  // nas bordas (isso já é feito só com CSS, ver ".estrutura__grid" e
+  // ".card-diferencial__galeria" no style.css: padding lateral + scroll-
+  // snap-align "center"). Aqui é só a lógica das setas em si.
+  // Mesma lógica de "achar o item mais perto do centro visível" já usada
+  // no carrossel dos planos acima — por isso virou uma função à parte
+  // (reaproveitável pra qualquer carrossel novo que precise de setas no
+  // futuro), em vez de copiar o código duas vezes.
+  // ===========================================================================
+  function ativarCarrosselDeSetas(trilha, botaoAnterior, botaoProximo) {
+    if (!trilha) return;
+    const itens = Array.from(trilha.children);
+    if (!itens.length) return;
+
+    function indiceAtual() {
+      const centroVisivel = trilha.scrollLeft + trilha.clientWidth / 2;
+      let indiceMaisPerto = 0;
+      let menorDistancia = Infinity;
+
+      itens.forEach(function (item, indice) {
+        const centroItem = item.offsetLeft + item.offsetWidth / 2;
+        const distancia = Math.abs(centroItem - centroVisivel);
+        if (distancia < menorDistancia) {
+          menorDistancia = distancia;
+          indiceMaisPerto = indice;
+        }
+      });
+
+      return indiceMaisPerto;
+    }
+
+    function irParaItem(indice) {
+      const alvo = itens[indice];
+      if (!alvo) return;
+      alvo.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+    }
+
+    // "Apaga" a seta do lado que não tem mais pra onde ir (primeira foto
+    // = sem seta "anterior" ativa; última foto = sem seta "próxima" ativa)
+    function atualizarSetas() {
+      const atual = indiceAtual();
+      if (botaoAnterior) {
+        botaoAnterior.classList.toggle("is-desativada", atual === 0);
+      }
+      if (botaoProximo) {
+        botaoProximo.classList.toggle("is-desativada", atual === itens.length - 1);
+      }
+    }
+
+    if (botaoAnterior) {
+      botaoAnterior.addEventListener("click", function () {
+        irParaItem(Math.max(0, indiceAtual() - 1));
+      });
+    }
+
+    if (botaoProximo) {
+      botaoProximo.addEventListener("click", function () {
+        irParaItem(Math.min(itens.length - 1, indiceAtual() + 1));
+      });
+    }
+
+    // Mesmo debounce do carrossel dos planos: só recalcula depois que o
+    // dedo "assenta", pra não ficar recalculando a cada pixel arrastado
+    let temporizadorSetas;
+    trilha.addEventListener("scroll", function () {
+      clearTimeout(temporizadorSetas);
+      temporizadorSetas = setTimeout(atualizarSetas, 100);
+    });
+
+    atualizarSetas();
+  }
+
+  ativarCarrosselDeSetas(
+    document.querySelector(".card-diferencial__galeria"),
+    document.querySelector(".card-diferencial__seta--prev"),
+    document.querySelector(".card-diferencial__seta--next")
+  );
+  ativarCarrosselDeSetas(
+    document.querySelector(".estrutura__grid"),
+    document.querySelector(".estrutura__seta--prev"),
+    document.querySelector(".estrutura__seta--next")
+  );
+
   /* -------------------------------------------------------------------
      CONFIRMAÇÃO ANTES DE ABRIR O WHATSAPP (ícone do cabeçalho mobile)
      - Só o ícone novo do cabeçalho (".site-header__whatsapp-mobile")

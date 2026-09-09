@@ -758,24 +758,32 @@ h1, h2, h3 {
 }
 
 /* Galeria de fotos do espaço kids, dentro do card de destaque (pedido do
-   Philipe, 03/09/2026). Enquanto não chegam as fotos reais da Milena, são
-   só "molduras" vazias.
+   Philipe, 03/09/2026; fotos maiores + setas laterais ajustadas em
+   09/09/2026 — ver comentário grande logo abaixo em
+   ".card-diferencial__seta"). Enquanto não chegam as fotos reais da
+   Milena, são só "molduras" vazias.
    - No CELULAR (base, mobile-first): vira um CARROSSEL — rolagem
-     horizontal com "encaixe" (scroll-snap), em vez de grade. Foi um
-     pedido específico do Philipe (03/09/2026): em grade 2×2 a galeria
-     ocupava altura demais na tela pequena; em carrossel, ocupa só a
-     altura de uma linha, e a pessoa arrasta o dedo pro lado pra ver as
-     outras fotos.
+     horizontal com "encaixe" (scroll-snap) + setas clicáveis, em vez de
+     grade. Foi um pedido específico do Philipe (03/09/2026): em grade
+     2×2 a galeria ocupava altura demais na tela pequena; em carrossel,
+     ocupa só a altura de uma linha, e a pessoa arrasta o dedo (ou clica
+     na seta) pro lado pra ver as outras fotos.
    - A partir de telas médias (640px+, ver media query na seção 8), a
      tela já tem largura de sobra, então volta a virar uma grade normal
-     (4 molduras numa linha só) — carrossel deixa de fazer sentido aí. */
+     (4 molduras numa linha só) — carrossel e setas deixam de fazer
+     sentido aí. */
 .card-diferencial__galeria {
   display: flex;
   gap: 0.85rem;
   margin-top: 1.5rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: 0.1rem;
+  /* Padding lateral (~8%) em vez de "scroll-padding-inline: 0.1rem" de
+     antes: com a moldura maior (ver ".card-diferencial__moldura" abaixo)
+     esse respiro é o que garante a "espiadinha" da foto vizinha
+     aparecendo nas bordas, tanto no início quanto no fim do carrossel */
+  scroll-padding-inline: 8%;
+  padding-inline: 8%;
   padding-bottom: 0.15rem;
   /* Esconde a barra de rolagem visualmente (o gesto de arrastar continua
      funcionando normal) — fica mais parecido com um carrossel "de app"
@@ -801,17 +809,22 @@ h1, h2, h3 {
    card, com um ícone de foto e o texto "Foto em breve" no centro — bem
    parecido com o placeholder "Foto da oficina em breve" que o Philipe
    mostrou como referência (site NovaHidráulica).
-   No celular, cada moldura ocupa boa parte da largura do card (mas não
-   tudo), pra já dar uma "espiadinha" da próxima e deixar claro que dá
-   pra arrastar — e "encaixa" certinho na tela graças ao scroll-snap. */
+   Tamanho aumentado de 42% pra 70% da largura do card (pedido do
+   Philipe, 09/09/2026: "as fotos, está muito pequeno... oque acha de
+   aumentar para ter mais visibilidade" — aumento MODERADO, mantendo o
+   card do jeito que já está, só a foto em si ficou maior) — agora só
+   aparece 1 foto grande em destaque por vez, com "scroll-snap-align:
+   center" (era "start") + o padding-inline da galeria acima garantindo
+   a espiadinha das vizinhas dos dois lados, em vez de 2 fotos pequenas
+   lado a lado como antes. */
 .card-diferencial__moldura {
   /* "min-width: 0" pelo mesmo motivo do comentário em ".card-diferencial"
      acima — permite o texto "Foto em breve" quebrar linha em vez de forçar
      a moldura (e tudo em volta) a ficar larga demais pro celular */
   min-width: 0;
   flex: 0 0 auto;
-  width: 42%;
-  scroll-snap-align: start;
+  width: 70%;
+  scroll-snap-align: center;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -833,14 +846,76 @@ h1, h2, h3 {
 }
 
 .card-diferencial__moldura svg {
-  width: 26px;
-  height: 26px;
+  width: 30px;
+  height: 30px;
 }
 
 .card-diferencial__moldura span {
-  font-size: 0.75rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.01em;
+}
+
+/* Envolve a galeria + as duas setas — precisa de "position: relative"
+   pra elas conseguirem se posicionar POR CIMA da foto (não numa fileira
+   separada embaixo, como no carrossel dos planos). Pedido do Philipe
+   (09/09/2026): "deixar uma seta ao lado esquerdo da foto e ao lado
+   direito, e uma breve mostrinha lateral da proxima foto para quando
+   for apertar na seta". */
+.card-diferencial__carrossel {
+  position: relative;
+}
+
+/* Setas de navegação sobre a foto — mesma "cara" do círculo vinho já
+   usado no carrossel dos planos (".planos__seta"), só um pouco menor
+   pra não tomar espaço demais em cima da foto. Ficam centralizadas na
+   altura da MOLDURA (não do card inteiro, que ainda tem o texto "Arraste
+   para o lado" embaixo) — por isso o "top" é calculado um pouco acima
+   dos 50%. */
+.card-diferencial__seta {
+  position: absolute;
+  top: 44%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border: none;
+  border-radius: 50%;
+  /* Branco quase opaco (não vinho sólido como no resto do site) —
+     esse card já é vinho sólido por dentro (".card-diferencial--destaque"),
+     então uma seta vinho ficava "sumindo" no fundo, sem contraste. Branco
+     com o ícone vinho é o mesmo par de cores já usado no botão
+     ".btn--white" do Hero, pensado bem pra esse tipo de fundo escuro. */
+  background-color: rgba(255, 255, 255, 0.92);
+  color: var(--cor-vinho-principal);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 6px 16px -8px rgba(0, 0, 0, 0.55);
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.card-diferencial__seta:active {
+  background-color: var(--cor-branco);
+}
+
+.card-diferencial__seta--prev {
+  left: 0.35rem;
+}
+
+.card-diferencial__seta--next {
+  right: 0.35rem;
+}
+
+/* Quando já está na primeira/última foto, a seta daquele lado fica
+   "apagada" (não tem mais pra onde ir) — controlado via JS
+   (".is-desativada", ver script.js) */
+.card-diferencial__seta.is-desativada {
+  opacity: 0.35;
+  pointer-events: none;
 }
 
 
@@ -1761,11 +1836,13 @@ h1, h2, h3 {
      bastante pras 4 molduras caberem numa linha só sem precisar de
      carrossel — volta a virar uma grade normal (desliga o comportamento
      de rolagem/scroll-snap do celular e reseta a largura de cada
-     moldura, que no celular era 42% pra caber só ~2 por vez) */
+     moldura, que no celular era 70% pra ficar 1 foto grande em
+     destaque) */
   .card-diferencial__galeria {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     overflow-x: visible;
+    padding-inline: 0;
   }
 
   .card-diferencial__moldura {
@@ -1775,6 +1852,12 @@ h1, h2, h3 {
   /* A dica de "arraste pro lado" só faz sentido no celular (onde é
      carrossel de verdade) — some a partir daqui */
   .card-diferencial__galeria-dica {
+    display: none;
+  }
+
+  /* As setas também só fazem sentido no celular (onde é carrossel de
+     verdade) — a partir daqui é grade fixa, sem nada pra navegar */
+  .card-diferencial__seta {
     display: none;
   }
 
@@ -2026,23 +2109,33 @@ h1, h2, h3 {
   padding-block: var(--espaco-secao);
 }
 
+/* Envolve o carrossel + as duas setas — precisa de "position: relative"
+   pra elas ficarem POR CIMA da foto (mesmo padrão da galeria do espaço
+   kids, ver ".card-diferencial__carrossel" na seção 6). Só existe de
+   verdade no CELULAR — a partir de 640px vira grade normal, sem setas
+   (ver media queries abaixo). */
+.estrutura__carrossel {
+  position: relative;
+}
+
 /* Grade de ambientes — NO CELULAR (base, mobile-first) vira CARROSSEL:
-   rolagem horizontal com "encaixe" (scroll-snap), mesmo padrão já usado
-   na galeria do espaço kids e no filtro de modalidades. Ajuste pedido
-   pelo Philipe (09/09/2026: "no celular agora melhor carrosel para as
-   fotos") — no início essa seção usava uma grade normal quebrando linha
-   (2 colunas), mas ficava com 4 linhas de molduras empilhadas, ocupando
-   bastante altura de tela; em carrossel, ocupa só a altura de uma linha,
-   e a pessoa arrasta o dedo pro lado pra ver os outros ambientes.
+   rolagem horizontal com "encaixe" (scroll-snap) + setas clicáveis,
+   mesmo padrão já usado na galeria do espaço kids e no filtro de
+   modalidades.
    A partir de telas médias (640px+, ver media queries abaixo) volta a
    virar uma grade normal — lá já tem espaço de sobra, carrossel deixa
    de fazer sentido. */
 .estrutura__grid {
   display: flex;
-  gap: 1.1rem;
+  gap: 1rem;
   overflow-x: auto;
   scroll-snap-type: x mandatory;
-  scroll-padding-inline: 0.1rem;
+  /* Padding lateral (~8%) garante a "espiadinha" da foto vizinha
+     aparecendo nas bordas, tanto no início quanto no fim do carrossel —
+     mesmo raciocínio/comentário completo em ".card-diferencial__galeria"
+     (seção 6) */
+  scroll-padding-inline: 8%;
+  padding-inline: 8%;
   padding-bottom: 0.15rem;
   /* Esconde a barra de rolagem visualmente (o gesto de arrastar continua
      funcionando normal) — mesmo motivo/comentário completo em
@@ -2054,14 +2147,21 @@ h1, h2, h3 {
   display: none; /* Chrome, Safari, Edge */
 }
 
+/* Fotos maiores no celular: de 44% pra 84% da largura do carrossel
+   (pedido do Philipe, 09/09/2026: "as fotos... está muito pequeno...
+   oque acha de aumentar para ter mais visibilidade da foto") — agora só
+   aparece 1 foto grande em destaque por vez, com "scroll-snap-align:
+   center" (era "start") + o padding-inline acima garantindo a
+   espiadinha das vizinhas dos dois lados, em vez de ~2 fotos pequenas
+   lado a lado como antes. */
 .estrutura__item {
   /* "min-width: 0" pelo mesmo motivo já documentado em ".card-diferencial"
      (seção 6) — permite a legenda quebrar linha em vez de forçar o item
      (e o carrossel inteiro) a ficar largo demais pro celular */
   min-width: 0;
   flex: 0 0 auto;
-  width: 44%;
-  scroll-snap-align: start;
+  width: 84%;
+  scroll-snap-align: center;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -2101,12 +2201,12 @@ h1, h2, h3 {
 }
 
 .estrutura__moldura svg {
-  width: 28px;
-  height: 28px;
+  width: 34px;
+  height: 34px;
 }
 
 .estrutura__moldura span {
-  font-size: 0.75rem;
+  font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.01em;
 }
@@ -2129,16 +2229,67 @@ h1, h2, h3 {
   text-align: center;
 }
 
+/* Setas de navegação sobre a foto — mesmo estilo da galeria do espaço
+   kids (ver ".card-diferencial__seta", seção 6, com o comentário
+   completo do pedido do Philipe de 09/09/2026), só que em círculo cheio
+   um pouco maior, já que aqui a foto também é maior. Centralizadas na
+   altura da MOLDURA (não do item inteiro, que ainda tem a legenda
+   embaixo) — por isso "top" fica um pouco acima dos 50%. */
+.estrutura__seta {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -10px rgba(43, 16, 22, 0.55);
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.estrutura__seta:active {
+  background-color: var(--cor-vinho-escuro);
+}
+
+.estrutura__seta--prev {
+  left: 0.35rem;
+}
+
+.estrutura__seta--next {
+  right: 0.35rem;
+}
+
+/* Quando já está no primeiro/último ambiente, a seta daquele lado fica
+   "apagada" (não tem mais pra onde ir) — controlado via JS
+   (".is-desativada", ver script.js) */
+.estrutura__seta.is-desativada {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
 /* A partir de tablets, a tela já tem largura de sobra: o carrossel do
-   celular volta a virar uma grade normal (desliga rolagem/scroll-snap e
-   reseta a largura de cada item, que no celular era 44% pra caber ~2 por
-   vez) — mesma lógica já usada na galeria do espaço kids e no filtro de
-   modalidades ao cruzar esse mesmo breakpoint. */
+   celular volta a virar uma grade normal (desliga rolagem/scroll-snap,
+   reseta a largura de cada item e esconde as setas) — mesma lógica já
+   usada na galeria do espaço kids e no filtro de modalidades ao cruzar
+   esse mesmo breakpoint. Também aproveitado pra diminuir o número de
+   colunas (3 em vez de 4 no desktop) — mesmo pedido de "aumentar o
+   tamanho das fotos" vale pra telas grandes também: menos colunas =
+   cada foto fica maior. */
 @media (min-width: 640px) {
   .estrutura__grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     overflow-x: visible;
+    padding-inline: 0;
     padding-bottom: 0;
   }
 
@@ -2149,10 +2300,14 @@ h1, h2, h3 {
   .estrutura__dica {
     display: none;
   }
+
+  .estrutura__seta {
+    display: none;
+  }
 }
 
 @media (min-width: 900px) {
   .estrutura__grid {
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
   }
 }
