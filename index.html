@@ -59,6 +59,11 @@
           <li><a href="#planos">Planos</a></li>
           <li><a href="#estrutura">Estrutura</a></li>
           <li><a href="#depoimentos">Depoimentos</a></li>
+          <!-- Novo link "Instagram" (14/09/2026) — pedido do Philipe: a
+               seção do Instagram (Bloco 5) precisava ficar bem visível,
+               igual às outras, com item próprio no menu (não só
+               "escondida" dentro da página) -->
+          <li><a href="#instagram">Instagram</a></li>
           <li><a href="#contato">Contato</a></li>
         </ul>
 
@@ -1046,8 +1051,170 @@
   </section>
 
   <!-- ===================================================================
+       DEPOIMENTOS (Bloco 5, parte 1) — 14/09/2026
+       A Milena ainda não reescreveu os depoimentos reais das alunas (os
+       que ela tem são longos, ela vai resumir — ver
+       respostas-milena-oh-my-gym.md, pergunta 21), e agora ela está de
+       férias, então isso demora mais um tempo. Por enquanto, 3 cards
+       "moldura pronta" avisando que o depoimento chega em breve — mesmo
+       espírito das molduras de foto já usadas em Diferenciais/Estrutura,
+       só que aqui é texto em vez de imagem. Sem nomes nem falas
+       inventadas: só um aviso honesto de "em breve". Assim que a Milena
+       mandar os depoimentos de verdade, é só trocar o conteúdo de cada
+       card (nome da aluna + a fala) — a estrutura/CSS já fica pronta,
+       não precisa mexer em mais nada do layout. -->
+  <section class="depoimentos" id="depoimentos">
+    <div class="container">
+
+      <div class="section-heading">
+        <span class="section-heading__eyebrow">O que dizem sobre a gente</span>
+        <h2 class="section-heading__title">Depoimentos</h2>
+        <p class="section-heading__subtitle">
+          Em breve, relatos de quem já faz parte da Oh My Gym.
+        </p>
+      </div>
+
+      <!-- Grade de 3 molduras de depoimento — quebra linha normalmente
+           (1 coluna no celular, 2 no tablet, 3 no desktop), sem
+           carrossel, já que são poucos itens e cabem bem quebrando
+           linha (mesmo raciocínio da grade original da Estrutura,
+           antes de virar carrossel — aqui não tem o mesmo motivo pra
+           virar carrossel, são só 3 cards). -->
+      <div class="depoimentos__grid">
+
+        <!-- Depoimento 1 -->
+        <div class="depoimento-card">
+          <span class="depoimento-card__icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.257 3.995-5.849h-4v-10h9.983z"></path>
+              <path d="M22.017 3v7.391c0 5.704-3.748 9.57-9 10.609l-.996-2.151c2.433-.917 3.996-3.257 3.996-5.849h-4v-10h9.996z"></path>
+            </svg>
+          </span>
+          <p class="depoimento-card__titulo">Depoimento em breve</p>
+          <p class="depoimento-card__texto">Em breve, o relato de uma aluna que já treina com a gente.</p>
+        </div>
+
+        <!-- Depoimento 2 -->
+        <div class="depoimento-card">
+          <span class="depoimento-card__icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.257 3.995-5.849h-4v-10h9.983z"></path>
+              <path d="M22.017 3v7.391c0 5.704-3.748 9.57-9 10.609l-.996-2.151c2.433-.917 3.996-3.257 3.996-5.849h-4v-10h9.996z"></path>
+            </svg>
+          </span>
+          <p class="depoimento-card__titulo">Depoimento em breve</p>
+          <p class="depoimento-card__texto">Em breve, o relato de uma aluna que já treina com a gente.</p>
+        </div>
+
+        <!-- Depoimento 3 -->
+        <div class="depoimento-card">
+          <span class="depoimento-card__icone" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.257 3.995-5.849h-4v-10h9.983z"></path>
+              <path d="M22.017 3v7.391c0 5.704-3.748 9.57-9 10.609l-.996-2.151c2.433-.917 3.996-3.257 3.996-5.849h-4v-10h9.996z"></path>
+            </svg>
+          </span>
+          <p class="depoimento-card__titulo">Depoimento em breve</p>
+          <p class="depoimento-card__texto">Em breve, o relato de uma aluna que já treina com a gente.</p>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================================
+       INSTAGRAM (Bloco 5, parte 2) — 14/09/2026
+       Milena pediu uma seção mostrando os posts/vídeos mais recentes do
+       Instagram (@ohmygym_cianorte) — ver "Funcionalidade extra pedida"
+       no briefing. A decisão de FERRAMENTA (embed manual post a post,
+       de graça, vs. widget tipo SnapWidget, que atualiza sozinho mas
+       pede login da Milena) ainda está em aberto — Philipe está
+       inclinado pro caminho manual, mas não confirmou de vez (ver
+       conversa de 09/09/2026 no briefing). Por isso, por enquanto, essa
+       seção é só a "moldura pronta" — uma grade de posts placeholder +
+       botão pra seguir o perfil de verdade. Quando a decisão for
+       fechada, cada ".instagram__post" vira o embed real (manual: cola
+       o <blockquote> que o Instagram gera em cada post; widget: troca a
+       grade inteira pelo script do serviço escolhido) — o resto da
+       seção (cabeçalho, botão de seguir) não muda.
+       Pedido do Philipe (14/09/2026): essa seção precisava ficar BEM
+       visível — inclusive com item próprio no menu do cabeçalho (ver
+       "#instagram" adicionado no <nav>, acima no arquivo), não só
+       "escondida" dentro da página. -->
+  <section class="instagram" id="instagram">
+    <div class="container">
+
+      <div class="section-heading">
+        <span class="section-heading__eyebrow">Comunidade Oh My Gym</span>
+        <h2 class="section-heading__title">Acompanhe no Instagram</h2>
+        <p class="section-heading__subtitle">
+          Últimas fotos e vídeos direto do dia a dia da academia — em breve, aqui.
+        </p>
+      </div>
+
+      <!-- Grade de posts placeholder — mesmo ícone de "câmera" já usado
+           nas molduras de foto do site (Estrutura/espaço kids), pra
+           manter a mesma linguagem visual — de propósito NÃO usa o
+           logo oficial do Instagram (é marca registrada da Meta, não
+           faz parte do manual de identidade da Oh My Gym). Quebra
+           linha normalmente (2 colunas no celular, 3 no tablet, 4 no
+           desktop), sem carrossel. -->
+      <div class="instagram__grid">
+
+        <div class="instagram__post">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <circle cx="8.5" cy="10" r="1.5"></circle>
+            <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
+          </svg>
+          <span>Post em breve</span>
+        </div>
+
+        <div class="instagram__post">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <circle cx="8.5" cy="10" r="1.5"></circle>
+            <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
+          </svg>
+          <span>Post em breve</span>
+        </div>
+
+        <div class="instagram__post">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <circle cx="8.5" cy="10" r="1.5"></circle>
+            <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
+          </svg>
+          <span>Post em breve</span>
+        </div>
+
+        <div class="instagram__post">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+            <circle cx="8.5" cy="10" r="1.5"></circle>
+            <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
+          </svg>
+          <span>Post em breve</span>
+        </div>
+
+      </div>
+
+      <div class="instagram__cta">
+        <a
+          href="https://www.instagram.com/ohmygym_cianorte/"
+          class="btn btn--outline"
+          target="_blank"
+          rel="noopener"
+        >Seguir @ohmygym_cianorte</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================================================================
        PRÓXIMOS BLOCOS ENTRAM AQUI EMBAIXO
-       (Depoimentos, Instagram, Contato, Rodapé) —
+       (Contato, Rodapé) —
        um de cada vez, nos próximos passos.
        =================================================================== -->
 

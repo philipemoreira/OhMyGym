@@ -533,6 +533,17 @@ document.addEventListener("DOMContentLoaded", function () {
   numerarGrupoParaCascata(
     document.querySelectorAll(".grade-horarios > .grade-horarios__dia")
   );
+  // Depoimentos e Instagram (Bloco 5, 14/09/2026) — mesma lógica dos
+  // cards de Diferenciais: não são carrossel (quebram linha normal),
+  // então dá pra numerar/observar cada item aqui mesmo, sem precisar
+  // da função "revelarGrupoAoEntrarNaTela" (essa é só pra grupos dentro
+  // de um carrossel com "overflow-x: auto", que não é o caso aqui).
+  numerarGrupoParaCascata(
+    document.querySelectorAll(".depoimentos__grid > .depoimento-card")
+  );
+  numerarGrupoParaCascata(
+    document.querySelectorAll(".instagram__grid > .instagram__post")
+  );
   // A grade de ambientes da seção Estrutura (".estrutura__grid") NÃO
   // entra na numeração/observação individual aqui — desde o ajuste de
   // 09/09/2026 ela virou carrossel no celular (mesmo "overflow-x: auto"
@@ -547,7 +558,8 @@ document.addEventListener("DOMContentLoaded", function () {
   // observado individualmente, revela assim que ENTRA ELE MESMO na tela.
   const elementosParaRevelar = document.querySelectorAll(
     ".section-heading, .card-diferencial, .card-modalidade-destaque, " +
-    ".grade-horarios__dia, .horario-funcionamento"
+    ".grade-horarios__dia, .horario-funcionamento, " +
+    ".depoimento-card, .instagram__post"
   );
 
   if (

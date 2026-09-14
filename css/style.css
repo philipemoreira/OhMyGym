@@ -2316,3 +2316,159 @@ h1, h2, h3 {
    900px, antes estreitava pra 29%/3 fotos por vez) — pedido do Philipe
    de 10/09/2026: no máximo 2 fotos por vez, em qualquer tamanho de
    tela, pra elas ficarem bem visíveis mesmo em monitor grande. */
+
+/* =====================================================================
+   12. SEÇÃO DEPOIMENTOS + INSTAGRAM (Bloco 5 do site) — 14/09/2026
+   As duas seções do Bloco 5 ficam aqui juntas (mesmo padrão já usado na
+   seção 11 — isoladas com suas próprias media queries, fácil de achar e
+   ajustar tudo desse bloco num lugar só). Fundo claro/branco alternando
+   com a seção anterior (Estrutura é --cor-fundo-claro, então Depoimentos
+   volta pro branco e Instagram fica --cor-fundo-claro de novo, mesmo
+   ritmo de alternância já usado no resto do site).
+   ===================================================================== */
+
+.depoimentos {
+  background-color: var(--cor-branco);
+  padding-block: var(--espaco-secao);
+}
+
+/* Grade de cards de depoimento — quebra linha normalmente (sem
+   carrossel, são só 3 itens): 1 coluna no celular, 2 no tablet, 3 no
+   desktop (ver media queries no fim desta seção) */
+.depoimentos__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* Card "moldura pronta" de depoimento — mesmo espírito visual das
+   molduras de foto (borda tracejada, centralizado, avisando "em
+   breve"), só que em formato de card de texto em vez de moldura de
+   imagem. Sem nome/foto/fala inventados — só o aviso honesto de que o
+   depoimento real chega assim que a Milena mandar. */
+.depoimento-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 2rem 1.75rem;
+  border-radius: var(--raio-padrao);
+  border: 1.5px dashed rgba(110, 33, 56, 0.25);
+  background-color: var(--cor-fundo-claro);
+  color: var(--cor-vinho-medio);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.depoimento-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px -20px rgba(43, 16, 22, 0.35);
+  border-color: rgba(110, 33, 56, 0.45);
+}
+
+.depoimento-card__icone {
+  display: flex;
+  color: var(--cor-rosa-queimado);
+}
+
+.depoimento-card__icone svg {
+  width: 30px;
+  height: 30px;
+}
+
+.depoimento-card__titulo {
+  color: var(--cor-vinho-escuro);
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.depoimento-card__texto {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 32ch;
+}
+
+/* --- Seção Instagram --- */
+
+.instagram {
+  background-color: var(--cor-fundo-claro);
+  padding-block: var(--espaco-secao);
+}
+
+/* Grade de posts placeholder — 2 colunas no celular, 3 no tablet, 4 no
+   desktop (ver media queries no fim desta seção). Sem carrossel: são
+   só 4 itens fixos, cabem bem quebrando linha (mesmo raciocínio já
+   usado nos depoimentos acima e na grade original da Estrutura). */
+.instagram__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+  margin-bottom: 2.5rem;
+}
+
+/* Cada "post" placeholder: quadrado (aspect-ratio 1/1, parecido com a
+   grade real do Instagram), mesmo ícone de câmera já usado nas
+   molduras de foto do site — de propósito NÃO usa o logo oficial do
+   Instagram (marca registrada da Meta, não faz parte do manual de
+   identidade da Oh My Gym). */
+.instagram__post {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  aspect-ratio: 1 / 1;
+  padding: 0.75rem;
+  border-radius: var(--raio-padrao);
+  border: 1.5px dashed rgba(110, 33, 56, 0.25);
+  background-color: var(--cor-branco);
+  color: var(--cor-vinho-medio);
+  text-align: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.instagram__post:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 14px 30px -20px rgba(43, 16, 22, 0.35);
+  border-color: rgba(110, 33, 56, 0.45);
+}
+
+.instagram__post svg {
+  width: 28px;
+  height: 28px;
+}
+
+.instagram__post span {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.instagram__cta {
+  display: flex;
+  justify-content: center;
+}
+
+/* A partir de tablets: depoimentos em 2 colunas, posts do Instagram em
+   3 colunas */
+@media (min-width: 640px) {
+  .depoimentos__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .instagram__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* A partir de telas grandes: depoimentos em 3 colunas (1 card por
+   depoimento, cabem os 3 numa linha só), posts do Instagram em 4
+   colunas */
+@media (min-width: 900px) {
+  .depoimentos__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .instagram__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
