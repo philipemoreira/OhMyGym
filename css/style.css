@@ -1757,9 +1757,15 @@ h1, h2, h3 {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.75rem;
   color: var(--cor-vinho-escuro);
-  font-size: 1.15rem;
+  /* Mesmo tamanho do título principal da seção (".section-heading__title",
+     ex: "Escolha o plano que combina com você") — pedido do Philipe
+     (10/09/2026, comparando print desse título com o "Prefere só as
+     aulas?", que antes era bem menor, 1.15rem). O ícone de coração ao
+     lado usa "em" (ver ".planos__grupo-titulo-icone"), então cresce
+     junto automaticamente. */
+  font-size: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
 .planos__grupo-titulo-texto {
@@ -1832,32 +1838,25 @@ h1, h2, h3 {
     gap: 1rem 2.5rem;
   }
 
-  /* Galeria de fotos do espaço kids: a partir daqui a tela já é larga o
-     bastante pras 4 molduras caberem numa linha só sem precisar de
-     carrossel — volta a virar uma grade normal (desliga o comportamento
-     de rolagem/scroll-snap do celular e reseta a largura de cada
-     moldura, que no celular era 70% pra ficar 1 foto grande em
-     destaque) */
-  .card-diferencial__galeria {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    overflow-x: visible;
-    padding-inline: 0;
-  }
+  /* Galeria de fotos do espaço kids: CONTINUA carrossel a partir daqui
+     (mudou em 10/09/2026 — antes virava uma grade fixa de 4 colunas,
+     deixando cada foto pequena demais; mesma reclamação/pedido do
+     Philipe que já tinha resolvido isso na seção Estrutura, "no máximo
+     2 fotos por vez, em qualquer tela"). A LARGURA da moldura (70%,
+     herdada do estilo base) fica igual aqui de propósito — nesse
+     intervalo (640-899px) o card de destaque ainda divide a linha com
+     outro card (grade de 2 colunas, ver ".diferenciais__grid" acima),
+     então ele ainda não é largo o bastante pra valer a pena estreitar
+     a foto; o ajuste pra 2 fotos por vez só acontece a partir de 900px
+     (ver media query abaixo), quando o card passa a ocupar a largura
+     toda. O resto do comportamento (scroll-snap, setas) é herdado do
+     estilo base, sem precisar repetir aqui. */
 
-  .card-diferencial__moldura {
-    width: auto;
-  }
-
-  /* A dica de "arraste pro lado" só faz sentido no celular (onde é
-     carrossel de verdade) — some a partir daqui */
+  /* A dica de "arraste pro lado" só faz sentido no celular — a partir
+     daqui o mouse já consegue usar as setas, que continuam visíveis e
+     funcionando em qualquer tamanho de tela (mesma lógica já usada na
+     seção Estrutura) */
   .card-diferencial__galeria-dica {
-    display: none;
-  }
-
-  /* As setas também só fazem sentido no celular (onde é carrossel de
-     verdade) — a partir daqui é grade fixa, sem nada pra navegar */
-  .card-diferencial__seta {
     display: none;
   }
 
@@ -1915,6 +1914,15 @@ h1, h2, h3 {
 
   .card-diferencial--destaque {
     grid-column: 1 / -1;
+  }
+
+  /* A partir daqui o card de destaque ocupa a largura toda (regra
+     acima), então já dá pra estreitar a moldura pra caber ~2 fotos
+     lado a lado (em vez de só 1 foto grande) — pedido do Philipe
+     (10/09/2026): "no máximo 2 fotos lado a lado", mesmo tratamento já
+     usado na seção Estrutura. */
+  .card-diferencial__moldura {
+    width: 44%;
   }
 
   /* Planos: 3 colunas (o card de destaque fica no meio da 1ª linha,
@@ -2290,7 +2298,12 @@ h1, h2, h3 {
    volta ao normal; aqui ela nunca volta). */
 @media (min-width: 640px) {
   .estrutura__item {
-    /* ~44% mostra 2 fotos por vez (com espiadinha de uma terceira) */
+    /* ~44% mostra 2 fotos por vez (com espiadinha de uma terceira) —
+       tablet E desktop ficam nesse mesmo tamanho (não estreita mais em
+       telas maiores, ver comentário abaixo). Antes tinha um passo extra
+       a partir de 900px estreitando pra 29% (3 por vez), mas o Philipe
+       achou que ainda ficava pequeno pra ver direito — pediu no máximo
+       2 fotos lado a lado, em qualquer tela (10/09/2026) */
     width: 44%;
   }
 
@@ -2299,9 +2312,7 @@ h1, h2, h3 {
   }
 }
 
-@media (min-width: 900px) {
-  .estrutura__item {
-    /* ~29% mostra 3 fotos por vez (com espiadinha de uma quarta) */
-    width: 29%;
-  }
-}
+/* Removido de propósito o passo extra que existia aqui (a partir de
+   900px, antes estreitava pra 29%/3 fotos por vez) — pedido do Philipe
+   de 10/09/2026: no máximo 2 fotos por vez, em qualquer tamanho de
+   tela, pra elas ficarem bem visíveis mesmo em monitor grande. */
