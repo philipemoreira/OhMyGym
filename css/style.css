@@ -162,6 +162,20 @@ h1, h2, h3 {
   background-color: var(--cor-vinho-escuro);
 }
 
+/* Botão sólido genérico (mesma cor/estilo do ".btn--whatsapp", só com
+   nome honesto pra usar em CTAs que não são de WhatsApp) — usado no
+   botão de seguir do Instagram (pedido do Philipe, 14/09/2026: deixar
+   o botão com mais peso visual em vez de só contorno). */
+.btn--vinho {
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+  box-shadow: 0 8px 20px -8px rgba(110, 33, 56, 0.6);
+}
+
+.btn--vinho:hover {
+  background-color: var(--cor-vinho-escuro);
+}
+
 /* Botão secundário (contorno), usado para ações de menor destaque,
    como "Ver planos" */
 .btn--outline {
@@ -1903,8 +1917,12 @@ h1, h2, h3 {
   }
 }
 
-/* A partir daqui (telas grandes / desktop): mostra o menu completo,
-   esconde o botão hambúrguer, e coloca hero em duas colunas lado a lado */
+/* A partir daqui (telas grandes / desktop): ajustes de grade (cards de
+   Diferenciais e Planos ganham mais colunas). Atenção: o cabeçalho
+   (menu completo vs. hambúrguer) NÃO muda mais nesse breakpoint — desde
+   14/09/2026 ele tem o próprio limiar, mais alto (1099px), porque
+   precisa de mais espaço que uma grade de cards (ver comentário grande
+   em ".nav-toggle"/"@media (max-width: 1099px)" mais abaixo). */
 @media (min-width: 900px) {
   /* Cards de diferenciais: o card de destaque (espaço kids) ocupa a
      largura toda, os outros 3 dividem uma linha de 3 colunas */
@@ -1985,8 +2003,16 @@ h1, h2, h3 {
 }
 
 /* Abaixo de telas grandes (tablet/celular): esconde o menu completo e
-   mostra o botão "hambúrguer" no lugar dele */
-@media (max-width: 899px) {
+   mostra o botão "hambúrguer" no lugar dele.
+   Esse limiar é 1099px, MAIOR que o resto do site (a maioria das seções
+   usa 899px pra virar "desktop") — de propósito: o cabeçalho tem 8 links
+   de texto + logo + botão de WhatsApp, então precisa de mais espaço
+   horizontal que uma grade de cards pra não ficar apertado. Ajustado em
+   14/09/2026 (era 899px) depois que o Philipe reparou que, com o link
+   novo "Instagram" (8º item), o menu completo ficava espremido/cortando
+   mal entre ~900-1020px — testado e confirmado que a partir de 1100px
+   não tem mais nenhum aperto nem estouro de largura. */
+@media (max-width: 1099px) {
   .nav-toggle {
     display: flex;
   }
@@ -2318,43 +2344,89 @@ h1, h2, h3 {
    tela, pra elas ficarem bem visíveis mesmo em monitor grande. */
 
 /* =====================================================================
-   12. SEÇÃO DEPOIMENTOS + INSTAGRAM (Bloco 5 do site) — 14/09/2026
-   As duas seções do Bloco 5 ficam aqui juntas (mesmo padrão já usado na
-   seção 11 — isoladas com suas próprias media queries, fácil de achar e
-   ajustar tudo desse bloco num lugar só). Fundo claro/branco alternando
-   com a seção anterior (Estrutura é --cor-fundo-claro, então Depoimentos
-   volta pro branco e Instagram fica --cor-fundo-claro de novo, mesmo
-   ritmo de alternância já usado no resto do site).
-   ===================================================================== */
+   12. DEPOIMENTOS (dentro da seção Estrutura) + SEÇÃO INSTAGRAM
+   (Bloco 5 do site) — 14/09/2026, ajustado em 14/09/2026
+   A seção de Depoimentos deixou de ter fundo/seção própria: a pedido do
+   Philipe, o HTML dela foi movido pra DENTRO da seção "Estrutura" (ver
+   seção 11 acima — ".estrutura__depoimentos" é o bloco que a envolve
+   lá), pra reduzir um item do menu e "encorpar" a seção de Estrutura
+   enquanto os depoimentos reais não chegam. As classes de grade/card
+   dos depoimentos continuam aqui embaixo (não valia a pena mover todo
+   o bloco de CSS só por causa disso), mas agora herdam o fundo da
+   seção Estrutura (--cor-fundo-claro) em vez de terem o próprio fundo —
+   por isso o card do depoimento passou a usar --cor-branco (precisa de
+   contraste contra o fundo claro do pai, mesmo raciocínio já usado na
+   ".estrutura__moldura" da galeria de fotos ali em cima). Instagram
+   continua com seção própria, mas o fundo dela também inverteu (pra
+   --cor-branco) pra manter a alternância clara/branco/clara do resto
+   do site, já que agora quem vem antes dela é a seção Estrutura inteira
+   (fundo claro) em vez da antiga seção Depoimentos (que era branca).
 
-.depoimentos {
-  background-color: var(--cor-branco);
-  padding-block: var(--espaco-secao);
+   Ajuste de 14/09/2026 (mesmo dia, depois): os depoimentos ganharam
+   carrossel no celular/tablet, a pedido do Philipe — mesmo padrão
+   técnico do carrossel de fotos da Estrutura, mas desfazendo a rolagem
+   a partir de 900px (grade normal de 3 colunas), já que só são 3 cards
+   e cabem numa linha só em tela grande. */
+
+/* Espaço entre a galeria de fotos e o bloco de depoimentos, já que os
+   dois agora dividem a mesma seção/fundo (sem essa margem, os dois
+   ficariam grudados um no outro). */
+.estrutura__depoimentos {
+  margin-top: var(--espaco-secao);
 }
 
-/* Grade de cards de depoimento — quebra linha normalmente (sem
-   carrossel, são só 3 itens): 1 coluna no celular, 2 no tablet, 3 no
-   desktop (ver media queries no fim desta seção) */
+/* Envolve o carrossel de depoimentos + as duas setas — precisa de
+   "position: relative" pra elas ficarem por cima dos cards (mesmo
+   padrão de ".estrutura__carrossel" ali em cima). */
+.depoimentos__carrossel {
+  position: relative;
+}
+
+/* Grade de cards de depoimento — vira CARROSSEL no celular/tablet
+   (pedido do Philipe, 14/09/2026: "na tela menor, faz carrossel
+   também, fica melhor"), mesmo padrão técnico do carrossel de fotos da
+   Estrutura ali em cima (rolagem horizontal com "encaixe" + espiadinha
+   do vizinho nas bordas). A partir de telas grandes (900px+) volta a
+   virar uma grade normal, sem rolagem — os 3 cards já cabem numa linha
+   só lado a lado, então não tem motivo pra manter o carrossel lá (ver
+   media queries no fim desta seção, que desfazem o carrossel). */
 .depoimentos__grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 1.5rem;
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 8%;
+  padding-inline: 8%;
+  padding-bottom: 0.15rem;
+  scrollbar-width: none; /* Firefox */
+}
+
+.depoimentos__grid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }
 
 /* Card "moldura pronta" de depoimento — mesmo espírito visual das
    molduras de foto (borda tracejada, centralizado, avisando "em
    breve"), só que em formato de card de texto em vez de moldura de
    imagem. Sem nome/foto/fala inventados — só o aviso honesto de que o
-   depoimento real chega assim que a Milena mandar. */
+   depoimento real chega assim que a Milena mandar.
+   "min-width: 0" + "flex: 0 0 auto" + "width" + "scroll-snap-align":
+   mesmo raciocínio de ".estrutura__item" — cada card é um item do
+   carrossel; a largura muda por tela (media queries abaixo) e some
+   totalmente a partir de 900px, quando a seção 12 desfaz o carrossel. */
 .depoimento-card {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 0.6rem;
+  min-width: 0;
+  flex: 0 0 auto;
+  width: 84%;
+  scroll-snap-align: center;
   padding: 2rem 1.75rem;
   border-radius: var(--raio-padrao);
   border: 1.5px dashed rgba(110, 33, 56, 0.25);
-  background-color: var(--cor-fundo-claro);
+  background-color: var(--cor-branco);
   color: var(--cor-vinho-medio);
   text-align: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
@@ -2388,35 +2460,161 @@ h1, h2, h3 {
   max-width: 32ch;
 }
 
+/* Legenda pequena, só no celular, avisando que o carrossel acima é
+   arrastável — some a partir de 640px (mesmo padrão de
+   ".estrutura__dica" ali em cima). */
+.depoimentos__dica {
+  margin-top: 0.85rem;
+  color: var(--cor-vinho-medio);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Setas de navegação do carrossel de depoimentos — mesmo estilo visual
+   de ".estrutura__seta" ali em cima, mas em classe própria (não dá pra
+   reaproveitar a mesma classe: o JavaScript pega a seta de cada
+   carrossel por "querySelector", que só acha a PRIMEIRA da página, e
+   agora tem dois carrosséis diferentes na mesma seção). Único ajuste:
+   "top: 50%" em vez de "42%", porque aqui o card inteiro é só uma
+   coisa só (não tem legenda separada embaixo puxando o centro visual
+   pra cima, como acontece na moldura de foto). Some a partir de 900px
+   junto com o resto do carrossel (ver media query no fim desta
+   seção). */
+.depoimentos__seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -10px rgba(43, 16, 22, 0.55);
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.depoimentos__seta:active {
+  background-color: var(--cor-vinho-escuro);
+}
+
+.depoimentos__seta--prev {
+  left: 0.35rem;
+}
+
+.depoimentos__seta--next {
+  right: 0.35rem;
+}
+
+.depoimentos__seta.is-desativada {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
 /* --- Seção Instagram --- */
 
 .instagram {
-  background-color: var(--cor-fundo-claro);
+  background-color: var(--cor-branco);
   padding-block: var(--espaco-secao);
 }
 
-/* Grade de posts placeholder — 2 colunas no celular, 3 no tablet, 4 no
-   desktop (ver media queries no fim desta seção). Sem carrossel: são
-   só 4 itens fixos, cabem bem quebrando linha (mesmo raciocínio já
-   usado nos depoimentos acima e na grade original da Estrutura). */
+/* Selo com o ícone de "megafone" (ver HTML) — círculo cheio na cor
+   institucional, centralizado bem em cima do título. Pedido do
+   Philipe (14/09/2026): fazer essa seção "chamar mais atenção" — em
+   vez de inventar uma cor nova (a Milena restringe cor fora da paleta
+   institucional, ver identidade-visual-oh-my-gym.md), reaproveita um
+   ícone que já É da própria identidade visual da marca. */
+.instagram__selo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  margin-inline: auto;
+  margin-bottom: 1.25rem;
+  border-radius: 50%;
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+  box-shadow: 0 10px 24px -12px rgba(110, 33, 56, 0.55);
+}
+
+.instagram__selo svg {
+  width: 1.6rem;
+  height: 1.6rem;
+}
+
+/* "Vitrine": cartão próprio envolvendo a grade de posts + botão de
+   seguir, com fundo e sombra que destacam essa parte do resto da
+   seção (que é branca) — cria uma moldura/"widget" em vez dos posts
+   ficarem soltos direto no fundo. Mesmo raciocínio de contraste já
+   usado em outras seções: o filho (".instagram__post") precisa de uma
+   cor diferente do pai pra aparecer, por isso o post virou branco (era
+   claro) agora que o fundo dele é o claro (era branco). */
+.instagram__vitrine {
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  border-radius: var(--raio-padrao);
+  border: 1.5px solid rgba(110, 33, 56, 0.15);
+  background-color: var(--cor-fundo-claro);
+  box-shadow: 0 20px 44px -28px rgba(43, 16, 22, 0.45);
+}
+
+/* Envolve o carrossel de posts + as duas setas — precisa de "position:
+   relative" pra elas ficarem por cima dos cards (mesmo padrão de
+   ".estrutura__carrossel"/".depoimentos__carrossel" ali em cima). */
+.instagram__carrossel {
+  position: relative;
+}
+
+/* Grade de posts placeholder — vira CARROSSEL no celular/tablet
+   (pedido do Philipe, 14/09/2026: "melhor ser tudo em carrossel em
+   telas menores"), mesmo padrão técnico já usado no carrossel de fotos
+   da Estrutura e nos Depoimentos. A partir de 900px volta a virar uma
+   grade normal, sem rolagem — os 4 posts já cabem numa linha só (ver
+   media queries no fim desta seção, que desfazem o carrossel). */
 .instagram__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
   gap: 1rem;
-  margin-bottom: 2.5rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 8%;
+  padding-inline: 8%;
+  padding-bottom: 0.15rem;
+  margin-bottom: 2rem;
+  scrollbar-width: none; /* Firefox */
+}
+
+.instagram__grid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
 }
 
 /* Cada "post" placeholder: quadrado (aspect-ratio 1/1, parecido com a
-   grade real do Instagram), mesmo ícone de câmera já usado nas
-   molduras de foto do site — de propósito NÃO usa o logo oficial do
-   Instagram (marca registrada da Meta, não faz parte do manual de
-   identidade da Oh My Gym). */
+   grade real do Instagram) — metade usa o ícone de câmera (foto),
+   metade usa o ícone de "play" (vídeo, ver HTML), deixando claro que
+   a área vai ter uma mistura dos dois tipos de conteúdo (pedido do
+   Philipe, 14/09/2026). De propósito NÃO usa o logo oficial do
+   Instagram nem imita as cores da marca dele (marca registrada da
+   Meta, não faz parte do manual de identidade da Oh My Gym).
+   "min-width: 0" + "flex: 0 0 auto" + "width" + "scroll-snap-align":
+   mesmo raciocínio de ".estrutura__item"/".depoimento-card" — cada
+   post é um item do carrossel; a largura muda por tela (media queries
+   abaixo) e some a partir de 900px, quando o carrossel desfaz. */
 .instagram__post {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  min-width: 0;
+  flex: 0 0 auto;
+  width: 68%;
+  scroll-snap-align: center;
   aspect-ratio: 1 / 1;
   padding: 0.75rem;
   border-radius: var(--raio-padrao);
@@ -2443,32 +2641,123 @@ h1, h2, h3 {
   font-weight: 600;
 }
 
+/* Legenda pequena, só no celular, avisando que o carrossel acima é
+   arrastável — mesmo padrão de ".estrutura__dica"/".depoimentos__dica"
+   ali em cima. Fica DENTRO da vitrine, por isso a margem de cima é
+   menor que nas outras (a vitrine já tem seu próprio respiro). */
+.instagram__dica {
+  margin-top: -1rem;
+  margin-bottom: 1.5rem;
+  color: var(--cor-vinho-medio);
+  font-size: 0.8rem;
+  text-align: center;
+}
+
+/* Setas de navegação do carrossel de posts — mesmo estilo visual de
+   ".estrutura__seta"/".depoimentos__seta" ali em cima, em classe
+   própria (o JavaScript pega a seta de cada carrossel por
+   "querySelector", que só acha a PRIMEIRA da página). */
+.instagram__seta {
+  position: absolute;
+  top: 42%;
+  transform: translateY(-50%);
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+  font-size: 1.4rem;
+  line-height: 1;
+  cursor: pointer;
+  box-shadow: 0 8px 20px -10px rgba(43, 16, 22, 0.55);
+  transition: opacity 0.2s ease, background-color 0.2s ease;
+}
+
+.instagram__seta:active {
+  background-color: var(--cor-vinho-escuro);
+}
+
+.instagram__seta--prev {
+  left: 0.35rem;
+}
+
+.instagram__seta--next {
+  right: 0.35rem;
+}
+
+.instagram__seta.is-desativada {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
 .instagram__cta {
   display: flex;
   justify-content: center;
 }
 
-/* A partir de tablets: depoimentos em 2 colunas, posts do Instagram em
-   3 colunas */
+/* A partir de tablets: os dois carrosséis (depoimentos e posts do
+   Instagram) mostram ~2/~2.5 itens por vez (mesmo tamanho usado no
+   carrossel de fotos da Estrutura em telas médias, ver
+   ".estrutura__item"), e as dicas "arraste" somem (a partir daqui dá
+   pra usar as setas também). */
 @media (min-width: 640px) {
-  .depoimentos__grid {
-    grid-template-columns: repeat(2, 1fr);
+  .depoimento-card {
+    width: 44%;
   }
 
-  .instagram__grid {
-    grid-template-columns: repeat(3, 1fr);
+  .depoimentos__dica {
+    display: none;
+  }
+
+  .instagram__post {
+    width: 38%;
+  }
+
+  .instagram__dica {
+    display: none;
   }
 }
 
-/* A partir de telas grandes: depoimentos em 3 colunas (1 card por
-   depoimento, cabem os 3 numa linha só), posts do Instagram em 4
-   colunas */
+/* A partir de telas grandes: os dois carrosséis DESFAZEM (os itens já
+   cabem numa linha só, sem precisar rolar) — voltam a ser grade
+   normal (3 colunas os depoimentos, 4 os posts do Instagram) e as
+   setas somem. */
 @media (min-width: 900px) {
   .depoimentos__grid {
+    display: grid;
     grid-template-columns: repeat(3, 1fr);
+    overflow-x: visible;
+    padding-inline: 0;
+  }
+
+  .depoimento-card {
+    flex: initial;
+    width: auto;
+  }
+
+  .depoimentos__seta {
+    display: none;
   }
 
   .instagram__grid {
+    display: grid;
     grid-template-columns: repeat(4, 1fr);
+    overflow-x: visible;
+    padding-inline: 0;
+    margin-bottom: 2.5rem;
+  }
+
+  .instagram__post {
+    flex: initial;
+    width: auto;
+  }
+
+  .instagram__seta {
+    display: none;
   }
 }

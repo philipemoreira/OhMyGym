@@ -533,33 +533,25 @@ document.addEventListener("DOMContentLoaded", function () {
   numerarGrupoParaCascata(
     document.querySelectorAll(".grade-horarios > .grade-horarios__dia")
   );
-  // Depoimentos e Instagram (Bloco 5, 14/09/2026) — mesma lógica dos
-  // cards de Diferenciais: não são carrossel (quebram linha normal),
-  // então dá pra numerar/observar cada item aqui mesmo, sem precisar
-  // da função "revelarGrupoAoEntrarNaTela" (essa é só pra grupos dentro
-  // de um carrossel com "overflow-x: auto", que não é o caso aqui).
-  numerarGrupoParaCascata(
-    document.querySelectorAll(".depoimentos__grid > .depoimento-card")
-  );
-  numerarGrupoParaCascata(
-    document.querySelectorAll(".instagram__grid > .instagram__post")
-  );
-  // A grade de ambientes da seção Estrutura (".estrutura__grid") NÃO
-  // entra na numeração/observação individual aqui — desde o ajuste de
-  // 09/09/2026 ela virou carrossel no celular (mesmo "overflow-x: auto"
-  // do filtro de modalidades e da galeria do espaço kids), então precisa
-  // da função "revelarGrupoAoEntrarNaTela" logo abaixo (observa o
-  // CONTAINER inteiro, não cada item sozinho) — ver o comentário grande
-  // ali explicando por quê. Numerar/observar aqui também causaria o
-  // mesmo bug já corrigido antes nos planos (itens escondidos pro lado
-  // no carrossel nunca "entrando" na tela sozinhos).
+  // A grade de ambientes da seção Estrutura (".estrutura__grid") e,
+  // desde 14/09/2026, os carrosséis de Depoimentos (".depoimentos__grid")
+  // e do Instagram (".instagram__grid") NÃO entram na numeração/
+  // observação individual aqui — os três viraram carrossel no
+  // celular/tablet (mesmo "overflow-x: auto" do filtro de modalidades e
+  // da galeria do espaço kids), então precisam da função
+  // "revelarGrupoAoEntrarNaTela" logo abaixo (observa o CONTAINER
+  // inteiro, não cada item sozinho) — ver o comentário grande ali
+  // explicando por quê. Numerar/observar aqui também causaria o mesmo
+  // bug já corrigido antes nos planos (itens escondidos pro lado no
+  // carrossel nunca "entrando" na tela sozinhos) — os posts continuam
+  // com fundo, aparência e "em breve" iguais, só a forma de detectar
+  // quando revelar que mudou.
 
   // Elementos "avulsos" ou já cobertos pela numeração acima — cada um
   // observado individualmente, revela assim que ENTRA ELE MESMO na tela.
   const elementosParaRevelar = document.querySelectorAll(
     ".section-heading, .card-diferencial, .card-modalidade-destaque, " +
-    ".grade-horarios__dia, .horario-funcionamento, " +
-    ".depoimento-card, .instagram__post"
+    ".grade-horarios__dia, .horario-funcionamento"
   );
 
   if (
@@ -660,6 +652,14 @@ document.addEventListener("DOMContentLoaded", function () {
   revelarGrupoAoEntrarNaTela(
     document.querySelectorAll(".estrutura__grid"),
     ".estrutura__item"
+  );
+  revelarGrupoAoEntrarNaTela(
+    document.querySelectorAll(".depoimentos__grid"),
+    ".depoimento-card"
+  );
+  revelarGrupoAoEntrarNaTela(
+    document.querySelectorAll(".instagram__grid"),
+    ".instagram__post"
   );
 
   // ===========================================================================
@@ -844,6 +844,27 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".estrutura__grid"),
     document.querySelector(".estrutura__seta--prev"),
     document.querySelector(".estrutura__seta--next")
+  );
+  // Carrossel de depoimentos (14/09/2026, pedido do Philipe) — só
+  // existe visualmente até 899px (a partir de 900px o CSS desfaz o
+  // carrossel e esconde as setas, ver style.css seção 12), mas ligar
+  // aqui sem "if" nenhum não tem problema: em tela grande o
+  // ".depoimentos__grid" simplesmente não tem overflow pra rolar
+  // (scrollWidth = clientWidth), então clicar nas setas escondidas
+  // (se de alguma forma fossem clicadas) não faria nada visível mesmo.
+  ativarCarrosselDeSetas(
+    document.querySelector(".depoimentos__grid"),
+    document.querySelector(".depoimentos__seta--prev"),
+    document.querySelector(".depoimentos__seta--next")
+  );
+  // Carrossel de posts do Instagram (14/09/2026, pedido do Philipe) —
+  // mesmo raciocínio do carrossel de depoimentos acima: só existe
+  // visualmente até 899px, mas ligar sem "if" não tem problema (em
+  // tela grande não tem overflow pra rolar).
+  ativarCarrosselDeSetas(
+    document.querySelector(".instagram__grid"),
+    document.querySelector(".instagram__seta--prev"),
+    document.querySelector(".instagram__seta--next")
   );
 
   /* -------------------------------------------------------------------
