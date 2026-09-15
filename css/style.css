@@ -2595,16 +2595,17 @@ h1, h2, h3 {
 }
 
 /* Cada "post" placeholder: quadrado (aspect-ratio 1/1, parecido com a
-   grade real do Instagram) — metade usa o ícone de câmera (foto),
-   metade usa o ícone de "play" (vídeo, ver HTML), deixando claro que
-   a área vai ter uma mistura dos dois tipos de conteúdo (pedido do
-   Philipe, 14/09/2026). De propósito NÃO usa o logo oficial do
-   Instagram nem imita as cores da marca dele (marca registrada da
-   Meta, não faz parte do manual de identidade da Oh My Gym).
+   grade real do Instagram) — a maioria usa o ícone de câmera (foto);
+   os de vídeo usam ".instagram__post--video" (ver abaixo), deixando
+   claro que a área vai ter uma mistura dos dois tipos de conteúdo. De
+   propósito NÃO usa o logo oficial do Instagram nem imita as cores da
+   marca dele (marca registrada da Meta, não faz parte do manual de
+   identidade da Oh My Gym).
    "min-width: 0" + "flex: 0 0 auto" + "width" + "scroll-snap-align":
-   mesmo raciocínio de ".estrutura__item"/".depoimento-card" — cada
-   post é um item do carrossel; a largura muda por tela (media queries
-   abaixo) e some a partir de 900px, quando o carrossel desfaz. */
+   mesmo raciocínio de ".estrutura__item" — cada post é um item do
+   carrossel; a largura aumenta um pouco no tablet+ (media query
+   abaixo), igual à Estrutura, e o carrossel NUNCA desfaz (ver
+   comentário grande no HTML — 15/09/2026, por causa dos 6 posts). */
 .instagram__post {
   display: flex;
   flex-direction: column;
@@ -2613,7 +2614,7 @@ h1, h2, h3 {
   gap: 0.5rem;
   min-width: 0;
   flex: 0 0 auto;
-  width: 68%;
+  width: 84%;
   scroll-snap-align: center;
   aspect-ratio: 1 / 1;
   padding: 0.75rem;
@@ -2639,6 +2640,54 @@ h1, h2, h3 {
 .instagram__post span {
   font-size: 0.75rem;
   font-weight: 600;
+}
+
+/* Post de VÍDEO: fundo vinho sólido (em vez da moldura clara/
+   tracejada dos posts de foto) + botão de play grande e redondo no
+   meio — pedido do Philipe (15/09/2026): "uma moldura que parece
+   mesmo que você pode dar play no vídeo". A ideia é parecer de
+   verdade uma miniatura de vídeo clicável, não só um ícone pequeno
+   igual o resto. */
+.instagram__post--video {
+  border-style: solid;
+  border-color: transparent;
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+}
+
+.instagram__post--video:hover {
+  background-color: var(--cor-vinho-escuro);
+}
+
+/* Círculo branco com o triângulo de play — maior que os ícones dos
+   posts de foto, de propósito, pra chamar mais atenção/parecer
+   clicável. Cresce um pouco no hover, reforçando a sensação de botão
+   de verdade. */
+.instagram__post-play {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 50%;
+  background-color: var(--cor-branco);
+  color: var(--cor-vinho-principal);
+  box-shadow: 0 6px 16px -6px rgba(43, 16, 22, 0.5);
+  transition: transform 0.2s ease;
+}
+
+.instagram__post--video:hover .instagram__post-play {
+  transform: scale(1.08);
+}
+
+.instagram__post-play svg {
+  width: 20px;
+  height: 20px;
+  /* Otimiza visualmente o triângulo de play: puxa 1px pra direita
+     porque um triângulo apontando pro lado parece "descentralizado"
+     num círculo perfeitamente centralizado (ilusão de ótica comum em
+     ícones de play) */
+  margin-left: 2px;
 }
 
 /* Legenda pequena, só no celular, avisando que o carrossel acima é
@@ -2700,11 +2749,15 @@ h1, h2, h3 {
   justify-content: center;
 }
 
-/* A partir de tablets: os dois carrosséis (depoimentos e posts do
-   Instagram) mostram ~2/~2.5 itens por vez (mesmo tamanho usado no
-   carrossel de fotos da Estrutura em telas médias, ver
-   ".estrutura__item"), e as dicas "arraste" somem (a partir daqui dá
-   pra usar as setas também). */
+/* A partir de tablets: o carrossel de depoimentos mostra ~2 cards por
+   vez e a dica "arraste" some (a partir daqui dá pra usar as setas
+   também). O carrossel do Instagram estreita pro mesmo tamanho usado
+   na Estrutura em telas médias+ (ver ".estrutura__item" — no máximo 2
+   por vez, em qualquer tela, pedido do Philipe de 10/09/2026 reforçado
+   em 15/09/2026 pro Instagram também) — mesmo tablet E desktop ficam
+   nesse tamanho, sem estreitar mais (ver comentário grande no HTML
+   sobre por que o Instagram NUNCA desfaz o carrossel, diferente de
+   Depoimentos). */
 @media (min-width: 640px) {
   .depoimento-card {
     width: 44%;
@@ -2715,7 +2768,7 @@ h1, h2, h3 {
   }
 
   .instagram__post {
-    width: 38%;
+    width: 44%;
   }
 
   .instagram__dica {
@@ -2723,10 +2776,11 @@ h1, h2, h3 {
   }
 }
 
-/* A partir de telas grandes: os dois carrosséis DESFAZEM (os itens já
-   cabem numa linha só, sem precisar rolar) — voltam a ser grade
-   normal (3 colunas os depoimentos, 4 os posts do Instagram) e as
-   setas somem. */
+/* A partir de telas grandes: só o carrossel de depoimentos DESFAZ (os
+   3 cards já cabem numa linha só, sem precisar rolar) — vira grade
+   normal de 3 colunas e as setas somem. O carrossel do Instagram
+   continua carrossel (não desfaz — ver comentário grande no HTML,
+   15/09/2026: 6 posts, "no máximo 2 por vez, em qualquer tela"). */
 @media (min-width: 900px) {
   .depoimentos__grid {
     display: grid;
@@ -2741,23 +2795,6 @@ h1, h2, h3 {
   }
 
   .depoimentos__seta {
-    display: none;
-  }
-
-  .instagram__grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    overflow-x: visible;
-    padding-inline: 0;
-    margin-bottom: 2.5rem;
-  }
-
-  .instagram__post {
-    flex: initial;
-    width: auto;
-  }
-
-  .instagram__seta {
     display: none;
   }
 }

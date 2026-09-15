@@ -1220,15 +1220,23 @@
            atenção"). -->
       <div class="instagram__vitrine">
 
-        <!-- Grade de posts placeholder — vira CARROSSEL no celular/tablet
-             (pedido do Philipe, 14/09/2026: "melhor ser tudo em
-             carrossel em telas menores" — mesmo padrão já aplicado nos
-             Depoimentos logo acima), volta a grade normal a partir de
-             900px. Alterna ícone de "câmera" (foto) e de "play"
-             (vídeo), pra já deixar claro que essa área vai ter uma
-             MISTURA de fotos e vídeos (pedido do Philipe, 14/09/2026:
-             "melhora onde vai ficar os vídeos e as fotos"). De
-             propósito NÃO usa o logo oficial do Instagram nem as
+        <!-- Grade de posts placeholder — CARROSSEL EM TODAS AS TELAS
+             (celular, tablet e desktop), mesmo padrão do carrossel de
+             fotos da Estrutura (não desfaz mais a partir de 900px como
+             antes — ajuste de 15/09/2026, pedido do Philipe: "pelo
+             menos 6 últimos post", e 6 itens não cabem bem numa grade
+             de 4 colunas sem sobrar fileira torta, então virou
+             carrossel de verdade, igual a Estrutura). Fotos maiores
+             (mesmo tamanho/raciocínio da Estrutura: no máximo 2 por
+             vez, em qualquer tela — pedido do Philipe, 15/09/2026:
+             "aumentar o tamanho das fotos... do instagram é igual").
+             Alterna ícone de "câmera" (foto) e uma moldura de "vídeo"
+             com botão de play bem destacado — fundo vinho sólido + play
+             branco grande no meio, pra parecer de verdade que dá pra
+             clicar (pedido do Philipe, 15/09/2026: "uma moldura que
+             parece mesmo que você pode dar play no vídeo"), deixando
+             claro que essa área vai ter uma MISTURA de fotos e vídeos.
+             De propósito NÃO usa o logo oficial do Instagram nem as
              cores/gradiente da marca dele (é marca registrada da Meta,
              não faz parte do manual de identidade da Oh My Gym — e a
              Milena restringe cor fora da paleta institucional). -->
@@ -1248,11 +1256,12 @@
             </div>
 
             <!-- Post 2: vídeo -->
-            <div class="instagram__post">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <circle cx="12" cy="12" r="9"></circle>
-                <path d="M10 8.3l6 3.7-6 3.7z" fill="currentColor" stroke="none"></path>
-              </svg>
+            <div class="instagram__post instagram__post--video">
+              <span class="instagram__post-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M9 7.2v9.6l8-4.8z"></path>
+                </svg>
+              </span>
               <span>Vídeo em breve</span>
             </div>
 
@@ -1266,13 +1275,34 @@
               <span>Foto em breve</span>
             </div>
 
-            <!-- Post 4: vídeo -->
+            <!-- Post 4: foto -->
             <div class="instagram__post">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                <circle cx="12" cy="12" r="9"></circle>
-                <path d="M10 8.3l6 3.7-6 3.7z" fill="currentColor" stroke="none"></path>
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <circle cx="8.5" cy="10" r="1.5"></circle>
+                <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
               </svg>
+              <span>Foto em breve</span>
+            </div>
+
+            <!-- Post 5: vídeo -->
+            <div class="instagram__post instagram__post--video">
+              <span class="instagram__post-play" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="currentColor">
+                  <path d="M9 7.2v9.6l8-4.8z"></path>
+                </svg>
+              </span>
               <span>Vídeo em breve</span>
+            </div>
+
+            <!-- Post 6: foto -->
+            <div class="instagram__post">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <circle cx="8.5" cy="10" r="1.5"></circle>
+                <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
+              </svg>
+              <span>Foto em breve</span>
             </div>
 
           </div>
