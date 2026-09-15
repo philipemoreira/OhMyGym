@@ -533,6 +533,12 @@ document.addEventListener("DOMContentLoaded", function () {
   numerarGrupoParaCascata(
     document.querySelectorAll(".grade-horarios > .grade-horarios__dia")
   );
+  // Cards da seção Contato (Bloco 6, 15/09/2026) — grade que quebra
+  // linha normal (sem carrossel), mesmo raciocínio dos cards de
+  // Diferenciais logo acima.
+  numerarGrupoParaCascata(
+    document.querySelectorAll(".contato__grid > .contato__card")
+  );
   // A grade de ambientes da seção Estrutura (".estrutura__grid") e,
   // desde 14/09/2026, os carrosséis de Depoimentos (".depoimentos__grid")
   // e do Instagram (".instagram__grid") NÃO entram na numeração/
@@ -551,7 +557,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // observado individualmente, revela assim que ENTRA ELE MESMO na tela.
   const elementosParaRevelar = document.querySelectorAll(
     ".section-heading, .card-diferencial, .card-modalidade-destaque, " +
-    ".grade-horarios__dia, .horario-funcionamento"
+    ".grade-horarios__dia, .horario-funcionamento, .contato__card"
   );
 
   if (

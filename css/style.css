@@ -2804,3 +2804,298 @@ h1, h2, h3 {
     width: 28%;
   }
 }
+
+
+/* =====================================================================
+   13. SEÇÃO CONTATO ("Onde nos encontrar") — Bloco 6, 15/09/2026
+   ===================================================================== */
+
+/* Fundo "--cor-fundo-claro": alterna com o branco da seção Instagram
+   logo acima, mesmo padrão de alternância já usado no resto do site. */
+.contato {
+  background-color: var(--cor-fundo-claro);
+  padding-block: var(--espaco-secao);
+}
+
+.contato__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+/* Card de informação (endereço / horário / WhatsApp) — fundo branco pra
+   contrastar com o "--cor-fundo-claro" da seção (mesmo raciocínio de
+   contraste já usado em Estrutura/Depoimentos/Instagram, só invertido:
+   lá o card ficava mais escuro que o fundo, aqui mais claro). Mesmo
+   estilo visual de ".card-diferencial" (ícone redondo + título + texto),
+   só que num componente próprio porque o fundo do card é diferente. */
+.contato__card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  padding: 2rem 1.75rem;
+  border-radius: var(--raio-padrao);
+  background-color: var(--cor-branco);
+  box-shadow: 0 10px 30px -20px rgba(43, 16, 22, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.contato__card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px -18px rgba(43, 16, 22, 0.45);
+}
+
+.contato__card-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 52px;
+  height: 52px;
+  margin-bottom: 1.25rem;
+  border-radius: 50%;
+  background-color: rgba(110, 33, 56, 0.1);
+  color: var(--cor-vinho-principal);
+}
+
+.contato__card-icon svg {
+  width: 26px;
+  height: 26px;
+}
+
+.contato__card-title {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+}
+
+.contato__card-text {
+  color: var(--cor-vinho-medio);
+  font-size: 0.95rem;
+}
+
+/* Lista de horário reaproveitada aqui (".horario-funcionamento__lista",
+   já estilizada na seção Modalidades) — só tira a margem de cima extra
+   que ela tinha lá (nesse card ela já é o primeiro conteúdo depois do
+   título, não precisa de respiro adicional).
+   IMPORTANTE: lá em Modalidades esse componente vive dentro de um card
+   de fundo vinho SÓLIDO (".horario-funcionamento"), por isso o texto
+   original é branco. Aqui o card é BRANCO (ver ".contato__card" acima)
+   — sem esse ajuste o texto ficaria branco em cima de branco,
+   invisível. Corrigido nos overrides abaixo antes de entregar (achado
+   no teste, não reportado pelo Philipe). Também deixa a linha
+   "dia / hora" quebrar (flex-wrap) em vez de estourar a largura do
+   card nos tablets (2 cards por linha, ~640px), onde o espaço fica
+   mais apertado do que no card largo original de Modalidades. */
+.contato__card-lista {
+  margin-top: 0;
+  width: 100%;
+}
+
+/* Sobrescreve a grade 2 colunas que ".horario-funcionamento__lista"
+   ganha a partir de 640px (ver seção 9, pensada pro card LARGO
+   original de Modalidades) — aqui o card é bem mais estreito (1 de 3
+   numa grade), então lista em coluna única (1 por linha) coube melhor
+   em todos os tamanhos testados. Seletor com 2 classes (mais específico
+   que a regra de 1 classe que está sobrescrevendo) em vez de
+   "!important". */
+.contato__card .contato__card-lista {
+  display: flex;
+  flex-direction: column;
+}
+
+.contato__card-lista li {
+  flex-wrap: wrap;
+  border-bottom-color: rgba(110, 33, 56, 0.15);
+}
+
+.contato__card-lista .horario-funcionamento__dia {
+  color: var(--cor-vinho-escuro);
+}
+
+.contato__card-lista .horario-funcionamento__hora {
+  color: var(--cor-vinho-medio);
+  text-align: left;
+}
+
+.contato__card-btn {
+  margin-top: 1.5rem;
+}
+
+/* A partir de tablets: os 3 cards ficam 2 por linha (o 3º sobra sozinho
+   numa linha própria) — mesmo padrão já usado em ".diferenciais__grid". */
+@media (min-width: 640px) {
+  .contato__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* A partir de desktop: os 3 cards cabem numa linha só. */
+@media (min-width: 900px) {
+  .contato__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+
+/* =====================================================================
+   14. RODAPÉ — Bloco 6, 15/09/2026
+   ===================================================================== */
+
+/* Fundo vinho escuro sólido — fecha o site com a cor mais forte da
+   marca, mesmo raciocínio de "âncora visual" já usado nos cards de
+   destaque (".card-diferencial--destaque", ".btn--whatsapp" etc.):
+   nunca usa o verde oficial do WhatsApp, tudo dentro da paleta vinho. */
+.rodape {
+  background-color: var(--cor-vinho-escuro);
+  color: var(--cor-rosa-claro);
+}
+
+.rodape__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2.5rem;
+  padding-block: var(--espaco-secao);
+}
+
+.rodape__marca {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.rodape__logo {
+  width: 160px;
+}
+
+.rodape__frase {
+  font-family: var(--fonte-titulo);
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--cor-branco);
+}
+
+.rodape__coluna {
+  min-width: 0;
+}
+
+.rodape__titulo {
+  font-family: var(--fonte-corpo);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--cor-branco);
+  margin-bottom: 0.9rem;
+}
+
+.rodape__texto {
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+}
+
+.rodape__cta {
+  margin-bottom: 1rem;
+}
+
+.rodape__rede {
+  display: block;
+  width: fit-content;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--cor-branco);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.rodape__rede:hover {
+  color: var(--cor-rosa-claro);
+}
+
+/* Faixa fina de créditos, no fim do rodapé, separada por uma linha
+   sutil. O crédito do Philipe fica pequeno e com opacidade reduzida de
+   propósito — pedido dele: "não pode ser destacado/chamativo", o foco
+   visual do rodapé continua sendo a Oh My Gym. */
+.rodape__creditos {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.rodape__creditos-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  padding-block: 1.25rem;
+  font-size: 0.78rem;
+  opacity: 0.65;
+}
+
+.rodape__creditos-inner a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rodape__creditos-inner a:hover {
+  opacity: 0.85;
+}
+
+/* Breakpoints iguais ao resto do site (2 colunas no tablet, 3 no
+   desktop — mesmo padrão de ".diferenciais__grid"). Testado e corrigido
+   antes de entregar: com só 1 breakpoint em 640px direto pra 3 colunas,
+   a 3ª coluna ("Fale com a gente") ficava estreita demais pro botão
+   "Falar no WhatsApp" (que não quebra linha, ver ".btn") e estourava a
+   largura da tela por 7px num teste de 640px de largura — corrigido
+   dando mais espaço no tablet (2 colunas) antes de ir pra 3. */
+@media (min-width: 640px) {
+  .rodape__inner {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .rodape__creditos-inner {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+@media (min-width: 900px) {
+  .rodape__inner {
+    grid-template-columns: 1.2fr 1fr 1fr;
+  }
+}
+
+
+/* =====================================================================
+   15. BOTÃO FLUTUANTE DE WHATSAPP — Bloco 6, 15/09/2026
+   ===================================================================== */
+
+/* Fixo no canto inferior direito, em cima de qualquer seção, em
+   qualquer tamanho de tela — diferente do ícone do cabeçalho mobile
+   (".site-header__whatsapp-mobile"), que some/aparece junto com o
+   cabeçalho, este aqui fica sempre visível, mesmo rolando a página.
+   z-index 40: fica acima do conteúdo normal das seções, mas abaixo do
+   cabeçalho (z-index 50) e da caixinha de confirmação (z-index 1000). */
+.whatsapp-flutuante {
+  position: fixed;
+  right: 1.25rem;
+  bottom: 1.25rem;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 50%;
+  background-color: var(--cor-vinho-principal);
+  color: var(--cor-branco);
+  box-shadow: 0 10px 26px -10px rgba(43, 16, 22, 0.6);
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.whatsapp-flutuante:hover {
+  transform: translateY(-3px) scale(1.05);
+  background-color: var(--cor-vinho-escuro);
+}
+
+.whatsapp-flutuante svg {
+  width: 28px;
+  height: 28px;
+}
