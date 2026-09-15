@@ -2603,9 +2603,11 @@ h1, h2, h3 {
    identidade da Oh My Gym).
    "min-width: 0" + "flex: 0 0 auto" + "width" + "scroll-snap-align":
    mesmo raciocínio de ".estrutura__item" — cada post é um item do
-   carrossel; a largura aumenta um pouco no tablet+ (media query
-   abaixo), igual à Estrutura, e o carrossel NUNCA desfaz (ver
-   comentário grande no HTML — 15/09/2026, por causa dos 6 posts). */
+   carrossel; a largura aumenta no tablet (media query abaixo, igual à
+   Estrutura) e diminui de novo no desktop pra caber 3 por vez (pedido
+   do Philipe, 15/09/2026: "3 no computador, nas telas menores deixa
+   do jeito que estava" — ver media query de 900px). Carrossel NUNCA
+   desfaz (ver comentário grande no HTML sobre os 6 posts). */
 .instagram__post {
   display: flex;
   flex-direction: column;
@@ -2751,13 +2753,10 @@ h1, h2, h3 {
 
 /* A partir de tablets: o carrossel de depoimentos mostra ~2 cards por
    vez e a dica "arraste" some (a partir daqui dá pra usar as setas
-   também). O carrossel do Instagram estreita pro mesmo tamanho usado
-   na Estrutura em telas médias+ (ver ".estrutura__item" — no máximo 2
-   por vez, em qualquer tela, pedido do Philipe de 10/09/2026 reforçado
-   em 15/09/2026 pro Instagram também) — mesmo tablet E desktop ficam
-   nesse tamanho, sem estreitar mais (ver comentário grande no HTML
-   sobre por que o Instagram NUNCA desfaz o carrossel, diferente de
-   Depoimentos). */
+   também). O do Instagram estreita pro mesmo tamanho usado na
+   Estrutura (no máximo 2 por vez) — igual já era antes; o ajuste pra
+   3 por vez pedido pelo Philipe é só no desktop (ver media query de
+   900px, mais abaixo). */
 @media (min-width: 640px) {
   .depoimento-card {
     width: 44%;
@@ -2780,7 +2779,10 @@ h1, h2, h3 {
    3 cards já cabem numa linha só, sem precisar rolar) — vira grade
    normal de 3 colunas e as setas somem. O carrossel do Instagram
    continua carrossel (não desfaz — ver comentário grande no HTML,
-   15/09/2026: 6 posts, "no máximo 2 por vez, em qualquer tela"). */
+   15/09/2026: 6 posts), mas no desktop os cards ficam menores pra
+   mostrar 3 por vez em vez de 2 — pedido à parte do Philipe
+   (15/09/2026: "3 no computador, nas telas menores deixa do jeito que
+   estava"), só a partir daqui. */
 @media (min-width: 900px) {
   .depoimentos__grid {
     display: grid;
@@ -2796,5 +2798,9 @@ h1, h2, h3 {
 
   .depoimentos__seta {
     display: none;
+  }
+
+  .instagram__post {
+    width: 28%;
   }
 }
