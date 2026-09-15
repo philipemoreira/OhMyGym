@@ -534,24 +534,27 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".grade-horarios > .grade-horarios__dia")
   );
   // A grade de ambientes da seção Estrutura (".estrutura__grid") e,
-  // desde 14/09/2026, os carrosséis de Depoimentos (".depoimentos__grid")
-  // e do Instagram (".instagram__grid") NÃO entram na numeração/
-  // observação individual aqui — os três viraram carrossel no
-  // celular/tablet (mesmo "overflow-x: auto" do filtro de modalidades e
-  // da galeria do espaço kids), então precisam da função
+  // desde 14/09/2026, o carrossel do Instagram (".instagram__grid") NÃO
+  // entram na numeração/observação individual aqui — os dois viraram
+  // carrossel no celular/tablet (mesmo "overflow-x: auto" do filtro de
+  // modalidades e da galeria do espaço kids), então precisam da função
   // "revelarGrupoAoEntrarNaTela" logo abaixo (observa o CONTAINER
   // inteiro, não cada item sozinho) — ver o comentário grande ali
   // explicando por quê. Numerar/observar aqui também causaria o mesmo
   // bug já corrigido antes nos planos (itens escondidos pro lado no
-  // carrossel nunca "entrando" na tela sozinhos) — os posts continuam
-  // com fundo, aparência e "em breve" iguais, só a forma de detectar
-  // quando revelar que mudou.
+  // carrossel nunca "entrando" na tela sozinhos).
+  //
+  // Depoimentos (15/09/2026, pedido do Philipe): o carrossel de 3 cards
+  // saiu e virou um único bloco "em breve" (".depoimentos__em-breve"),
+  // então ele não precisa mais da observação em grupo acima — entrou na
+  // lista "avulsos" logo abaixo, igual a ".horario-funcionamento".
 
   // Elementos "avulsos" ou já cobertos pela numeração acima — cada um
   // observado individualmente, revela assim que ENTRA ELE MESMO na tela.
   const elementosParaRevelar = document.querySelectorAll(
     ".section-heading, .card-diferencial, .card-modalidade-destaque, " +
-    ".grade-horarios__dia, .horario-funcionamento, .contato__info, .contato__mapa"
+    ".grade-horarios__dia, .horario-funcionamento, .contato__info, .contato__mapa, " +
+    ".depoimentos__em-breve"
   );
 
   if (
@@ -652,10 +655,6 @@ document.addEventListener("DOMContentLoaded", function () {
   revelarGrupoAoEntrarNaTela(
     document.querySelectorAll(".estrutura__grid"),
     ".estrutura__item"
-  );
-  revelarGrupoAoEntrarNaTela(
-    document.querySelectorAll(".depoimentos__grid"),
-    ".depoimento-card"
   );
   revelarGrupoAoEntrarNaTela(
     document.querySelectorAll(".instagram__grid"),
@@ -845,22 +844,17 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".estrutura__seta--prev"),
     document.querySelector(".estrutura__seta--next")
   );
-  // Carrossel de depoimentos (14/09/2026, pedido do Philipe) — só
+  // Carrossel de posts do Instagram (14/09/2026, pedido do Philipe) — só
   // existe visualmente até 899px (a partir de 900px o CSS desfaz o
   // carrossel e esconde as setas, ver style.css seção 12), mas ligar
   // aqui sem "if" nenhum não tem problema: em tela grande o
-  // ".depoimentos__grid" simplesmente não tem overflow pra rolar
-  // (scrollWidth = clientWidth), então clicar nas setas escondidas
-  // (se de alguma forma fossem clicadas) não faria nada visível mesmo.
-  ativarCarrosselDeSetas(
-    document.querySelector(".depoimentos__grid"),
-    document.querySelector(".depoimentos__seta--prev"),
-    document.querySelector(".depoimentos__seta--next")
-  );
-  // Carrossel de posts do Instagram (14/09/2026, pedido do Philipe) —
-  // mesmo raciocínio do carrossel de depoimentos acima: só existe
-  // visualmente até 899px, mas ligar sem "if" não tem problema (em
-  // tela grande não tem overflow pra rolar).
+  // ".instagram__grid" simplesmente não tem overflow pra rolar
+  // (scrollWidth = clientWidth), então clicar nas setas escondidas (se
+  // de alguma forma fossem clicadas) não faria nada visível mesmo.
+  //
+  // O carrossel de depoimentos que existia aqui saiu em 15/09/2026 —
+  // virou um único bloco "em breve" sem nenhum carrossel (pedido do
+  // Philipe), então essa chamada foi removida.
   ativarCarrosselDeSetas(
     document.querySelector(".instagram__grid"),
     document.querySelector(".instagram__seta--prev"),

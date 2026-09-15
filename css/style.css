@@ -2274,11 +2274,9 @@ h1, h2, h3 {
    Philipe, o HTML dela foi movido pra DENTRO da seção "Estrutura" (ver
    seção 11 acima — ".estrutura__depoimentos" é o bloco que a envolve
    lá), pra reduzir um item do menu e "encorpar" a seção de Estrutura
-   enquanto os depoimentos reais não chegam. As classes de grade/card
-   dos depoimentos continuam aqui embaixo (não valia a pena mover todo
-   o bloco de CSS só por causa disso), mas agora herdam o fundo da
-   seção Estrutura (--cor-fundo-claro) em vez de terem o próprio fundo —
-   por isso o card do depoimento passou a usar --cor-branco (precisa de
+   enquanto os depoimentos reais não chegam. O bloco herda o fundo da
+   seção Estrutura (--cor-fundo-claro) em vez de ter fundo próprio —
+   por isso a mensagem "em breve" usa --cor-branco (precisa de
    contraste contra o fundo claro do pai, mesmo raciocínio já usado na
    ".estrutura__moldura" da galeria de fotos ali em cima). Instagram
    continua com seção própria, mas o fundo dela também inverteu (pra
@@ -2286,11 +2284,17 @@ h1, h2, h3 {
    do site, já que agora quem vem antes dela é a seção Estrutura inteira
    (fundo claro) em vez da antiga seção Depoimentos (que era branca).
 
-   Ajuste de 14/09/2026 (mesmo dia, depois): os depoimentos ganharam
-   carrossel no celular/tablet, a pedido do Philipe — mesmo padrão
-   técnico do carrossel de fotos da Estrutura, mas desfazendo a rolagem
-   a partir de 900px (grade normal de 3 colunas), já que só são 3 cards
-   e cabem numa linha só em tela grande. */
+   Ajuste de 15/09/2026: o carrossel de 3 cards "em breve" foi
+   SIMPLIFICADO pra uma única mensagem central, sem carrossel — pedido
+   do Philipe ("só deixa uma mensagem que em breve dizendo que logo
+   terá algo ali, sem carrosel, tipo, não precisa, porque não tem
+   depoimentos ainda"). As classes antigas do carrossel
+   (".depoimentos__carrossel", ".depoimentos__grid", ".depoimento-card",
+   ".depoimentos__seta", ".depoimentos__dica") foram removidas — quando
+   a Milena mandar os depoimentos de verdade, é só substituir
+   ".depoimentos__em-breve" por uma grade/carrossel de cards de
+   depoimento de verdade (mesmo raciocínio dos outros carrosséis do
+   site, se fizer sentido nessa hora). */
 
 /* Espaço entre a galeria de fotos e o bloco de depoimentos, já que os
    dois agora dividem a mesma seção/fundo (sem essa margem, os dois
@@ -2299,147 +2303,39 @@ h1, h2, h3 {
   margin-top: var(--espaco-secao);
 }
 
-/* Envolve o carrossel de depoimentos + as duas setas — precisa de
-   "position: relative" pra elas ficarem por cima dos cards (mesmo
-   padrão de ".estrutura__carrossel" ali em cima). */
-.depoimentos__carrossel {
-  position: relative;
-}
-
-/* Grade de cards de depoimento — vira CARROSSEL no celular/tablet
-   (pedido do Philipe, 14/09/2026: "na tela menor, faz carrossel
-   também, fica melhor"), mesmo padrão técnico do carrossel de fotos da
-   Estrutura ali em cima (rolagem horizontal com "encaixe" + espiadinha
-   do vizinho nas bordas). A partir de telas grandes (900px+) volta a
-   virar uma grade normal, sem rolagem — os 3 cards já cabem numa linha
-   só lado a lado, então não tem motivo pra manter o carrossel lá (ver
-   media queries no fim desta seção, que desfazem o carrossel). */
-.depoimentos__grid {
-  display: flex;
-  gap: 1rem;
-  overflow-x: auto;
-  scroll-snap-type: x mandatory;
-  scroll-padding-inline: 8%;
-  padding-inline: 8%;
-  padding-bottom: 0.15rem;
-  scrollbar-width: none; /* Firefox */
-}
-
-.depoimentos__grid::-webkit-scrollbar {
-  display: none; /* Chrome, Safari, Edge */
-}
-
-/* Card "moldura pronta" de depoimento — mesmo espírito visual das
-   molduras de foto (borda tracejada, centralizado, avisando "em
-   breve"), só que em formato de card de texto em vez de moldura de
-   imagem. Sem nome/foto/fala inventados — só o aviso honesto de que o
-   depoimento real chega assim que a Milena mandar.
-   "min-width: 0" + "flex: 0 0 auto" + "width" + "scroll-snap-align":
-   mesmo raciocínio de ".estrutura__item" — cada card é um item do
-   carrossel; a largura muda por tela (media queries abaixo) e some
-   totalmente a partir de 900px, quando a seção 12 desfaz o carrossel. */
-.depoimento-card {
+/* Mensagem única "em breve" — mesmo espírito visual das molduras
+   tracejadas usadas no resto do site enquanto o conteúdo real não
+   chega, só que centralizada e sem carrossel/setas, já que é uma peça
+   só (não faz sentido rolar pra "ver mais" quando só tem uma
+   mensagem). */
+.depoimentos__em-breve {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.6rem;
-  min-width: 0;
-  flex: 0 0 auto;
-  width: 84%;
-  scroll-snap-align: center;
-  padding: 2rem 1.75rem;
+  gap: 0.75rem;
+  max-width: 40ch;
+  margin-inline: auto;
+  padding: clamp(2rem, 5vw, 2.75rem) 1.75rem;
   border-radius: var(--raio-padrao);
   border: 1.5px dashed rgba(110, 33, 56, 0.25);
   background-color: var(--cor-branco);
   color: var(--cor-vinho-medio);
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
-.depoimento-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 14px 30px -20px rgba(43, 16, 22, 0.35);
-  border-color: rgba(110, 33, 56, 0.45);
-}
-
-.depoimento-card__icone {
+.depoimentos__em-breve-icone {
   display: flex;
   color: var(--cor-rosa-queimado);
 }
 
-.depoimento-card__icone svg {
-  width: 30px;
-  height: 30px;
+.depoimentos__em-breve-icone svg {
+  width: 32px;
+  height: 32px;
 }
 
-.depoimento-card__titulo {
-  color: var(--cor-vinho-escuro);
-  font-size: 1rem;
-  font-weight: 600;
-}
-
-.depoimento-card__texto {
-  font-size: 0.9rem;
+.depoimentos__em-breve p {
+  font-size: 0.95rem;
   line-height: 1.5;
-  max-width: 32ch;
-}
-
-/* Legenda pequena, só no celular, avisando que o carrossel acima é
-   arrastável — some a partir de 640px (mesmo padrão de
-   ".estrutura__dica" ali em cima). */
-.depoimentos__dica {
-  margin-top: 0.85rem;
-  color: var(--cor-vinho-medio);
-  font-size: 0.8rem;
-  text-align: center;
-}
-
-/* Setas de navegação do carrossel de depoimentos — mesmo estilo visual
-   de ".estrutura__seta" ali em cima, mas em classe própria (não dá pra
-   reaproveitar a mesma classe: o JavaScript pega a seta de cada
-   carrossel por "querySelector", que só acha a PRIMEIRA da página, e
-   agora tem dois carrosséis diferentes na mesma seção). Único ajuste:
-   "top: 50%" em vez de "42%", porque aqui o card inteiro é só uma
-   coisa só (não tem legenda separada embaixo puxando o centro visual
-   pra cima, como acontece na moldura de foto). Some a partir de 900px
-   junto com o resto do carrossel (ver media query no fim desta
-   seção). */
-.depoimentos__seta {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 2.5rem;
-  height: 2.5rem;
-  border: none;
-  border-radius: 50%;
-  background-color: var(--cor-vinho-principal);
-  color: var(--cor-branco);
-  font-size: 1.4rem;
-  line-height: 1;
-  cursor: pointer;
-  box-shadow: 0 8px 20px -10px rgba(43, 16, 22, 0.55);
-  transition: opacity 0.2s ease, background-color 0.2s ease;
-}
-
-.depoimentos__seta:active {
-  background-color: var(--cor-vinho-escuro);
-}
-
-.depoimentos__seta--prev {
-  left: 0.35rem;
-}
-
-.depoimentos__seta--next {
-  right: 0.35rem;
-}
-
-.depoimentos__seta.is-desativada {
-  opacity: 0.35;
-  pointer-events: none;
 }
 
 /* --- Seção Instagram --- */
@@ -2506,6 +2402,13 @@ h1, h2, h3 {
   display: flex;
   gap: 1rem;
   overflow-x: auto;
+  overflow-y: hidden;
+  /* "pan-x": no touch (celular), só deixa o gesto horizontal ser
+     capturado por esse carrossel — um arrasto vertical passa direto
+     pra rolagem normal da página. Sem isso, um arrasto na diagonal
+     podia ser "roubado" pelo carrossel (pedido do Philipe, 15/09/2026:
+     "não quero isso, só quero que arraste para o lado"). */
+  touch-action: pan-x;
   scroll-snap-type: x mandatory;
   scroll-padding-inline: 8%;
   padding-inline: 8%;
@@ -2533,63 +2436,55 @@ h1, h2, h3 {
    do jeito que estava" — ver media query de 900px). Carrossel NUNCA
    desfaz (ver comentário grande no HTML sobre os 6 posts). */
 .instagram__post {
+  position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 0.5rem;
   min-width: 0;
   flex: 0 0 auto;
   width: 84%;
   scroll-snap-align: center;
-  aspect-ratio: 1 / 1;
-  padding: 0.75rem;
+  /* Era "1/1" (quadrado) — trocado pra "4/5" em 15/09/2026 (pedido do
+     Philipe: "aumente a altura de onde os post vai ficar, tá muito
+     pequeno"), o que também bate melhor com os posts REAIS agora
+     usados aqui (são Reels, formato vertical). */
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
   border-radius: var(--raio-padrao);
-  border: 1.5px dashed rgba(110, 33, 56, 0.25);
-  background-color: var(--cor-branco);
+  background-color: var(--cor-vinho-principal);
   color: var(--cor-vinho-medio);
   text-align: center;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  box-shadow: 0 10px 26px -18px rgba(43, 16, 22, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .instagram__post:hover {
   transform: translateY(-4px);
   box-shadow: 0 14px 30px -20px rgba(43, 16, 22, 0.35);
-  border-color: rgba(110, 33, 56, 0.45);
 }
 
-.instagram__post svg {
-  width: 28px;
-  height: 28px;
+.instagram__post img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.instagram__post span {
-  font-size: 0.75rem;
-  font-weight: 600;
-}
-
-/* Post de VÍDEO: fundo vinho sólido (em vez da moldura clara/
-   tracejada dos posts de foto) + botão de play grande e redondo no
-   meio — pedido do Philipe (15/09/2026): "uma moldura que parece
-   mesmo que você pode dar play no vídeo". A ideia é parecer de
-   verdade uma miniatura de vídeo clicável, não só um ícone pequeno
-   igual o resto. */
-.instagram__post--video {
-  border-style: solid;
-  border-color: transparent;
-  background-color: var(--cor-vinho-principal);
-  color: var(--cor-branco);
-}
-
+/* Post de VÍDEO: botão de play grande e redondo, centralizado por
+   cima da capa real do post — pedido do Philipe (15/09/2026): "uma
+   moldura que parece mesmo que você pode dar play no vídeo". Todos os
+   6 posts atuais são Reels, então todos usam essa moldura. */
 .instagram__post--video:hover {
   background-color: var(--cor-vinho-escuro);
 }
 
-/* Círculo branco com o triângulo de play — maior que os ícones dos
-   posts de foto, de propósito, pra chamar mais atenção/parecer
-   clicável. Cresce um pouco no hover, reforçando a sensação de botão
-   de verdade. */
+/* Círculo branco com o triângulo de play, centralizado por cima da
+   foto de capa — cresce um pouco no hover, reforçando a sensação de
+   botão de verdade. */
 .instagram__post-play {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2675,21 +2570,13 @@ h1, h2, h3 {
   justify-content: center;
 }
 
-/* A partir de tablets: o carrossel de depoimentos mostra ~2 cards por
-   vez e a dica "arraste" some (a partir daqui dá pra usar as setas
-   também). O do Instagram estreita pro mesmo tamanho usado na
-   Estrutura (no máximo 2 por vez) — igual já era antes; o ajuste pra
-   3 por vez pedido pelo Philipe é só no desktop (ver media query de
-   900px, mais abaixo). */
+/* A partir de tablets: o do Instagram estreita pro mesmo tamanho
+   usado na Estrutura (no máximo 2 por vez) — igual já era antes; o
+   ajuste pra 3 por vez pedido pelo Philipe é só no desktop (ver media
+   query de 900px, mais abaixo). Depoimentos não tem mais nada
+   responsivo aqui desde 15/09/2026 (virou mensagem única, sem
+   carrossel). */
 @media (min-width: 640px) {
-  .depoimento-card {
-    width: 44%;
-  }
-
-  .depoimentos__dica {
-    display: none;
-  }
-
   .instagram__post {
     width: 44%;
   }
@@ -2699,31 +2586,13 @@ h1, h2, h3 {
   }
 }
 
-/* A partir de telas grandes: só o carrossel de depoimentos DESFAZ (os
-   3 cards já cabem numa linha só, sem precisar rolar) — vira grade
-   normal de 3 colunas e as setas somem. O carrossel do Instagram
-   continua carrossel (não desfaz — ver comentário grande no HTML,
-   15/09/2026: 6 posts), mas no desktop os cards ficam menores pra
-   mostrar 3 por vez em vez de 2 — pedido à parte do Philipe
-   (15/09/2026: "3 no computador, nas telas menores deixa do jeito que
-   estava"), só a partir daqui. */
+/* A partir de telas grandes: o carrossel do Instagram continua
+   carrossel (não desfaz — ver comentário grande no HTML, 15/09/2026: 6
+   posts), mas no desktop os cards ficam menores pra mostrar 3 por vez
+   em vez de 2 — pedido à parte do Philipe (15/09/2026: "3 no
+   computador, nas telas menores deixa do jeito que estava"), só a
+   partir daqui. */
 @media (min-width: 900px) {
-  .depoimentos__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    overflow-x: visible;
-    padding-inline: 0;
-  }
-
-  .depoimento-card {
-    flex: initial;
-    width: auto;
-  }
-
-  .depoimentos__seta {
-    display: none;
-  }
-
   .instagram__post {
     width: 28%;
   }
