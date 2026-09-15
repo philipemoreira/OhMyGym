@@ -100,66 +100,30 @@
         Falar no WhatsApp
       </a>
 
-      <!-- Ícone de WhatsApp + hambúrguer, agrupados num wrapper só —
-           pedido do Philipe (04/09/2026): no mobile o botão "Falar no
-           WhatsApp" do cabeçalho fica escondido (some junto com o
-           menu completo, só aparece depois de abrir o menu), então
-           esse ícone dá um acesso rápido direto na barra, do lado do
-           hambúrguer, sem precisar abrir o menu primeiro. Ao clicar,
-           mostra uma confirmação (".confirmar-whatsapp", ver fim do
-           body) antes de abrir o WhatsApp de verdade — evita toque
-           sem querer. (O wrapper existe pra manter os dois grudados
-           um no outro à direita — sem ele, o "justify-content:
-           space-between" do cabeçalho jogaria o ícone pro meio da
-           barra, longe do hambúrguer.) -->
-      <div class="site-header__acoes-mobile">
-        <a
-          href="https://wa.me/554488488888?text=Oi!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20a%20Oh%20My%20Gym"
-          class="site-header__whatsapp-mobile"
-          id="whatsapp-mobile-topo"
-          aria-label="Falar no WhatsApp"
-          target="_blank"
-          rel="noopener"
-        >
-          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.44 1.26 4.88L2 22l5.25-1.28c1.38.72 2.95 1.13 4.6 1.13h.01c5.52 0 10.02-4.48 10.02-10S17.56 2 12.04 2Zm5.87 14.24c-.25.7-1.45 1.33-2 1.42-.51.08-1.15.11-1.86-.12-.43-.13-.98-.32-1.68-.63-2.96-1.28-4.9-4.25-5.04-4.45-.15-.2-1.21-1.61-1.21-3.07 0-1.46.77-2.18 1.04-2.48.27-.3.6-.37.8-.37.2 0 .4 0 .57.01.18.01.43-.07.68.52.25.6.86 2.06.94 2.21.08.15.13.33.03.53-.1.2-.15.33-.3.5-.15.18-.31.4-.44.53-.15.15-.3.31-.13.6.17.3.77 1.27 1.66 2.06 1.14 1.02 2.1 1.34 2.4 1.49.3.15.47.13.65-.08.18-.2.76-.88.96-1.18.2-.3.4-.25.67-.15.28.1 1.75.82 2.05.97.3.15.5.22.57.35.08.13.08.73-.17 1.43Z" />
-          </svg>
-        </a>
-
-        <!-- Botão "hambúrguer" que aparece só no mobile para abrir o menu -->
-        <button
-          class="nav-toggle"
-          id="nav-toggle"
-          aria-label="Abrir menu"
-          aria-expanded="false"
-          aria-controls="nav-menu"
-        >
-          <span class="nav-toggle__bar"></span>
-          <span class="nav-toggle__bar"></span>
-          <span class="nav-toggle__bar"></span>
-        </button>
-      </div>
+      <!-- Ícone de WhatsApp ao lado do hambúrguer — REMOVIDO em
+           15/09/2026 (pedido do Philipe: "é o botão que fica no
+           celular, do lado das três barrinha"). Motivo: agora existe o
+           botão flutuante de WhatsApp (Bloco 6), sempre visível em
+           qualquer tela/rolagem — esse ícone ficou redundante. O
+           wrapper ".site-header__acoes-mobile" existia só pra manter
+           os dois grudados um no outro; como sobrou só o hambúrguer,
+           o wrapper também saiu (não tinha mais função). A caixinha de
+           confirmação (".confirmar-whatsapp") também foi removida
+           inteira — ela só existia pra esse ícone. -->
+      <button
+        class="nav-toggle"
+        id="nav-toggle"
+        aria-label="Abrir menu"
+        aria-expanded="false"
+        aria-controls="nav-menu"
+      >
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+        <span class="nav-toggle__bar"></span>
+      </button>
 
     </div>
   </header>
-
-  <!-- ===================================================================
-       CONFIRMAÇÃO ANTES DE ABRIR O WHATSAPP (só o ícone do cabeçalho
-       mobile usa isso — os outros botões "Falar no WhatsApp" do site
-       continuam indo direto, sem confirmação, como sempre foram).
-       Escondido por padrão (".confirmar-whatsapp" some via CSS); o
-       JavaScript mostra/esconde ao clicar no ícone (ver script.js).
-       =================================================================== -->
-  <div class="confirmar-whatsapp" id="confirmar-whatsapp" aria-hidden="true">
-    <div class="confirmar-whatsapp__caixa" role="alertdialog" aria-modal="true" aria-labelledby="confirmar-whatsapp-titulo">
-      <p id="confirmar-whatsapp-titulo" class="confirmar-whatsapp__titulo">Ir para o WhatsApp da Oh My Gym?</p>
-      <p class="confirmar-whatsapp__texto">Você vai sair do site e abrir uma conversa no WhatsApp com a academia.</p>
-      <div class="confirmar-whatsapp__botoes">
-        <button type="button" class="btn btn--outline" id="confirmar-whatsapp-cancelar">Cancelar</button>
-        <button type="button" class="btn btn--whatsapp" id="confirmar-whatsapp-aceitar">Sim, ir para o WhatsApp</button>
-      </div>
-    </div>
-  </div>
 
   <!-- ===================================================================
        SEÇÃO HERO (abertura do site)
@@ -1336,20 +1300,22 @@
 
   <!-- ===================================================================
        SEÇÃO CONTATO ("Onde nos encontrar") — Bloco 6, 15/09/2026
+       REDESENHADA em 15/09/2026 (mesmo dia): Philipe mandou print de
+       referência do próprio site dele (SP Hidráulicos) — layout de 2
+       colunas, texto (Contato + Redes Sociais) à esquerda e mapa de
+       verdade do Google à direita, mostrando o pino com o nome "Oh My
+       Gym" (a academia já tem perfil cadastrado no Google Maps, então
+       o pino aparece com nome igual no exemplo dele). Confirmado
+       explicitamente que isso SUBSTITUI os 3 cards antigos (Endereço,
+       Horário de funcionamento, Fale com a gente) — o horário continua
+       só no card de Modalidades, sem duplicar aqui.
        - Rótulo do menu é "Onde estamos" (curto), mas o título de verdade
          da seção é "Onde nos encontrar" (pedido do Philipe, 14/09/2026).
-       - 3 cards lado a lado: Endereço (com link "Ver no mapa" pro Google
-         Maps, sem embed — mesma linha de raciocínio do Instagram: link
-         simples em vez de widget/iframe de terceiro), Horário de
-         funcionamento (mesmo conteúdo do card em Modalidades — reaparece
-         aqui porque é exatamente onde a visitante vai procurar) e Fale
-         com a gente (WhatsApp).
        - Fundo "--cor-fundo-claro": alterna com o branco da seção
          Instagram logo acima, mesmo padrão de alternância usada no
          resto do site.
        - E-mail de contato: NÃO incluído ainda — a Milena ainda não
-         confirmou (ver briefing/respostas dela). Quando chegar, é só
-         adicionar um 4º dado dentro do card "Fale com a gente".
+         confirmou (ver briefing/respostas dela).
        =================================================================== -->
   <section class="contato" id="contato">
     <div class="container">
@@ -1357,88 +1323,46 @@
       <div class="section-heading">
         <span class="section-heading__eyebrow">Fale com a gente</span>
         <h2 class="section-heading__title">Onde nos encontrar</h2>
-        <p class="section-heading__subtitle">Endereço, horário de funcionamento e um jeito rápido de tirar dúvidas.</p>
+        <p class="section-heading__subtitle">Fale com a gente e veja onde fica a Oh My Gym.</p>
       </div>
 
-      <div class="contato__grid">
+      <div class="contato__wrapper">
 
-        <!-- Card 1: Endereço -->
-        <div class="contato__card">
-          <span class="contato__card-icon">
-            <!-- Ícone genérico de "pin" de localização (não é logo de
-                 nenhuma marca/app de mapa, só o símbolo universal). -->
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M12 21s-7-7.58-7-12a7 7 0 0 1 14 0c0 4.42-7 12-7 12Z"></path>
-              <circle cx="12" cy="9" r="2.5"></circle>
-            </svg>
-          </span>
-          <h3 class="contato__card-title">Endereço</h3>
-          <p class="contato__card-text">
-            Avenida Santa Catarina, 546<br>
-            Em frente à prefeitura — Cianorte/PR
-          </p>
-          <a
-            href="https://www.google.com/maps/search/?api=1&query=Avenida+Santa+Catarina%2C+546%2C+Cianorte%2C+PR"
-            class="btn btn--outline contato__card-btn"
-            target="_blank"
-            rel="noopener"
-          >Ver no mapa</a>
+        <!-- Coluna de texto: Contato (telefone/WhatsApp) + Redes
+             Sociais (Instagram) — ordem exata pedida pelo Philipe. -->
+        <div class="contato__info">
+          <div>
+            <h3 class="contato__bloco-titulo">Contato</h3>
+            <a
+              href="https://wa.me/554488488888?text=Oi!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20a%20Oh%20My%20Gym"
+              class="contato__valor"
+              target="_blank"
+              rel="noopener"
+            >+55 44 8848-8888</a>
+          </div>
+          <div>
+            <h3 class="contato__bloco-titulo">Redes Sociais</h3>
+            <a
+              href="https://www.instagram.com/ohmygym_cianorte/"
+              class="contato__valor"
+              target="_blank"
+              rel="noopener"
+            >Instagram</a>
+          </div>
         </div>
 
-        <!-- Card 2: Horário de funcionamento — mesmo conteúdo do card
-             já usado em Modalidades (ver "#horario-funcionamento" ali
-             em cima). Repetido aqui de propósito: é o lugar mais
-             natural pra visitante procurar isso. Se um dia mudar, tem
-             que atualizar os DOIS lugares (não tem componente
-             compartilhado por HTML puro). -->
-        <div class="contato__card">
-          <span class="contato__card-icon">
-            <svg viewBox="0 0 75.16 104.41" fill="currentColor">
-              <path d="M 55.6647866468,12.655636209 C 47.6257246468,5.88610520905 37.1374426468,4.10876120905 29.0124426468,8.11657420905 C 28.5905676468,8.26110520905 28.2975986468,8.40954220905 27.8835366468,8.65954220905 C 24.0515056468,8.69469820905 20.4421306468,10.456417209 18.1921306468,13.417355209 C 13.5085366468,19.550167209 9.92259864682,38.237667209 8.73900564682,44.393917209 C 8.46947464682,45.932980209 8.21166164682,47.479855209 7.96166164682,49.018917209 C 7.72338064682,50.557980209 7.47338064682,52.104855209 7.19994264682,53.643917209 C 7.09056764682,54.265011209 7.00463064682,54.858761209 6.89525564682,55.444698209 C 6.16869264682,59.600948209 5.60619264682,62.886105209 6.35228664682,66.366574209 C 6.73119264682,69.304074209 7.58666164682,71.393917209 9.16088064682,73.311886209 C 10.1804116468,82.405636209 15.4968176468,90.225948209 23.7546306468,94.776730209 C 28.1843176468,97.194698209 32.7155676468,98.409542209 37.2350986468,98.409542209 C 42.9343176468,98.409542209 48.5788486468,96.479855209 53.8210366468,92.655636209 C 55.1765056468,91.983761209 56.5436926468,90.964230209 57.7546306468,89.718136209 C 58.6100986468,90.171261209 59.6296306468,90.042355209 60.3561926468,89.358761209 C 61.0788486468,88.667355209 61.4616616468,87.397824209 60.7546306468,86.093136209 C 64.3835366468,81.065792209 65.7194746468,75.171261209 66.7038486468,70.015011209 C 68.6257246468,60.675167209 69.3913486468,52.866574209 69.0983806468,45.409542209 C 68.1765056468,25.850948209 60.2780676468,16.487667209 55.6725986468,12.655636209 Z M 25.0475986468,92.370480209 C 18.7546306468,88.956417209 14.3640056468,83.335324209 12.6608806468,76.452511209 C 17.2897866468,79.608761209 23.4225986468,79.847042209 28.3210366468,77.038448209 C 28.9929116468,80.179074209 29.9147866468,82.714230209 31.2038486468,84.968136209 C 34.3640056468,90.233761209 39.1335366468,93.714230209 44.1608806468,94.491574209 C 37.7897866468,96.487667209 31.2038486468,95.749386209 25.0475986468,92.350948209 Z M 27.7546306468,11.456417209 C 28.5163486468,11.456417209 29.2819746468,11.561886209 29.9890056468,11.800167209 C 36.9538486468,13.850948209 36.3171306468,21.671261209 35.0905676468,29.526730209 C 34.3991616468,33.698605209 33.8366616468,37.350948209 33.3249426468,40.557980209 C 31.3874426468,52.897824209 30.4225986468,59.108761209 27.5397866468,65.218136209 C 26.9421306468,66.725948209 26.2702556468,68.265011209 25.3405676468,69.194698209 C 23.0007246468,72.022824209 18.8288486468,73.225948209 14.4382246468,72.315792209 C 11.3874426468,71.643917209 9.48509864682,68.382198209 8.93822464682,65.436886209 C 8.55541164682,62.749386209 9.01244264682,60.104855209 9.86791164682,55.272824209 L 10.1179116468,53.843136209 C 11.8952556468,42.878292209 13.7468176468,31.522824209 17.7546306468,20.741574209 C 18.5046306468,18.815792209 19.3171306468,16.807980209 20.5163486468,15.206417209 C 22.2194746468,12.866574209 25.0475986468,11.468136209 27.7350986468,11.468136209 L 27.7546306468,11.448605209 Z M 37.2819746468,81.503292209 C 36.8796306468,81.917355209 36.6491616468,82.464230209 36.6843176468,83.026730209 C 36.7038486468,83.483761209 36.8796306468,83.917355209 37.1921306468,84.261105209 C 36.6491616468,84.804074209 36.0866616468,85.354855209 35.4499426468,85.897824209 C 32.7624426468,82.483761209 32.0593176468,79.655636209 31.0046306468,75.429074209 L 31.0046306468,75.397824209 C 36.9225986468,70.097042209 38.4265056468,60.749386209 39.7702556468,52.491574209 C 39.9147866468,51.585324209 40.0554116468,50.694698209 40.2038486468,49.804074209 C 42.7272866468,34.929074209 43.3600986468,30.972042209 43.6296306468,29.284542209 C 43.6530676468,29.155636209 43.6725986468,29.046261209 43.6843176468,28.936886209 C 46.9030676468,35.960324209 48.0827556468,44.526730209 47.4225986468,55.741574209 C 47.0436926468,60.932980209 46.3913486468,66.975948209 44.3561926468,72.472042209 C 43.2702556468,75.464230209 41.7858806468,78.335324209 40.0241616468,80.784542209 C 39.0593176468,80.655636209 38.0280676468,80.565792209 37.2819746468,81.452511209 L 37.2819746468,81.507198209 Z M 27.5202556468,70.991574209 C 28.5007246468,69.886105209 29.1725986468,68.362667209 29.7702556468,67.018917209 C 29.8796306468,66.765011209 29.9890056468,66.530636209 30.0983806468,66.272824209 C 33.0202556468,59.737667209 34.1061926468,52.913448209 36.2858806468,39.343136209 C 36.7390056468,36.515011209 37.2468176468,33.374386209 37.8249426468,29.874386209 L 37.8640056468,29.655636209 C 38.4968176468,25.464230209 39.4265056468,19.311886209 37.3757246468,14.737667209 C 38.6061926468,15.757198209 39.8249426468,17.057980209 40.2819746468,18.440792209 C 41.3640056468,21.815792209 40.6921306468,25.843136209 40.1491616468,29.093136209 L 35.6452556468,55.296261209 C 34.6686926468,61.155636209 33.5632246468,67.796261209 29.2975986468,71.643917209 C 26.7038486468,74.018917209 22.6413486468,75.858761209 18.5241616468,75.382198209 C 22.2077556468,75.163448209 25.3952556468,73.624386209 27.5202556468,70.972042209 Z M 33.4772866468,9.29626120905 C 37.4655676468,8.22594820905 41.8952556468,8.51891720905 46.1335366468,10.132198209 C 44.0319746468,10.327511209 41.5475986468,11.054074209 39.5866616468,13.015011209 C 37.7897866468,11.511105209 35.5788486468,10.167355209 33.4772866468,9.29626120905 Z M 37.2819746468,88.155636209 C 38.6804116468,86.847042209 39.9890056468,85.417355209 41.1686926468,83.874386209 C 46.1022866468,84.366574209 51.7116616468,85.417355209 56.6960366468,86.800167209 C 53.9421306468,89.866574209 50.5436926468,91.679074209 47.0827556468,91.882198209 C 43.6725986468,92.097042209 40.2936926468,90.807980209 37.3015056468,88.163448209 L 37.2819746468,88.163448209 Z M 50.7272866468,56.366574209 C 51.7116616468,45.097042209 49.9147866468,29.452511209 43.7272866468,21.597042209 C 43.7272866468,21.272824209 43.6179116468,20.999386209 43.5085366468,20.729855209 L 43.4343176468,20.546261209 C 43.1647866468,18.311886209 42.6765056468,17.046261209 42.0046306468,15.917355209 C 45.5905676468,13.522824209 51.7780676468,13.179074209 57.1530676468,17.987667209 C 62.3210366468,24.175167209 65.7155676468,34.425167209 66.1882246468,45.401730209 C 66.6100986468,52.460324209 65.8952556468,60.104855209 63.9577556468,69.425167209 C 62.7429116468,75.374386209 61.3444746468,80.218136209 58.5515056468,84.378292209 C 56.6960366468,83.686886209 49.8913486468,82.069698209 42.9616616468,81.147824209 C 48.4225986468,72.784542209 50.2038486468,63.054074209 50.7077556468,56.347042209 Z M 50.7272866468,56.366574209"/>
-            </svg>
-          </span>
-          <h3 class="contato__card-title">Horário de funcionamento</h3>
-          <ul class="horario-funcionamento__lista contato__card-lista">
-            <li>
-              <span class="horario-funcionamento__dia">Segunda a sexta</span>
-              <span class="horario-funcionamento__hora">05:00 às 21:00</span>
-            </li>
-            <li>
-              <span class="horario-funcionamento__dia">Sábado</span>
-              <span class="horario-funcionamento__hora">08:00 às 12:00</span>
-            </li>
-            <li>
-              <span class="horario-funcionamento__dia">Domingo</span>
-              <span class="horario-funcionamento__hora">Fechada</span>
-            </li>
-            <li>
-              <span class="horario-funcionamento__dia">Feriados</span>
-              <span class="horario-funcionamento__hora">
-                Fechada
-                <small>(exceto feriados santos: 08:00 às 12:00)</small>
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <!-- Card 3: Fale com a gente (WhatsApp) -->
-        <div class="contato__card">
-          <span class="contato__card-icon">
-            <svg viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.44 1.26 4.88L2 22l5.25-1.28c1.38.72 2.95 1.13 4.6 1.13h.01c5.52 0 10.02-4.48 10.02-10S17.56 2 12.04 2Zm5.87 14.24c-.25.7-1.45 1.33-2 1.42-.51.08-1.15.11-1.86-.12-.43-.13-.98-.32-1.68-.63-2.96-1.28-4.9-4.25-5.04-4.45-.15-.2-1.21-1.61-1.21-3.07 0-1.46.77-2.18 1.04-2.48.27-.3.6-.37.8-.37.2 0 .4 0 .57.01.18.01.43-.07.68.52.25.6.86 2.06.94 2.21.08.15.13.33.03.53-.1.2-.15.33-.3.5-.15.18-.31.4-.44.53-.15.15-.3.31-.13.6.17.3.77 1.27 1.66 2.06 1.14 1.02 2.1 1.34 2.4 1.49.3.15.47.13.65-.08.18-.2.76-.88.96-1.18.2-.3.4-.25.67-.15.28.1 1.75.82 2.05.97.3.15.5.22.57.35.08.13.08.73-.17 1.43Z" />
-            </svg>
-          </span>
-          <h3 class="contato__card-title">Fale com a gente</h3>
-          <p class="contato__card-text">
-            (44) 8848-8888<br>
-            Segunda a sábado, no horário de funcionamento
-          </p>
-          <a
-            href="https://wa.me/554488488888?text=Oi!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20a%20Oh%20My%20Gym"
-            class="btn btn--whatsapp contato__card-btn"
-            target="_blank"
-            rel="noopener"
-          >Falar no WhatsApp</a>
+        <!-- Mapa incorporado (Google Maps, sem chave de API — formato
+             de embed público "output=embed"), buscando pelo NOME da
+             academia (em vez do endereço solto) pra aparecer o pino
+             com "Oh My Gym" escrito, igual no site de referência do
+             Philipe. -->
+        <div class="contato__mapa">
+          <iframe
+            src="https://www.google.com/maps?q=Oh+My+Gym+Cianorte&output=embed"
+            title="Mapa com a localização da Oh My Gym"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+          ></iframe>
         </div>
 
       </div>
@@ -1447,13 +1371,19 @@
   </section>
 
   <!-- ===================================================================
-       RODAPÉ — Bloco 6, 15/09/2026
+       RODAPÉ — Bloco 6, 15/09/2026 (ajustado em 15/09/2026, mesmo dia,
+       pedido do Philipe):
        - Fundo vinho escuro sólido (fecha o site com a cor mais forte da
          marca), logo na versão branca (feita pra fundo escuro).
        - Crédito do desenvolvedor discreto, como pedido pelo Philipe —
          de propósito pequeno/baixo contraste, sem chamar atenção (ver
          briefing: "não pode ser destacado/chamativo").
-       =================================================================== -->
+       - Ajustes pedidos: (1) tirado o horário de funcionamento daqui
+         (já tem no card de Modalidades e agora também na seção
+         Contato, não precisa repetir uma 3ª vez); (2) rodapé mais
+         compacto (menos espaçamento — ver CSS); (3) mais contato/redes
+         sociais aqui — WhatsApp, Instagram e telefone agora em 3 linhas
+         com ícone, em vez de só 1 botão + 1 link de texto. -->
   <footer class="rodape">
     <div class="container rodape__inner">
 
@@ -1465,23 +1395,51 @@
       <div class="rodape__coluna">
         <h4 class="rodape__titulo">Onde nos encontrar</h4>
         <p class="rodape__texto">Avenida Santa Catarina, 546<br>Em frente à prefeitura — Cianorte/PR</p>
-        <p class="rodape__texto">Seg. a sex. 05:00–21:00 · Sáb. 08:00–12:00</p>
       </div>
 
       <div class="rodape__coluna">
         <h4 class="rodape__titulo">Fale com a gente</h4>
-        <a
-          href="https://wa.me/554488488888?text=Oi!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20a%20Oh%20My%20Gym"
-          class="btn btn--white rodape__cta"
-          target="_blank"
-          rel="noopener"
-        >Falar no WhatsApp</a>
-        <a
-          href="https://www.instagram.com/ohmygym_cianorte/"
-          class="rodape__rede"
-          target="_blank"
-          rel="noopener"
-        >@ohmygym_cianorte</a>
+        <div class="rodape__redes">
+          <a
+            href="https://wa.me/554488488888?text=Oi!%20Vim%20pelo%20site%20e%20quero%20saber%20mais%20sobre%20a%20Oh%20My%20Gym"
+            class="rodape__rede"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="rodape__rede-icone">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.44 1.26 4.88L2 22l5.25-1.28c1.38.72 2.95 1.13 4.6 1.13h.01c5.52 0 10.02-4.48 10.02-10S17.56 2 12.04 2Zm5.87 14.24c-.25.7-1.45 1.33-2 1.42-.51.08-1.15.11-1.86-.12-.43-.13-.98-.32-1.68-.63-2.96-1.28-4.9-4.25-5.04-4.45-.15-.2-1.21-1.61-1.21-3.07 0-1.46.77-2.18 1.04-2.48.27-.3.6-.37.8-.37.2 0 .4 0 .57.01.18.01.43-.07.68.52.25.6.86 2.06.94 2.21.08.15.13.33.03.53-.1.2-.15.33-.3.5-.15.18-.31.4-.44.53-.15.15-.3.31-.13.6.17.3.77 1.27 1.66 2.06 1.14 1.02 2.1 1.34 2.4 1.49.3.15.47.13.65-.08.18-.2.76-.88.96-1.18.2-.3.4-.25.67-.15.28.1 1.75.82 2.05.97.3.15.5.22.57.35.08.13.08.73-.17 1.43Z" />
+              </svg>
+            </span>
+            Falar no WhatsApp
+          </a>
+          <a
+            href="https://www.instagram.com/ohmygym_cianorte/"
+            class="rodape__rede"
+            target="_blank"
+            rel="noopener"
+          >
+            <span class="rodape__rede-icone">
+              <!-- Ícone genérico de câmera (mesmo já usado nos posts
+                   placeholder do Instagram) — de propósito, não é o
+                   logo oficial do Instagram (marca da Meta). -->
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                <circle cx="8.5" cy="10" r="1.5"></circle>
+                <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
+              </svg>
+            </span>
+            @ohmygym_cianorte
+          </a>
+          <a href="tel:+554488488888" class="rodape__rede">
+            <span class="rodape__rede-icone">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.1.4 2.3.6 3.5.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.4c.6 0 1 .4 1 1 0 1.2.2 2.4.6 3.5.1.4 0 .8-.2 1L6.6 10.8Z"></path>
+              </svg>
+            </span>
+            (44) 8848-8888
+          </a>
+        </div>
       </div>
 
     </div>

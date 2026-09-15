@@ -533,12 +533,6 @@ document.addEventListener("DOMContentLoaded", function () {
   numerarGrupoParaCascata(
     document.querySelectorAll(".grade-horarios > .grade-horarios__dia")
   );
-  // Cards da seção Contato (Bloco 6, 15/09/2026) — grade que quebra
-  // linha normal (sem carrossel), mesmo raciocínio dos cards de
-  // Diferenciais logo acima.
-  numerarGrupoParaCascata(
-    document.querySelectorAll(".contato__grid > .contato__card")
-  );
   // A grade de ambientes da seção Estrutura (".estrutura__grid") e,
   // desde 14/09/2026, os carrosséis de Depoimentos (".depoimentos__grid")
   // e do Instagram (".instagram__grid") NÃO entram na numeração/
@@ -557,7 +551,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // observado individualmente, revela assim que ENTRA ELE MESMO na tela.
   const elementosParaRevelar = document.querySelectorAll(
     ".section-heading, .card-diferencial, .card-modalidade-destaque, " +
-    ".grade-horarios__dia, .horario-funcionamento, .contato__card"
+    ".grade-horarios__dia, .horario-funcionamento, .contato__info, .contato__mapa"
   );
 
   if (
@@ -873,61 +867,10 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".instagram__seta--next")
   );
 
-  /* -------------------------------------------------------------------
-     CONFIRMAÇÃO ANTES DE ABRIR O WHATSAPP (ícone do cabeçalho mobile)
-     - Só o ícone novo do cabeçalho (".site-header__whatsapp-mobile")
-       passa por essa confirmação — os outros botões "Falar no
-       WhatsApp" do site (cabeçalho desktop, menu mobile aberto,
-       cards de plano) continuam indo direto, sem confirmar nada,
-       como sempre foi. Pedido do Philipe (04/09/2026): como esse
-       ícone fica bem coladinho no hambúrguer, achou melhor confirmar
-       antes de sair do site sem querer, com o dedo.
-     - O link em si já tem o href certo (funciona normal se o
-       JavaScript não carregar); aqui a gente só intercepta o clique,
-       mostra a caixinha de confirmação, e só abre o WhatsApp de
-       verdade se a visitante confirmar.
-     ------------------------------------------------------------------- */
-  const linkWhatsappMobile = document.getElementById("whatsapp-mobile-topo");
-  const caixaConfirmarWhatsapp = document.getElementById("confirmar-whatsapp");
-  const botaoConfirmarAceitar = document.getElementById("confirmar-whatsapp-aceitar");
-  const botaoConfirmarCancelar = document.getElementById("confirmar-whatsapp-cancelar");
-
-  if (linkWhatsappMobile && caixaConfirmarWhatsapp && botaoConfirmarAceitar && botaoConfirmarCancelar) {
-    const linkWhatsappDestino = linkWhatsappMobile.getAttribute("href");
-
-    function abrirConfirmacao(evento) {
-      evento.preventDefault();
-      caixaConfirmarWhatsapp.classList.add("is-aberto");
-      caixaConfirmarWhatsapp.setAttribute("aria-hidden", "false");
-    }
-
-    function fecharConfirmacao() {
-      caixaConfirmarWhatsapp.classList.remove("is-aberto");
-      caixaConfirmarWhatsapp.setAttribute("aria-hidden", "true");
-    }
-
-    linkWhatsappMobile.addEventListener("click", abrirConfirmacao);
-
-    botaoConfirmarAceitar.addEventListener("click", function () {
-      fecharConfirmacao();
-      window.open(linkWhatsappDestino, "_blank", "noopener");
-    });
-
-    botaoConfirmarCancelar.addEventListener("click", fecharConfirmacao);
-
-    // Clicar no fundo escurecido (fora da caixinha) também cancela
-    caixaConfirmarWhatsapp.addEventListener("click", function (evento) {
-      if (evento.target === caixaConfirmarWhatsapp) {
-        fecharConfirmacao();
-      }
-    });
-
-    // Tecla Esc também cancela, caso a caixinha esteja aberta
-    document.addEventListener("keydown", function (evento) {
-      if (evento.key === "Escape" && caixaConfirmarWhatsapp.classList.contains("is-aberto")) {
-        fecharConfirmacao();
-      }
-    });
-  }
+  // A confirmação antes de abrir o WhatsApp (ícone do cabeçalho mobile)
+  // foi removida em 15/09/2026, junto com o próprio ícone — ver
+  // comentário no HTML (header) e no CSS. Motivo: o botão flutuante de
+  // WhatsApp (Bloco 6) já cobre esse acesso rápido em qualquer tela,
+  // então o ícone coladinho no hambúrguer ficou redundante.
 
 });

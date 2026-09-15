@@ -324,15 +324,6 @@ h1, h2, h3 {
   width: 100%;
 }
 
-/* Wrapper do ícone de WhatsApp mobile + hambúrguer — mantém os dois
-   grudados um no outro à direita do cabeçalho (ver comentário no
-   HTML) */
-.site-header__acoes-mobile {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
 /* Botão "hambúrguer" — só aparece em telas pequenas (ver media query) */
 .nav-toggle {
   display: none;
@@ -364,91 +355,6 @@ h1, h2, h3 {
 .nav-toggle[aria-expanded="true"] .nav-toggle__bar:nth-child(3) {
   transform: translateY(-7.5px) rotate(-45deg);
 }
-
-/* Ícone de WhatsApp do cabeçalho mobile — só aparece em telas pequenas
-   (ver media query), do lado do hambúrguer. Escondido por padrão aqui
-   porque, no desktop, o botão "Falar no WhatsApp" comum já resolve
-   (".site-header__cta"). Mesma cor vinho dos outros botões de
-   WhatsApp do site (o site nunca usa o verde oficial do WhatsApp, pra
-   manter tudo dentro da paleta da marca). */
-.site-header__whatsapp-mobile {
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: var(--cor-vinho-principal);
-  color: var(--cor-branco);
-  transition: background-color 0.2s ease;
-}
-
-.site-header__whatsapp-mobile:hover {
-  background-color: var(--cor-vinho-escuro);
-}
-
-.site-header__whatsapp-mobile svg {
-  width: 21px;
-  height: 21px;
-}
-
-/* Confirmação antes de abrir o WhatsApp (só pro ícone do cabeçalho
-   mobile — ver comentário no HTML). Fica por cima de tudo, cobrindo a
-   tela inteira com um fundo escurecido; a caixinha em si usa a mesma
-   linguagem visual (cantos arredondados, cores da marca) do resto do
-   site. Escondida por padrão via "display: none"; o JavaScript alterna
-   a classe ".is-aberto" pra mostrar/esconder (ver script.js). */
-.confirmar-whatsapp {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 1000;
-  align-items: center;
-  justify-content: center;
-  padding: 1.5rem;
-  background-color: rgba(43, 16, 22, 0.55);
-}
-
-.confirmar-whatsapp.is-aberto {
-  display: flex;
-}
-
-.confirmar-whatsapp__caixa {
-  width: 100%;
-  max-width: 360px;
-  padding: 1.75rem;
-  border-radius: var(--raio-padrao);
-  background-color: var(--cor-branco);
-  text-align: center;
-  box-shadow: 0 20px 45px -15px rgba(43, 16, 22, 0.5);
-}
-
-.confirmar-whatsapp__titulo {
-  margin-bottom: 0.5rem;
-  color: var(--cor-vinho-escuro);
-  font-family: var(--fonte-titulo);
-  font-size: 1.15rem;
-  font-weight: 600;
-}
-
-.confirmar-whatsapp__texto {
-  margin-bottom: 1.5rem;
-  color: var(--cor-vinho-medio);
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-
-.confirmar-whatsapp__botoes {
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-}
-
-.confirmar-whatsapp__botoes .btn {
-  width: 100%;
-}
-
 
 /* =====================================================================
    5. SEÇÃO HERO
@@ -2017,10 +1923,6 @@ h1, h2, h3 {
     display: flex;
   }
 
-  .site-header__whatsapp-mobile {
-    display: flex;
-  }
-
   .site-header__cta {
     display: none; /* no mobile, o botão de WhatsApp fica só dentro do menu aberto */
   }
@@ -2808,6 +2710,16 @@ h1, h2, h3 {
 
 /* =====================================================================
    13. SEÇÃO CONTATO ("Onde nos encontrar") — Bloco 6, 15/09/2026
+   REDESENHADA em 15/09/2026 (mesmo dia): Philipe mandou print de
+   referência do próprio site dele (SP Hidráulicos) e pediu pra seguir
+   esse layout — 2 colunas: texto (Contato + Redes Sociais) à esquerda,
+   mapa de verdade do Google (mostrando o pino com o nome "Oh My Gym",
+   já que a academia tem perfil cadastrado no Google Maps) à direita.
+   SUBSTITUI por completo os 3 cards antigos (Endereço/Horário/Fale com
+   a gente) — confirmado explicitamente por ele ("Substitui, não
+   quero..."). O horário de funcionamento continua só no card de
+   Modalidades (não duplicado aqui); o endereço em texto também saiu —
+   agora é o próprio mapa que mostra a localização.
    ===================================================================== */
 
 /* Fundo "--cor-fundo-claro": alterna com o branco da seção Instagram
@@ -2817,122 +2729,71 @@ h1, h2, h3 {
   padding-block: var(--espaco-secao);
 }
 
-.contato__grid {
+/* 2 colunas a partir do desktop (texto + mapa lado a lado); empilha no
+   celular/tablet (texto primeiro, mapa embaixo — ordem de leitura mais
+   natural). */
+.contato__wrapper {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5rem;
+  gap: 2rem;
+  align-items: stretch;
 }
 
-/* Card de informação (endereço / horário / WhatsApp) — fundo branco pra
-   contrastar com o "--cor-fundo-claro" da seção (mesmo raciocínio de
-   contraste já usado em Estrutura/Depoimentos/Instagram, só invertido:
-   lá o card ficava mais escuro que o fundo, aqui mais claro). Mesmo
-   estilo visual de ".card-diferencial" (ícone redondo + título + texto),
-   só que num componente próprio porque o fundo do card é diferente. */
-.contato__card {
+.contato__info {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  min-width: 0;
-  padding: 2rem 1.75rem;
-  border-radius: var(--raio-padrao);
-  background-color: var(--cor-branco);
-  box-shadow: 0 10px 30px -20px rgba(43, 16, 22, 0.4);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.contato__card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 16px 34px -18px rgba(43, 16, 22, 0.45);
-}
-
-.contato__card-icon {
-  display: inline-flex;
-  align-items: center;
+  gap: 2rem;
   justify-content: center;
-  width: 52px;
-  height: 52px;
-  margin-bottom: 1.25rem;
-  border-radius: 50%;
-  background-color: rgba(110, 33, 56, 0.1);
+}
+
+.contato__bloco-titulo {
+  font-size: 1.05rem;
+  margin-bottom: 0.6rem;
+}
+
+/* Valor clicável (telefone/WhatsApp, Instagram) — destaque maior que um
+   link comum, pra ficar fácil de bater o olho, igual na referência do
+   Philipe. */
+.contato__valor {
+  display: inline-block;
   color: var(--cor-vinho-principal);
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
 }
 
-.contato__card-icon svg {
-  width: 26px;
-  height: 26px;
-}
-
-.contato__card-title {
-  font-size: 1.15rem;
-  margin-bottom: 0.75rem;
-}
-
-.contato__card-text {
-  color: var(--cor-vinho-medio);
-  font-size: 0.95rem;
-}
-
-/* Lista de horário reaproveitada aqui (".horario-funcionamento__lista",
-   já estilizada na seção Modalidades) — só tira a margem de cima extra
-   que ela tinha lá (nesse card ela já é o primeiro conteúdo depois do
-   título, não precisa de respiro adicional).
-   IMPORTANTE: lá em Modalidades esse componente vive dentro de um card
-   de fundo vinho SÓLIDO (".horario-funcionamento"), por isso o texto
-   original é branco. Aqui o card é BRANCO (ver ".contato__card" acima)
-   — sem esse ajuste o texto ficaria branco em cima de branco,
-   invisível. Corrigido nos overrides abaixo antes de entregar (achado
-   no teste, não reportado pelo Philipe). Também deixa a linha
-   "dia / hora" quebrar (flex-wrap) em vez de estourar a largura do
-   card nos tablets (2 cards por linha, ~640px), onde o espaço fica
-   mais apertado do que no card largo original de Modalidades. */
-.contato__card-lista {
-  margin-top: 0;
-  width: 100%;
-}
-
-/* Sobrescreve a grade 2 colunas que ".horario-funcionamento__lista"
-   ganha a partir de 640px (ver seção 9, pensada pro card LARGO
-   original de Modalidades) — aqui o card é bem mais estreito (1 de 3
-   numa grade), então lista em coluna única (1 por linha) coube melhor
-   em todos os tamanhos testados. Seletor com 2 classes (mais específico
-   que a regra de 1 classe que está sobrescrevendo) em vez de
-   "!important". */
-.contato__card .contato__card-lista {
-  display: flex;
-  flex-direction: column;
-}
-
-.contato__card-lista li {
-  flex-wrap: wrap;
-  border-bottom-color: rgba(110, 33, 56, 0.15);
-}
-
-.contato__card-lista .horario-funcionamento__dia {
+.contato__valor:hover {
   color: var(--cor-vinho-escuro);
 }
 
-.contato__card-lista .horario-funcionamento__hora {
-  color: var(--cor-vinho-medio);
-  text-align: left;
+/* Mapa incorporado (Google Maps) — pedido do Philipe (15/09/2026):
+   primeiro só um link "Ver no mapa", depois pediu o mapa de verdade
+   embutido, e por fim pediu que a busca seja pelo NOME da academia (em
+   vez do endereço solto) pra aparecer o pino com "Oh My Gym" escrito,
+   igual no site de referência dele — só funciona porque a academia já
+   tem perfil cadastrado no Google Maps. */
+.contato__mapa {
+  min-height: 320px;
+  border-radius: var(--raio-padrao);
+  overflow: hidden;
+  box-shadow: 0 10px 30px -20px rgba(43, 16, 22, 0.4);
 }
 
-.contato__card-btn {
-  margin-top: 1.5rem;
+.contato__mapa iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  border: 0;
 }
 
-/* A partir de tablets: os 3 cards ficam 2 por linha (o 3º sobra sozinho
-   numa linha própria) — mesmo padrão já usado em ".diferenciais__grid". */
-@media (min-width: 640px) {
-  .contato__grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-}
-
-/* A partir de desktop: os 3 cards cabem numa linha só. */
+/* A partir de desktop: texto e mapa lado a lado (mapa um pouco mais
+   largo que o texto, igual na referência). */
 @media (min-width: 900px) {
-  .contato__grid {
-    grid-template-columns: repeat(3, 1fr);
+  .contato__wrapper {
+    grid-template-columns: 1fr 1.3fr;
   }
 }
 
@@ -2950,28 +2811,32 @@ h1, h2, h3 {
   color: var(--cor-rosa-claro);
 }
 
+/* Rodapé mais compacto (ajuste pedido pelo Philipe, 15/09/2026: "diminuir
+   o tamanho do rodapé") — "padding-block" bem menor que o
+   "--espaco-secao" padrão do resto do site (que é pensado pra seções de
+   conteúdo, não pro fechamento da página) e "gap" também reduzido. */
 .rodape__inner {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 2.5rem;
-  padding-block: var(--espaco-secao);
+  gap: 2rem;
+  padding-block: clamp(2rem, 4vw, 2.75rem);
 }
 
 .rodape__marca {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.75rem;
+  gap: 0.6rem;
 }
 
 .rodape__logo {
-  width: 160px;
+  width: 130px;
 }
 
 .rodape__frase {
   font-family: var(--fonte-titulo);
   font-style: italic;
-  font-size: 1.05rem;
+  font-size: 1rem;
   color: var(--cor-branco);
 }
 
@@ -2981,12 +2846,12 @@ h1, h2, h3 {
 
 .rodape__titulo {
   font-family: var(--fonte-corpo);
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
   color: var(--cor-branco);
-  margin-bottom: 0.9rem;
+  margin-bottom: 0.75rem;
 }
 
 .rodape__texto {
@@ -2994,22 +2859,51 @@ h1, h2, h3 {
   margin-bottom: 0.5rem;
 }
 
-.rodape__cta {
-  margin-bottom: 1rem;
+/* Lista de contatos/redes (WhatsApp, Instagram, telefone) — pedido do
+   Philipe (15/09/2026: "ter um pouco mais de redes sociais... como
+   instagram, número da academia"). Cada linha é um ícone redondo
+   pequeno + texto, mais compacto que o botão sólido usado antes aqui
+   (ajuda também no pedido de diminuir o rodapé). */
+.rodape__redes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
 }
 
 .rodape__rede {
-  display: block;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
   width: fit-content;
   font-size: 0.9rem;
   font-weight: 600;
   color: var(--cor-branco);
-  text-decoration: underline;
-  text-underline-offset: 3px;
 }
 
 .rodape__rede:hover {
   color: var(--cor-rosa-claro);
+}
+
+.rodape__rede-icone {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.15);
+  color: var(--cor-branco);
+  transition: background-color 0.2s ease;
+}
+
+.rodape__rede:hover .rodape__rede-icone {
+  background-color: rgba(255, 255, 255, 0.28);
+}
+
+.rodape__rede-icone svg {
+  width: 14px;
+  height: 14px;
 }
 
 /* Faixa fina de créditos, no fim do rodapé, separada por uma linha
@@ -3024,7 +2918,7 @@ h1, h2, h3 {
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
-  padding-block: 1.25rem;
+  padding-block: 1rem;
   font-size: 0.78rem;
   opacity: 0.65;
 }
@@ -3039,12 +2933,7 @@ h1, h2, h3 {
 }
 
 /* Breakpoints iguais ao resto do site (2 colunas no tablet, 3 no
-   desktop — mesmo padrão de ".diferenciais__grid"). Testado e corrigido
-   antes de entregar: com só 1 breakpoint em 640px direto pra 3 colunas,
-   a 3ª coluna ("Fale com a gente") ficava estreita demais pro botão
-   "Falar no WhatsApp" (que não quebra linha, ver ".btn") e estourava a
-   largura da tela por 7px num teste de 640px de largura — corrigido
-   dando mais espaço no tablet (2 colunas) antes de ir pra 3. */
+   desktop — mesmo padrão de ".diferenciais__grid"). */
 @media (min-width: 640px) {
   .rodape__inner {
     grid-template-columns: repeat(2, 1fr);
