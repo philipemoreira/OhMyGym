@@ -1375,14 +1375,22 @@ h1, h2, h3 {
   position: absolute;
   top: calc(var(--espaco-secao) + 18px);
   left: calc(50% + 340px);
-  width: 68px;
+  /* AUMENTADO de 68px pra 108px (17/09/2026, rodada seguinte): Philipe
+     achou os adesivos pequenos demais, "não dá para ver oque está
+     escrito" — mesmo ajuste espelhado em ".contato__adesivo" logo
+     abaixo, os dois adesivos da marca no site. Pra caber sem cortar no
+     "overflow: hidden" da seção, o breakpoint que esconde/mostra o
+     adesivo também subiu de 899px pra 959px (ver media query abaixo) —
+     só aparece a partir de uma tela larga o bastante pra sobrar espaço
+     de verdade do lado do título, mesmo com o adesivo maior. */
+  width: 108px;
   height: auto;
   pointer-events: none;
   z-index: 0;
   transform: rotate(7deg);
 }
 
-@media (max-width: 899px) {
+@media (max-width: 959px) {
   .planos__adesivo {
     display: none;
   }
@@ -2256,7 +2264,12 @@ h1, h2, h3 {
   transform: scale(1.04);
 }
 
-/* Legenda com o nome do ambiente, embaixo da moldura */
+/* Legenda com o nome do ambiente, embaixo da moldura. SEM USO no HTML
+   desde 17/09/2026 (rodada seguinte): Philipe pediu pra tirar essa
+   legenda de baixo das fotos da galeria de estrutura ("não gostei").
+   Regra mantida aqui, comentada como não usada, caso volte a ser
+   pedida — não afeta nada, já que nenhum elemento no HTML tem mais essa
+   classe. */
 .estrutura__legenda {
   color: var(--cor-vinho-escuro);
   font-size: 0.9rem;
@@ -2717,20 +2730,28 @@ h1, h2, h3 {
    não mais nos cantos da seção. "right: calc(50% + 340px)" = 320px
    (metade dos 640px do título) + 20px de respiro, contado a partir do
    centro da seção — assim fica sempre colado do lado esquerdo do
-   título, em qualquer largura de tela. Só aparece a partir de 900px
-   (abaixo disso não sobra vazio suficiente do lado). */
+   título, em qualquer largura de tela. Só aparece a partir de 960px
+   (abaixo disso não sobra vazio suficiente do lado — breakpoint subiu
+   de 900px pra 960px em 17/09/2026 junto com o aumento de tamanho, ver
+   comentário na regra da largura logo abaixo). */
 .contato__adesivo {
   position: absolute;
   top: calc(var(--espaco-secao) + 22px);
   right: calc(50% + 340px);
-  width: 68px;
+  /* AUMENTADO de 68px pra 108px (17/09/2026, rodada seguinte) — mesmo
+     motivo/comentário completo do ".planos__adesivo" (seção 8, logo
+     acima): Philipe achou os adesivos pequenos demais pra ler o que tá
+     escrito neles. Breakpoint que esconde/mostra também subiu de 899px
+     pra 959px, mesmo motivo (evitar corte no "overflow: hidden" da
+     seção com o adesivo maior). */
+  width: 108px;
   height: auto;
   pointer-events: none;
   z-index: 0;
   transform: rotate(-8deg);
 }
 
-@media (max-width: 899px) {
+@media (max-width: 959px) {
   .contato__adesivo {
     display: none;
   }
@@ -2761,6 +2782,19 @@ h1, h2, h3 {
 .contato__bloco-titulo {
   font-size: 1.05rem;
   margin-bottom: 0.6rem;
+}
+
+/* Empilha WhatsApp + e-mail dentro do bloco "Formas de contato"
+   (17/09/2026 — antes eram 2 blocos separados, "Contato" e "E-mail",
+   cada um com seu próprio subtítulo; o Philipe achou que ia ficar com
+   subtítulo demais/poluído e pediu pra juntar os dois embaixo de um
+   título só). Vira container flex em coluna porque ".contato__valor"
+   é "inline-flex" e, sozinho, não quebra linha por conta própria —
+   dois links um do lado do outro sem isso. */
+.contato__contatos {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
 }
 
 /* Valor clicável (telefone/WhatsApp, Instagram) — destaque maior que um
