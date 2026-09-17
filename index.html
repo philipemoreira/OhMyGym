@@ -946,7 +946,24 @@
        letreiro, balcão de recepção, treino personalizado) — ver a lista
        completa comentada logo depois do item "Vestiário" abaixo. Com
        isso, das 25 fotos que a Milena mandou, 23 aparecem no site (as
-       únicas 2 de fora continuam sendo as do bebedouro). -->
+       únicas 2 de fora continuam sendo as do bebedouro).
+
+       REORDENADO em 17/09/2026 (rodada seguinte): Philipe pediu uma
+       ORDEM específica pra sequência de fotos, contando a história da
+       academia em passeio (ver comentário logo acima da grade, mais
+       abaixo, com a lista completa da ordem final). Os 19 cards
+       continuam os mesmos, nenhuma foto nova nem removida — só mudou a
+       posição de cada `.estrutura__item` dentro de `.estrutura__grid`.
+       Nenhuma mudança em CSS nem em script.js (a ordem visual é 100%
+       ordem do HTML, o carrossel/grade só segue o que já está no
+       documento).
+
+       CORREÇÃO (17/09/2026, mesmo dia, rodada seguinte): Philipe avisou
+       que o card "Corredor" foi classificado errado — não é a
+       transição pro mezanino, é o corredor de acesso ao vestiário. Card
+       movido do grupo 3 (Maquinários) pro início do grupo 6 (Banheiro),
+       logo antes do Vestiário. Legenda continua "Corredor", só o "alt"
+       da imagem e a posição mudaram. -->
   <section class="estrutura" id="estrutura">
     <div class="container">
 
@@ -972,6 +989,26 @@
 
         <div class="estrutura__grid">
 
+        <!-- ORDEM DA GALERIA — pedido do Philipe (17/09/2026, rodada
+             seguinte): ele quer os 19 cards seguindo uma sequência de
+             "passeio" pela academia, contando a experiência de chegada
+             de uma visitante, em vez da ordem solta de antes. Grupos
+             pedidos por ele, na ordem:
+               1. Fachada (a frente da academia)
+               2. Recepção (entrada, balcão, letreiro, check-in)
+               3. Maquinários (todos os aparelhos de musculação/cardio)
+               4. Funcional, Jump, Pilates "e assim vai" (sala multiuso
+                  do mezanino, cada card com um ângulo/destaque)
+               5. Área de café (2º andar, junto da área de funcional/jump)
+               6. Banheiro (vestiário)
+             Dentro de cada grupo, a ordem exata dos cards foi decidida
+             por mim (ex.: qual foto de recepção vem primeiro) — não foi
+             detalhada pelo Philipe, então se alguma posição específica
+             não bater com o que ele imaginou, é só falar que eu ajusto.
+             Nenhuma foto nova, nenhuma removida, nenhuma legenda mudou
+             — só a ORDEM dos `.estrutura__item` dentro desta grade. -->
+
+        <!-- Grupo 1: Fachada -->
         <!-- Ambiente: Fachada -->
         <div class="estrutura__item">
           <div class="estrutura__moldura estrutura__moldura--foto">
@@ -980,6 +1017,7 @@
           <p class="estrutura__legenda">Fachada</p>
         </div>
 
+        <!-- Grupo 2: Recepção (entrada, balcão, letreiro, check-in) -->
         <!-- Ambiente: Recepção -->
         <div class="estrutura__item">
           <div class="estrutura__moldura estrutura__moldura--foto">
@@ -988,6 +1026,32 @@
           <p class="estrutura__legenda">Recepção</p>
         </div>
 
+        <!-- Ambiente: outro ângulo da recepção -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-balcao-recepcao.jpg" alt="Balcão de recepção da Oh My Gym visto de outro ângulo" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Balcão de recepção</p>
+        </div>
+
+        <!-- Ambiente: letreiro em destaque, pé-direito duplo da recepção -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-letreiro.jpg" alt="Letreiro Oh my Gym em destaque no pé-direito duplo da recepção" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Letreiro Oh my Gym</p>
+        </div>
+
+        <!-- Ambiente: check-in na entrada da musculação (fecha o grupo
+             "recepção", já fazendo a ponte pro grupo dos maquinários) -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-checkin.jpg" alt="Check-in na entrada da área de musculação, com letreiro Oh my Power" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Check-in</p>
+        </div>
+
+        <!-- Grupo 3: Maquinários (todos os aparelhos) -->
         <!-- Ambiente: Área de musculação -->
         <div class="estrutura__item">
           <div class="estrutura__moldura estrutura__moldura--foto">
@@ -995,61 +1059,6 @@
           </div>
           <p class="estrutura__legenda">Área de musculação</p>
         </div>
-
-        <!-- Ambiente: Treino funcional -->
-        <div class="estrutura__item">
-          <div class="estrutura__moldura estrutura__moldura--foto">
-            <img src="assets/images/estrutura/estrutura-funcional.jpg" alt="Área de treino funcional da Oh My Gym, com aparelho cross over" loading="lazy">
-          </div>
-          <p class="estrutura__legenda">Treino funcional</p>
-        </div>
-
-        <!-- Ambiente: Pilates solo -->
-        <div class="estrutura__item">
-          <div class="estrutura__moldura estrutura__moldura--foto">
-            <img src="assets/images/estrutura/estrutura-pilates.jpg" alt="Sala de Pilates solo da Oh My Gym, com bolas suíças na parede" loading="lazy">
-          </div>
-          <p class="estrutura__legenda">Pilates solo</p>
-        </div>
-
-        <!-- Ambiente: Sala de ritmos -->
-        <div class="estrutura__item">
-          <div class="estrutura__moldura estrutura__moldura--foto">
-            <img src="assets/images/estrutura/estrutura-ritmos.jpg" alt="Sala de ritmos da Oh My Gym, estúdio amplo com espelhos" loading="lazy">
-          </div>
-          <p class="estrutura__legenda">Sala de ritmos</p>
-        </div>
-
-        <!-- Ambiente: Jump -->
-        <div class="estrutura__item">
-          <div class="estrutura__moldura estrutura__moldura--foto">
-            <img src="assets/images/estrutura/estrutura-jump.jpg" alt="Sala de Jump da Oh My Gym, com as camas elásticas e bolas suíças" loading="lazy">
-          </div>
-          <p class="estrutura__legenda">Jump</p>
-        </div>
-
-        <!-- Ambiente: Vestiário — FOTO ADICIONADA em 17/09/2026 (mesma
-             rodada). Não é foto do bebedouro (essa continua de fora,
-             ver comentário grande no início da seção) — é a área de
-             banheiro/vanity "Oh my Glow" (pias, espelho, secador),
-             também parte do vestiário, sem o bebedouro aparecendo. -->
-        <div class="estrutura__item">
-          <div class="estrutura__moldura estrutura__moldura--foto">
-            <img src="assets/images/estrutura/estrutura-vestiario.jpg" alt="Área Oh my Glow do vestiário da Oh My Gym, com pias e espelho" loading="lazy">
-          </div>
-          <p class="estrutura__legenda">Vestiário</p>
-        </div>
-
-        <!-- 11 ambientes/ângulos ADICIONADOS em 17/09/2026 (mesma rodada,
-             pedido do Philipe: "use todas as fotos, crie mais card e
-             coloque as fotos") — fotos que sobraram do zip da Milena
-             depois dos 8 ambientes principais + espaço kids + as 2
-             excluídas do bebedouro. Algumas mostram o mesmo espaço físico
-             dos cards acima por outro ângulo (ex.: a academia tem uma
-             sala de aulas multiuso só, usada pra Pilates/Ritmos/Jump/
-             Coffee em momentos diferentes — não são 4 salas separadas),
-             mas cada legenda descreve o que aquele ângulo específico
-             destaca, pra não repetir a mesma legenda em cards diferentes. -->
 
         <!-- Ambiente: Área de cardio -->
         <div class="estrutura__item">
@@ -1083,7 +1092,8 @@
           <p class="estrutura__legenda">Treino com cabos</p>
         </div>
 
-        <!-- Ambiente: atendimento personalizado -->
+        <!-- Ambiente: atendimento personalizado (fecha o grupo dos
+             maquinários) -->
         <div class="estrutura__item">
           <div class="estrutura__moldura estrutura__moldura--foto">
             <img src="assets/images/estrutura/estrutura-treino-personalizado.jpg" alt="Personal trainer acompanhando aluna na área de pesos livres" loading="lazy">
@@ -1091,31 +1101,44 @@
           <p class="estrutura__legenda">Treino personalizado</p>
         </div>
 
-        <!-- Ambiente: check-in na entrada da musculação -->
+        <!-- Grupo 4: Funcional, Jump, Pilates, Ritmos — mesma sala
+             multiuso do mezanino, cada card com um ângulo/destaque
+             diferente (ver comentário grande no início da seção) -->
+        <!-- Ambiente: Treino funcional -->
         <div class="estrutura__item">
           <div class="estrutura__moldura estrutura__moldura--foto">
-            <img src="assets/images/estrutura/estrutura-checkin.jpg" alt="Check-in na entrada da área de musculação, com letreiro Oh my Power" loading="lazy">
+            <img src="assets/images/estrutura/estrutura-funcional.jpg" alt="Área de treino funcional da Oh My Gym, com aparelho cross over" loading="lazy">
           </div>
-          <p class="estrutura__legenda">Check-in</p>
+          <p class="estrutura__legenda">Treino funcional</p>
         </div>
 
-        <!-- Ambiente: outro ângulo da recepção -->
+        <!-- Ambiente: Jump -->
         <div class="estrutura__item">
           <div class="estrutura__moldura estrutura__moldura--foto">
-            <img src="assets/images/estrutura/estrutura-balcao-recepcao.jpg" alt="Balcão de recepção da Oh My Gym visto de outro ângulo" loading="lazy">
+            <img src="assets/images/estrutura/estrutura-jump.jpg" alt="Sala de Jump da Oh My Gym, com as camas elásticas e bolas suíças" loading="lazy">
           </div>
-          <p class="estrutura__legenda">Balcão de recepção</p>
+          <p class="estrutura__legenda">Jump</p>
         </div>
 
-        <!-- Ambiente: letreiro em destaque, pé-direito duplo da recepção -->
+        <!-- Ambiente: Pilates solo -->
         <div class="estrutura__item">
           <div class="estrutura__moldura estrutura__moldura--foto">
-            <img src="assets/images/estrutura/estrutura-letreiro.jpg" alt="Letreiro Oh my Gym em destaque no pé-direito duplo da recepção" loading="lazy">
+            <img src="assets/images/estrutura/estrutura-pilates.jpg" alt="Sala de Pilates solo da Oh My Gym, com bolas suíças na parede" loading="lazy">
           </div>
-          <p class="estrutura__legenda">Letreiro Oh my Gym</p>
+          <p class="estrutura__legenda">Pilates solo</p>
         </div>
 
-        <!-- Ambiente: mezanino, vista geral da sala de aulas multiuso -->
+        <!-- Ambiente: Sala de ritmos -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-ritmos.jpg" alt="Sala de ritmos da Oh My Gym, estúdio amplo com espelhos" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Sala de ritmos</p>
+        </div>
+
+        <!-- Ambiente: mezanino, vista geral da sala de aulas multiuso —
+             fecha o grupo 4 fazendo a ponte pro cantinho do café
+             (grupo 5), que fica dentro desse mesmo andar -->
         <div class="estrutura__item">
           <div class="estrutura__moldura estrutura__moldura--foto">
             <img src="assets/images/estrutura/estrutura-mezanino.jpg" alt="Vista geral do mezanino da Oh My Gym, com a sala de aulas ao fundo" loading="lazy">
@@ -1123,6 +1146,7 @@
           <p class="estrutura__legenda">Mezanino</p>
         </div>
 
+        <!-- Grupo 5: Área de café (2º andar, junto do funcional/jump) -->
         <!-- Ambiente: cantinho do café, no mezanino -->
         <div class="estrutura__item">
           <div class="estrutura__moldura estrutura__moldura--foto">
@@ -1131,12 +1155,30 @@
           <p class="estrutura__legenda">Espaço Oh my Coffee</p>
         </div>
 
-        <!-- Ambiente: corredor de acesso -->
+        <!-- Grupo 6: Banheiro (vestiário) — último da sequência, como
+             pedido pelo Philipe. CORREÇÃO (17/09/2026, rodada seguinte):
+             o card "Corredor" tinha ficado classificado como transição
+             pro mezanino (grupo 3→4), mas o Philipe avisou que esse
+             corredor é o corredor de ACESSO AO BANHEIRO, então ele foi
+             pra cá, abrindo este grupo, logo antes do Vestiário. -->
+        <!-- Ambiente: corredor de acesso ao vestiário -->
         <div class="estrutura__item">
           <div class="estrutura__moldura estrutura__moldura--foto">
-            <img src="assets/images/estrutura/estrutura-corredor.jpg" alt="Corredor de acesso da Oh My Gym" loading="lazy">
+            <img src="assets/images/estrutura/estrutura-corredor.jpg" alt="Corredor de acesso ao vestiário da Oh My Gym" loading="lazy">
           </div>
           <p class="estrutura__legenda">Corredor</p>
+        </div>
+
+        <!-- Ambiente: Vestiário. Não é foto do bebedouro (essa continua
+             de fora, ver comentário grande no início da seção) — é a
+             área de banheiro/vanity "Oh my Glow" (pias, espelho,
+             secador), também parte do vestiário, sem o bebedouro
+             aparecendo. -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-vestiario.jpg" alt="Área Oh my Glow do vestiário da Oh My Gym, com pias e espelho" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Vestiário</p>
         </div>
 
         </div>
