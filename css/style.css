@@ -776,6 +776,30 @@ h1, h2, h3 {
   letter-spacing: 0.01em;
 }
 
+/* Moldura com FOTO REAL (17/09/2026) — Milena mandou as fotos do espaço
+   kids, então os 4 placeholders acima ("Foto em breve") viraram fotos de
+   verdade. Modificador "--foto" na mesma moldura: tira a borda tracejada/
+   fundo translúcido (não faz sentido em cima de uma foto) e vira só uma
+   "janela" que recorta a imagem (overflow:hidden + a <img> dentro em
+   position:absolute + object-fit:cover, mesmo raciocínio já usado em
+   ".instagram__post img"), mantendo o tamanho/aspect-ratio/cantos
+   arredondados e a animação de hover que a moldura já tinha. */
+.card-diferencial__moldura--foto {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  overflow: hidden;
+  position: relative;
+}
+
+.card-diferencial__moldura--foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 /* Envolve a galeria + as duas setas — precisa de "position: relative"
    pra elas conseguirem se posicionar POR CIMA da foto (não numa fileira
    separada embaixo, como no carrossel dos planos). Pedido do Philipe
@@ -2203,6 +2227,35 @@ h1, h2, h3 {
   letter-spacing: 0.01em;
 }
 
+/* Moldura com FOTO REAL (17/09/2026) — mesmo raciocínio/comentário
+   completo do modificador "--foto" em ".card-diferencial__moldura"
+   (seção 6, logo acima) — aqui reaproveitado pras fotos da estrutura da
+   academia (fachada, recepção, musculação etc.). Tira a borda tracejada/
+   fundo claro do placeholder, vira só a "janela" que recorta a foto. */
+.estrutura__moldura--foto {
+  padding: 0;
+  border: none;
+  background-color: transparent;
+  overflow: hidden;
+  position: relative;
+}
+
+.estrutura__moldura--foto img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+/* Zoom leve na foto ao passar o mouse na moldura (por cima do "levanta
+   um pouco" que ".estrutura__moldura:hover" já faz) — reforça a sensação
+   de interatividade combinada no pacote ("efeitos visuais/hover"). */
+.estrutura__moldura--foto:hover img {
+  transform: scale(1.04);
+}
+
 /* Legenda com o nome do ambiente, embaixo da moldura */
 .estrutura__legenda {
   color: var(--cor-vinho-escuro);
@@ -3018,4 +3071,98 @@ h1, h2, h3 {
 .whatsapp-flutuante svg {
   width: 28px;
   height: 28px;
+}
+
+
+/* =====================================================================
+   16. LIGHTBOX DE FOTOS (ver foto ampliada) — pedido do Philipe, 17/09/2026
+   Quando clicada, qualquer foto da galeria do espaço kids (".card-
+   diferencial__moldura--foto") ou da galeria da estrutura da academia
+   (".estrutura__moldura--foto") abre ampliada por cima de tudo — ver
+   HTML (logo antes do <script>) e script.js.
+   z-index 1000 é o maior do site de propósito: precisa ficar acima de
+   TUDO, inclusive do cabeçalho fixo (z-index 50, seção 4) e do botão
+   flutuante de WhatsApp (z-index 40, seção 15 acima).
+   ===================================================================== */
+
+/* Cursor de "lupa" nas fotos clicáveis — sinaliza que dá pra clicar
+   pra ampliar, sem precisar de nenhum texto explicando do lado. */
+.card-diferencial__moldura--foto img,
+.estrutura__moldura--foto img {
+  cursor: zoom-in;
+}
+
+/* Camada de fundo escuro cobrindo a tela inteira.
+   IMPORTANTE: o "display: flex" (que centraliza a foto) só entra em
+   ".lightbox:not([hidden])" logo abaixo — nunca direto em ".lightbox"
+   sozinho. Isso é de propósito: o atributo HTML "hidden" já esconde o
+   elemento (display: none) por padrão do navegador, mas se a regra
+   "display: flex" estivesse solta aqui em cima, ela teria a mesma
+   prioridade (specificity) da regra nativa do navegador pro "hidden" e
+   acabaria ganhando por vir depois — o que faria o lightbox aparecer
+   sempre, mesmo escondido. Usando ":not([hidden])" isso não acontece. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  padding: 2rem;
+  background-color: rgba(43, 16, 22, 0.92); /* --cor-texto com transparência */
+}
+
+.lightbox:not([hidden]) {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* A foto em si: nunca maior que a tela (cabe inteira, sem cortar nada
+   — diferente das molduras normais do site, que usam object-fit:cover
+   e recortam a imagem; aqui é o oposto, queremos ver a foto completa). */
+.lightbox__img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  border-radius: var(--raio-padrao);
+  box-shadow: 0 20px 60px -10px rgba(0, 0, 0, 0.6);
+}
+
+.lightbox__fechar {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: none;
+  border-radius: 50%;
+  background-color: var(--cor-branco);
+  color: var(--cor-vinho-principal);
+  font-size: 1.75rem;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.lightbox__fechar:hover {
+  transform: scale(1.08);
+  background-color: var(--cor-rosa-claro);
+}
+
+/* Celular: botão de fechar um pouco menor e mais coladinho no canto,
+   pra sobrar mais espaço de tela pra foto em si. */
+@media (max-width: 639px) {
+  .lightbox {
+    padding: 1rem;
+  }
+
+  .lightbox__fechar {
+    top: 0.5rem;
+    right: 0.5rem;
+    width: 2.25rem;
+    height: 2.25rem;
+    font-size: 1.4rem;
+  }
 }

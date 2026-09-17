@@ -867,4 +867,69 @@ document.addEventListener("DOMContentLoaded", function () {
   // WhatsApp (Bloco 6) já cobre esse acesso rápido em qualquer tela,
   // então o ícone coladinho no hambúrguer ficou redundante.
 
+  /* -------------------------------------------------------------------
+     LIGHTBOX DE FOTOS (ver foto ampliada) — pedido do Philipe (17/09/2026)
+     "Quero que todas as fotos do site, quando aperte ela aparece maior
+     — as fotos no caso da estrutura e da área kid." Junta num seletor
+     só as fotos da galeria do espaço kids
+     (".card-diferencial__moldura--foto img") e as fotos da galeria da
+     estrutura da academia (".estrutura__moldura--foto img"): clicar em
+     qualquer uma delas abre a mesma camada "#lightbox" (ver HTML, logo
+     antes deste <script>) mostrando a foto ampliada.
+     ------------------------------------------------------------------- */
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImg = document.getElementById("lightbox-img");
+  const lightboxFechar = document.getElementById("lightbox-fechar");
+
+  if (lightbox && lightboxImg && lightboxFechar) {
+    const fotosClicaveis = document.querySelectorAll(
+      ".card-diferencial__moldura--foto img, .estrutura__moldura--foto img"
+    );
+
+    function abrirLightbox(img) {
+      lightboxImg.src = img.getAttribute("src");
+      lightboxImg.alt = img.getAttribute("alt") || "";
+      lightbox.hidden = false;
+      // Trava o scroll da página por trás enquanto o lightbox tá aberto,
+      // senão dava pra rolar a página "por baixo" da foto ampliada.
+      document.body.style.overflow = "hidden";
+      // Manda o foco pro botão de fechar (acessibilidade: quem navega
+      // só com teclado já cai direto em cima do jeito de sair).
+      lightboxFechar.focus();
+    }
+
+    function fecharLightbox() {
+      lightbox.hidden = true;
+      lightboxImg.src = "";
+      document.body.style.overflow = "";
+    }
+
+    fotosClicaveis.forEach(function (img) {
+      img.addEventListener("click", function () {
+        abrirLightbox(img);
+      });
+    });
+
+    // Fecha clicando no X
+    lightboxFechar.addEventListener("click", fecharLightbox);
+
+    // Fecha clicando no fundo escuro, mas NÃO clicando na própria foto:
+    // o clique na <img> tem ela mesma como "evento.target" (não o
+    // ".lightbox"), então esse "if" só deixa passar cliques que
+    // realmente caíram no fundo.
+    lightbox.addEventListener("click", function (evento) {
+      if (evento.target === lightbox) {
+        fecharLightbox();
+      }
+    });
+
+    // Fecha apertando Esc, em qualquer lugar da página (só se o
+    // lightbox estiver aberto no momento)
+    document.addEventListener("keydown", function (evento) {
+      if (evento.key === "Escape" && !lightbox.hidden) {
+        fecharLightbox();
+      }
+    });
+  }
+
 });

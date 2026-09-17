@@ -230,56 +230,34 @@
           </p>
 
           <!-- Galeria de fotos do espaço kids — pedido do Philipe (03/09/2026).
-               Ainda não temos fotos reais do espaço (a Milena ainda não
-               mandou), então por enquanto isso é só a "moldura" pronta:
-               4 molduras vazias, já no tamanho/estilo certo, com o texto
-               "Foto em breve". Assim que a Milena mandar as fotos reais,
-               é só trocar cada <div class="card-diferencial__moldura"> por
-               uma <img>, sem precisar mexer em mais nada do layout.
-               No celular vira carrossel (arrasta pro lado OU clica na
+               ATUALIZADO em 17/09/2026: a Milena mandou as fotos reais do
+               espaço (zip com 25 fotos da academia toda) — os 4
+               placeholders "Foto em breve" viraram <img> de verdade, cada
+               <div class="card-diferencial__moldura"> ganhou o modificador
+               "--foto" (ver CSS, seção 6 — tira borda tracejada/ícone,
+               vira "janela" que recorta a imagem com object-fit:cover).
+               As 4 fotos batiam exatinho com as 4 molduras que já
+               existiam (sinal de placar do "Oh my Kids" + 3 ângulos do
+               playground colorido), nenhuma sobrou de fora.
+               No celular continua carrossel (arrasta pro lado OU clica na
                seta); a partir de telas médias volta a virar uma grade
-               normal (ver CSS, seção 6 e seção 8).
-               Fotos maiores + setas laterais: ajuste pedido pelo Philipe
-               (09/09/2026, "aumentar o tamanho das fotos" + "deixar uma
-               seta ao lado esquerdo da foto e ao lado direito, e uma
-               breve mostrinha lateral da próxima foto") — mesmo padrão
-               aplicado também na galeria da seção Estrutura logo abaixo
-               no site. -->
+               normal (ver CSS, seção 6 e seção 8) — nada disso mudou, só
+               o conteúdo de dentro da moldura. -->
           <div class="card-diferencial__carrossel">
             <button type="button" class="card-diferencial__seta card-diferencial__seta--prev" aria-label="Ver foto anterior">‹</button>
 
             <div class="card-diferencial__galeria" aria-hidden="true">
-              <div class="card-diferencial__moldura">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                  <circle cx="8.5" cy="10" r="1.5"></circle>
-                  <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-                </svg>
-                <span>Foto em breve</span>
+              <div class="card-diferencial__moldura card-diferencial__moldura--foto">
+                <img src="assets/images/espaco-kids/espaco-kids-1.jpg" alt="Entrada do espaço kids da Oh My Gym, com parede colorida e letreiro Oh my Kids" loading="lazy">
               </div>
-              <div class="card-diferencial__moldura">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                  <circle cx="8.5" cy="10" r="1.5"></circle>
-                  <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-                </svg>
-                <span>Foto em breve</span>
+              <div class="card-diferencial__moldura card-diferencial__moldura--foto">
+                <img src="assets/images/espaco-kids/espaco-kids-2.jpg" alt="Brinquedoteca do espaço kids, com escorregador e estrutura de playground" loading="lazy">
               </div>
-              <div class="card-diferencial__moldura">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                  <circle cx="8.5" cy="10" r="1.5"></circle>
-                  <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-                </svg>
-                <span>Foto em breve</span>
+              <div class="card-diferencial__moldura card-diferencial__moldura--foto">
+                <img src="assets/images/espaco-kids/espaco-kids-3.jpg" alt="Playground do espaço kids visto de outro ângulo, com escorregador amarelo" loading="lazy">
               </div>
-              <div class="card-diferencial__moldura">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-                  <circle cx="8.5" cy="10" r="1.5"></circle>
-                  <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-                </svg>
-                <span>Foto em breve</span>
+              <div class="card-diferencial__moldura card-diferencial__moldura--foto">
+                <img src="assets/images/espaco-kids/espaco-kids-4.jpg" alt="Túnel e brinquedos do espaço kids da Oh My Gym" loading="lazy">
               </div>
             </div>
 
@@ -911,16 +889,41 @@
 
   <!-- ===================================================================
        SEÇÃO ESTRUTURA + DEPOIMENTOS — Bloco 4 do site (unidas em 14/09/2026)
-       Galeria mostrando os ambientes da academia. As fotos reais já
-       foram tiradas pelo fotógrafo (lista de lugares combinada com o
-       Philipe), mas a Milena ainda não avaliou elas — está de férias,
-       ainda não teve como ver (08/09/2026). Por isso, por enquanto,
-       cada ambiente aparece só como "moldura" pronta (mesmo padrão já
-       usado na galeria do espaço kids, lá em Diferenciais): borda
-       tracejada, ícone de foto e o texto "Foto em breve". Assim que a
-       Milena aprovar as fotos, é só trocar cada
-       <div class="estrutura__moldura"> por uma <img> de verdade, sem
-       precisar mexer em mais nada do layout/CSS.
+       Galeria mostrando os ambientes da academia.
+
+       ATUALIZADO em 17/09/2026: a Milena aprovou as fotos e mandou o zip
+       com todas (25 fotos, tiradas pelo fotógrafo) pro Philipe, que
+       repassou. 7 dos 8 ambientes já têm foto real (Fachada, Recepção,
+       Área de musculação, Treino funcional, Pilates solo, Sala de
+       ritmos, Jump) — cada <div class="estrutura__moldura"> desses
+       ganhou o modificador "--foto" (tira borda tracejada/ícone, vira
+       "janela" que recorta a imagem, ver CSS seção 11) com uma <img>
+       dentro no lugar do "Foto em breve".
+
+       "Vestiário" continua como moldura placeholder DE PROPÓSITO: entre
+       as fotos do vestiário só tinha o bebedouro/estação de hidratação
+       em destaque, e a Milena não gostou dessa foto especificamente
+       (pedido do Philipe, 17/09/2026: "unica foto que a Milena não
+       gostou é a do bebedouro, retira ela, não coloca no site") — sem
+       outra foto limpa do vestiário sem o bebedouro no meio, o ambiente
+       fica aguardando uma foto nova em vez de usar essa. Quando tiver
+       substituta, é só repetir o mesmo padrão dos outros 7: trocar
+       <div class="estrutura__moldura"> por
+       <div class="estrutura__moldura estrutura__moldura--foto"> com uma
+       <img> dentro, sem precisar mexer em mais nada do layout/CSS.
+
+       CORREÇÃO (17/09/2026, mesma rodada): este comentário grande tinha
+       ficado com o fechamento do comentário HTML no meio do texto por
+       engano (faltou fundir dois comentários antigos num só) — isso
+       deixava o parágrafo "Pedido do Philipe (14/09/2026)..." abaixo
+       RENDERIZADO como texto solto na página, sem estilo nenhum, bem
+       entre a seção de Planos e a seção de Estrutura (visível
+       sobrepondo o título "Nossa estrutura"). Corrigido fundindo tudo
+       num comentário único — nenhuma mudança de conteúdo, só a marcação
+       do comentário. ATENÇÃO pra próxima vez: nunca escrever a sequência
+       literal de fechamento de comentário HTML dentro do texto de um
+       comentário, nem entre aspas — o navegador fecha o comentário ali
+       mesmo, não entende como texto citado.
 
        Pedido do Philipe (14/09/2026): juntar esta seção com a seção de
        Depoimentos (que antes ficava separada, logo abaixo) e tirar um
@@ -929,7 +932,21 @@
        itens). Agora "Depoimentos" vira um bloco DENTRO desta mesma
        seção "#estrutura" (fotos em cima, depoimentos embaixo), com um
        único link no menu ("Estrutura") pros dois. Nada do conteúdo em
-       si mudou, só a organização/posição. -->
+       si mudou, só a organização/posição.
+
+       ATUALIZADO em 17/09/2026 (mesmo dia, rodada seguinte): Philipe
+       pediu pra usar TODAS as fotos da estrutura, não só as 7 dos 8
+       ambientes originais — "crie mais card e coloque as fotos". A
+       moldura do Vestiário finalmente ganhou foto (a do banheiro/
+       vanity "Oh my Glow", que não tem o bebedouro — a exclusão
+       continua valendo só pras 2 fotos que realmente mostram o
+       bebedouro em destaque) e a grade ganhou 11 `.estrutura__item`
+       NOVOS pras fotos que sobraram (corredor, cantinho do café,
+       ângulos extras de musculação/funcional, área de cardio, check-in,
+       letreiro, balcão de recepção, treino personalizado) — ver a lista
+       completa comentada logo depois do item "Vestiário" abaixo. Com
+       isso, das 25 fotos que a Milena mandou, 23 aparecem no site (as
+       únicas 2 de fora continuam sendo as do bebedouro). -->
   <section class="estrutura" id="estrutura">
     <div class="container">
 
@@ -957,106 +974,169 @@
 
         <!-- Ambiente: Fachada -->
         <div class="estrutura__item">
-          <div class="estrutura__moldura">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <circle cx="8.5" cy="10" r="1.5"></circle>
-              <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-            </svg>
-            <span>Foto em breve</span>
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-fachada.jpg" alt="Fachada da Oh My Gym, com letreiro Oh my Gym na entrada" loading="lazy">
           </div>
           <p class="estrutura__legenda">Fachada</p>
         </div>
 
         <!-- Ambiente: Recepção -->
         <div class="estrutura__item">
-          <div class="estrutura__moldura">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <circle cx="8.5" cy="10" r="1.5"></circle>
-              <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-            </svg>
-            <span>Foto em breve</span>
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-recepcao.jpg" alt="Recepção da Oh My Gym, com balcão de mármore e letreiro Oh my Gym" loading="lazy">
           </div>
           <p class="estrutura__legenda">Recepção</p>
         </div>
 
         <!-- Ambiente: Área de musculação -->
         <div class="estrutura__item">
-          <div class="estrutura__moldura">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <circle cx="8.5" cy="10" r="1.5"></circle>
-              <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-            </svg>
-            <span>Foto em breve</span>
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-musculacao.jpg" alt="Área de musculação da Oh My Gym, com aparelhos e pesos livres" loading="lazy">
           </div>
           <p class="estrutura__legenda">Área de musculação</p>
         </div>
 
         <!-- Ambiente: Treino funcional -->
         <div class="estrutura__item">
-          <div class="estrutura__moldura">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <circle cx="8.5" cy="10" r="1.5"></circle>
-              <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-            </svg>
-            <span>Foto em breve</span>
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-funcional.jpg" alt="Área de treino funcional da Oh My Gym, com aparelho cross over" loading="lazy">
           </div>
           <p class="estrutura__legenda">Treino funcional</p>
         </div>
 
         <!-- Ambiente: Pilates solo -->
         <div class="estrutura__item">
-          <div class="estrutura__moldura">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <circle cx="8.5" cy="10" r="1.5"></circle>
-              <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-            </svg>
-            <span>Foto em breve</span>
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-pilates.jpg" alt="Sala de Pilates solo da Oh My Gym, com bolas suíças na parede" loading="lazy">
           </div>
           <p class="estrutura__legenda">Pilates solo</p>
         </div>
 
         <!-- Ambiente: Sala de ritmos -->
         <div class="estrutura__item">
-          <div class="estrutura__moldura">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <circle cx="8.5" cy="10" r="1.5"></circle>
-              <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-            </svg>
-            <span>Foto em breve</span>
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-ritmos.jpg" alt="Sala de ritmos da Oh My Gym, estúdio amplo com espelhos" loading="lazy">
           </div>
           <p class="estrutura__legenda">Sala de ritmos</p>
         </div>
 
         <!-- Ambiente: Jump -->
         <div class="estrutura__item">
-          <div class="estrutura__moldura">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <circle cx="8.5" cy="10" r="1.5"></circle>
-              <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-            </svg>
-            <span>Foto em breve</span>
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-jump.jpg" alt="Sala de Jump da Oh My Gym, com as camas elásticas e bolas suíças" loading="lazy">
           </div>
           <p class="estrutura__legenda">Jump</p>
         </div>
 
-        <!-- Ambiente: Vestiário -->
+        <!-- Ambiente: Vestiário — FOTO ADICIONADA em 17/09/2026 (mesma
+             rodada). Não é foto do bebedouro (essa continua de fora,
+             ver comentário grande no início da seção) — é a área de
+             banheiro/vanity "Oh my Glow" (pias, espelho, secador),
+             também parte do vestiário, sem o bebedouro aparecendo. -->
         <div class="estrutura__item">
-          <div class="estrutura__moldura">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <rect x="3" y="5" width="18" height="14" rx="2"></rect>
-              <circle cx="8.5" cy="10" r="1.5"></circle>
-              <path d="M21 15l-5-5-4 4-3-3-6 6"></path>
-            </svg>
-            <span>Foto em breve</span>
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-vestiario.jpg" alt="Área Oh my Glow do vestiário da Oh My Gym, com pias e espelho" loading="lazy">
           </div>
           <p class="estrutura__legenda">Vestiário</p>
+        </div>
+
+        <!-- 11 ambientes/ângulos ADICIONADOS em 17/09/2026 (mesma rodada,
+             pedido do Philipe: "use todas as fotos, crie mais card e
+             coloque as fotos") — fotos que sobraram do zip da Milena
+             depois dos 8 ambientes principais + espaço kids + as 2
+             excluídas do bebedouro. Algumas mostram o mesmo espaço físico
+             dos cards acima por outro ângulo (ex.: a academia tem uma
+             sala de aulas multiuso só, usada pra Pilates/Ritmos/Jump/
+             Coffee em momentos diferentes — não são 4 salas separadas),
+             mas cada legenda descreve o que aquele ângulo específico
+             destaca, pra não repetir a mesma legenda em cards diferentes. -->
+
+        <!-- Ambiente: Área de cardio -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-cardio.jpg" alt="Área de cardio da Oh My Gym, com esteiras e bicicletas ergométricas" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Área de cardio</p>
+        </div>
+
+        <!-- Ambiente: outro ângulo da musculação, com rack de agachamento -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-rack-agachamento.jpg" alt="Rack de agachamento na área de musculação da Oh My Gym" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Rack de agachamento</p>
+        </div>
+
+        <!-- Ambiente: outro ângulo da musculação -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-estacao-musculacao.jpg" alt="Estação de musculação da Oh My Gym, com aparelhos e anilhas" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Estação de musculação</p>
+        </div>
+
+        <!-- Ambiente: outro ângulo do treino funcional -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-treino-cabos.jpg" alt="Aluna treinando com aparelho de cabos na Oh My Gym" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Treino com cabos</p>
+        </div>
+
+        <!-- Ambiente: atendimento personalizado -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-treino-personalizado.jpg" alt="Personal trainer acompanhando aluna na área de pesos livres" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Treino personalizado</p>
+        </div>
+
+        <!-- Ambiente: check-in na entrada da musculação -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-checkin.jpg" alt="Check-in na entrada da área de musculação, com letreiro Oh my Power" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Check-in</p>
+        </div>
+
+        <!-- Ambiente: outro ângulo da recepção -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-balcao-recepcao.jpg" alt="Balcão de recepção da Oh My Gym visto de outro ângulo" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Balcão de recepção</p>
+        </div>
+
+        <!-- Ambiente: letreiro em destaque, pé-direito duplo da recepção -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-letreiro.jpg" alt="Letreiro Oh my Gym em destaque no pé-direito duplo da recepção" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Letreiro Oh my Gym</p>
+        </div>
+
+        <!-- Ambiente: mezanino, vista geral da sala de aulas multiuso -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-mezanino.jpg" alt="Vista geral do mezanino da Oh My Gym, com a sala de aulas ao fundo" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Mezanino</p>
+        </div>
+
+        <!-- Ambiente: cantinho do café, no mezanino -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-coffee.jpg" alt="Espaço Oh my Coffee, cantinho de descanso no mezanino da Oh My Gym" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Espaço Oh my Coffee</p>
+        </div>
+
+        <!-- Ambiente: corredor de acesso -->
+        <div class="estrutura__item">
+          <div class="estrutura__moldura estrutura__moldura--foto">
+            <img src="assets/images/estrutura/estrutura-corredor.jpg" alt="Corredor de acesso da Oh My Gym" loading="lazy">
+          </div>
+          <p class="estrutura__legenda">Corredor</p>
         </div>
 
         </div>
@@ -1214,71 +1294,120 @@
                play — antes (com os placeholders) só metade era
                marcada como vídeo, só pra exemplificar a mistura; agora
                que são posts de verdade, cada um reflete o tipo real.
-               Isso é uma primeira versão pra Philipe ver como fica —
-               ainda não linkam pro post individual no Instagram (só
-               pro perfil, no botão "Seguir" abaixo), porque a extração
-               não garante o link exato de cada um. -->
+
+               Cada post virou um link <a> (era <div>) — pedido do
+               Philipe (17/09/2026): "quero que a pessoa quando for
+               clicar [no botão de play], é direcionada para o
+               instagram". Como a extração não garante o link exato de
+               cada post individual (ver comentário acima), todos os 6
+               apontam pro perfil (@ohmygym_cianorte), igual ao botão
+               "Seguir" logo abaixo — mesmo destino, só que agora
+               clicar direto na foto/play também funciona, que é o
+               comportamento que dá a entender que aquilo é clicável.
+               "target=_blank" + "rel=noopener" (abre em nova aba, sem
+               dar acesso da nova aba de volta pra essa página — prática
+               padrão de segurança), mesmo padrão já usado no botão
+               "Seguir" e nos links de Instagram do rodapé/contato.
+               ".instagram__post" já era "display:flex" no CSS, então
+               virar <a> não muda nada visualmente (link "flex" se
+               comporta igual a div "flex"). -->
             <div class="instagram__grid">
 
             <!-- Post 1 -->
-            <div class="instagram__post instagram__post--video">
+            <a
+              href="https://www.instagram.com/ohmygym_cianorte/"
+              class="instagram__post instagram__post--video"
+              target="_blank"
+              rel="noopener"
+              aria-label="Ver este post no Instagram da Oh My Gym"
+            >
               <img src="assets/instagram/post-1.jpg" alt="Post recente do Instagram da Oh My Gym" loading="lazy">
               <span class="instagram__post-play" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M9 7.2v9.6l8-4.8z"></path>
                 </svg>
               </span>
-            </div>
+            </a>
 
             <!-- Post 2 -->
-            <div class="instagram__post instagram__post--video">
+            <a
+              href="https://www.instagram.com/ohmygym_cianorte/"
+              class="instagram__post instagram__post--video"
+              target="_blank"
+              rel="noopener"
+              aria-label="Ver este post no Instagram da Oh My Gym"
+            >
               <img src="assets/instagram/post-2.jpg" alt="Post recente do Instagram da Oh My Gym" loading="lazy">
               <span class="instagram__post-play" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M9 7.2v9.6l8-4.8z"></path>
                 </svg>
               </span>
-            </div>
+            </a>
 
             <!-- Post 3 -->
-            <div class="instagram__post instagram__post--video">
+            <a
+              href="https://www.instagram.com/ohmygym_cianorte/"
+              class="instagram__post instagram__post--video"
+              target="_blank"
+              rel="noopener"
+              aria-label="Ver este post no Instagram da Oh My Gym"
+            >
               <img src="assets/instagram/post-3.jpg" alt="Post recente do Instagram da Oh My Gym" loading="lazy">
               <span class="instagram__post-play" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M9 7.2v9.6l8-4.8z"></path>
                 </svg>
               </span>
-            </div>
+            </a>
 
             <!-- Post 4 -->
-            <div class="instagram__post instagram__post--video">
+            <a
+              href="https://www.instagram.com/ohmygym_cianorte/"
+              class="instagram__post instagram__post--video"
+              target="_blank"
+              rel="noopener"
+              aria-label="Ver este post no Instagram da Oh My Gym"
+            >
               <img src="assets/instagram/post-4.jpg" alt="Post recente do Instagram da Oh My Gym" loading="lazy">
               <span class="instagram__post-play" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M9 7.2v9.6l8-4.8z"></path>
                 </svg>
               </span>
-            </div>
+            </a>
 
             <!-- Post 5 -->
-            <div class="instagram__post instagram__post--video">
+            <a
+              href="https://www.instagram.com/ohmygym_cianorte/"
+              class="instagram__post instagram__post--video"
+              target="_blank"
+              rel="noopener"
+              aria-label="Ver este post no Instagram da Oh My Gym"
+            >
               <img src="assets/instagram/post-5.jpg" alt="Post recente do Instagram da Oh My Gym" loading="lazy">
               <span class="instagram__post-play" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M9 7.2v9.6l8-4.8z"></path>
                 </svg>
               </span>
-            </div>
+            </a>
 
             <!-- Post 6 -->
-            <div class="instagram__post instagram__post--video">
+            <a
+              href="https://www.instagram.com/ohmygym_cianorte/"
+              class="instagram__post instagram__post--video"
+              target="_blank"
+              rel="noopener"
+              aria-label="Ver este post no Instagram da Oh My Gym"
+            >
               <img src="assets/instagram/post-6.jpg" alt="Post recente do Instagram da Oh My Gym" loading="lazy">
               <span class="instagram__post-play" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="currentColor">
                   <path d="M9 7.2v9.6l8-4.8z"></path>
                 </svg>
               </span>
-            </div>
+            </a>
 
           </div>
 
@@ -1541,6 +1670,25 @@
       <path d="M12.04 2c-5.52 0-10 4.48-10 10 0 1.77.46 3.44 1.26 4.88L2 22l5.25-1.28c1.38.72 2.95 1.13 4.6 1.13h.01c5.52 0 10.02-4.48 10.02-10S17.56 2 12.04 2Zm5.87 14.24c-.25.7-1.45 1.33-2 1.42-.51.08-1.15.11-1.86-.12-.43-.13-.98-.32-1.68-.63-2.96-1.28-4.9-4.25-5.04-4.45-.15-.2-1.21-1.61-1.21-3.07 0-1.46.77-2.18 1.04-2.48.27-.3.6-.37.8-.37.2 0 .4 0 .57.01.18.01.43-.07.68.52.25.6.86 2.06.94 2.21.08.15.13.33.03.53-.1.2-.15.33-.3.5-.15.18-.31.4-.44.53-.15.15-.3.31-.13.6.17.3.77 1.27 1.66 2.06 1.14 1.02 2.1 1.34 2.4 1.49.3.15.47.13.65-.08.18-.2.76-.88.96-1.18.2-.3.4-.25.67-.15.28.1 1.75.82 2.05.97.3.15.5.22.57.35.08.13.08.73-.17 1.43Z" />
     </svg>
   </a>
+
+  <!-- ===================================================================
+       LIGHTBOX DE FOTOS (ver foto ampliada) — pedido do Philipe (17/09/2026)
+       Estrutura única, reaproveitada pra QUALQUER foto clicável do site
+       (por enquanto: galeria do espaço kids e galeria da estrutura da
+       academia — ver seletor no JS, script.js).
+       - Fica escondida (atributo "hidden") até alguém clicar numa foto;
+         o script troca o "src"/"alt" da <img> de dentro pra foto
+         clicada e mostra essa camada por cima de tudo (position:fixed,
+         z-index bem alto — ver CSS, seção 16).
+       - Fecha clicando no X, clicando no fundo escuro (fora da foto)
+         ou apertando Esc — tudo tratado em script.js.
+       - "role=dialog"/"aria-modal"/"aria-label" e o foco automático no
+         botão de fechar ao abrir são só pra acessibilidade (leitor de
+         tela entender que isso é uma janela por cima do conteúdo). -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto ampliada" hidden>
+    <button type="button" class="lightbox__fechar" id="lightbox-fechar" aria-label="Fechar foto ampliada">&times;</button>
+    <img src="" alt="" class="lightbox__img" id="lightbox-img">
+  </div>
 
   <!-- Script principal (menu mobile, etc.) -->
   <script src="js/script.js"></script>
