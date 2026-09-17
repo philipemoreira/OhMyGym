@@ -70,14 +70,24 @@
        etc.) — arquivos em "assets/favicon/", exceto o .ico e o .svg
        (que ficam na raiz do projeto por convenção, pra navegadores que
        procuram "/favicon.ico"/"/favicon.svg" direto, sem olhar o
-       <link> aqui). -->
-  <link rel="icon" type="image/svg+xml" href="favicon.svg">
-  <link rel="icon" href="favicon.ico" sizes="any">
-  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png">
-  <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png">
+       <link> aqui).
+       "?v=2" no fim de cada link (17/09/2026, rodada seguinte): o
+       Philipe testou e continuou vendo o ícone antigo (pequeno, com
+       fundo), mesmo depois do ajuste — não é bug nos arquivos (eu
+       testei renderizando eles direto, e estão certos), é o Chrome
+       guardando o favicon antigo numa memória própria dele, separada
+       do cache normal de página, que nem um F5/Ctrl+Shift+R limpa
+       sozinho. Colocar uma "versão" (?v=2) no final do link do arquivo
+       faz o navegador enxergar como um arquivo NOVO, diferente do que
+       tava guardado, e buscar de novo — se o favicon for trocado de
+       novo no futuro, é só subir esse número (?v=3, ?v=4...). -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg?v=2">
+  <link rel="icon" href="favicon.ico?v=2" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png?v=2">
+  <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png?v=2">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/favicon/apple-touch-icon.png?v=2">
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon/android-chrome-192x192.png?v=2">
+  <link rel="icon" type="image/png" sizes="512x512" href="assets/favicon/android-chrome-512x512.png?v=2">
 </head>
 <body>
 
