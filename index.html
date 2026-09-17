@@ -42,17 +42,36 @@
        ícone específico (preenche a área transparente com um quadrado
        preto sólido por trás, o que ficaria pior que o quadrado rosa
        antigo), então esse caso continua com fundo, só que com a coroa
-       maior também. Vale ter em mente: coroa vinho-escuro sobre fundo
-       TRANSPARENTE fica com contraste mais baixo em navegador no modo
-       escuro (tema escuro da aba) — é uma limitação inerente de ícone
-       de uma cor só sem fundo, não um bug; se incomodar, dá pra
-       reavaliar depois.
+       maior também.
+       AJUSTE 2 (17/09/2026, rodada seguinte): como avisado no ajuste
+       acima, a coroa vinho-escuro sobre fundo transparente sumia no
+       modo escuro do navegador — e o Philipe, ao pensar na troca
+       óbvia (usar rosa-claro em vez de vinho-escuro), percebeu sozinho
+       que isso ia só INVERTER o problema: rosa-claro sobre fundo
+       transparente ia sumir no modo CLARO do navegador (fundo quase
+       branco + coroa clara), que é o modo mais comum. Não existe uma
+       cor sólida só que funcione bem nos dois modos ao mesmo tempo.
+       Resolvido com "favicon.svg" (ver esse arquivo, na raiz do
+       projeto) — um SVG com uma troca de cor embutida via
+       "@media (prefers-color-scheme: dark)": vinho-escuro no modo
+       claro do navegador (igual antes), rosa-claro só quando o
+       navegador está no modo escuro. O navegador troca sozinho, sem
+       precisar de JavaScript. Chrome, Edge e Firefox atuais já usam
+       esse SVG como favicon preferido (por isso o <link> dele vem
+       ANTES do .ico/PNG aqui embaixo — o navegador usa o primeiro
+       formato que ele sabe exibir). O Safari (iPhone/Mac) ainda não
+       aplica favicon em SVG, então cai pro conjunto antigo de PNG/.ico
+       — nesse caso continua só com o vinho-escuro fixo (sem troca
+       automática), que é a situação mais comum de qualquer forma (modo
+       claro é o padrão da maioria dos navegadores/sistemas).
        Conjunto padrão de tamanhos (16/32/180/192/512px) gerado a partir
        de um mestre em alta resolução, pra ficar nítido em qualquer
        navegador/dispositivo (aba do Chrome, atalho no iPhone/Android
-       etc.) — arquivos em "assets/favicon/", exceto o .ico (que fica na
-       raiz do projeto por convenção, pra navegadores antigos que
-       procuram "/favicon.ico" direto, sem olhar o <link> aqui). -->
+       etc.) — arquivos em "assets/favicon/", exceto o .ico e o .svg
+       (que ficam na raiz do projeto por convenção, pra navegadores que
+       procuram "/favicon.ico"/"/favicon.svg" direto, sem olhar o
+       <link> aqui). -->
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon/favicon-16x16.png">
