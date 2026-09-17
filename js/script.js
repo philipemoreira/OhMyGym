@@ -908,6 +908,30 @@ document.addEventListener("DOMContentLoaded", function () {
       img.addEventListener("click", function () {
         abrirLightbox(img);
       });
+
+      // BUG DE ACESSIBILIDADE ENCONTRADO NO BLOCO 7 (17/09/2026): essas
+      // fotos só tinham o evento de "click" — quem navega o site só pelo
+      // teclado (sem mouse/toque) nunca conseguia abrir NENHUMA das 23
+      // fotos ampliadas, porque uma <img> comum não entra na ordem de
+      // tabulação por padrão e não reage a Enter/Espaço sozinha. Testado
+      // com Playwright: 60 "Tab" seguidos a partir do topo da página e
+      // nenhuma foto recebia foco em momento nenhum.
+      // Corrigido em duas partes: aqui no HTML (index.html) cada uma
+      // dessas <img> ganhou "tabindex=\"0\"" (agora entra na ordem de
+      // tabulação) e "role=\"button\"" (leitor de tela passa a anunciar
+      // como um botão, já que ela dispara uma ação, não é só uma imagem
+      // ilustrativa); aqui no JS, o "keydown" abaixo faz Enter e Espaço
+      // chamarem a mesma função que o clique do mouse chamaria — sem
+      // isso, mesmo com o foco chegando na foto, apertar Enter não faria
+      // nada.
+      img.addEventListener("keydown", function (evento) {
+        if (evento.key === "Enter" || evento.key === " " || evento.key === "Spacebar") {
+          // Sem isso, Espaço rolaria a página pra baixo (comportamento
+          // padrão do navegador pra tecla Espaço) em vez de abrir a foto.
+          evento.preventDefault();
+          abrirLightbox(img);
+        }
+      });
     });
 
     // Fecha clicando no X

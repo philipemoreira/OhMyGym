@@ -2024,6 +2024,21 @@ h1, h2, h3 {
     transform: translateX(100%);
     transition: transform 0.3s ease, top 0.25s ease;
     padding: 2rem 1.5rem;
+    /* BUG ENCONTRADO NO BLOCO 7 (17/09/2026): em celular deitado com tela
+       baixa (ex: 568x320, iPhone SE landscape), os 8 links + botão de
+       WhatsApp juntos (458px de altura) não cabem no espaço vertical
+       disponível (252px nesse caso). Como esse elemento é "position:
+       fixed" com "inset: 0" (ou seja, top E bottom travados na tela) e
+       "overflow" não estava definido (o padrão do navegador é "visible"),
+       o conteúdo que não cabia simplesmente vazava pra fora da caixa sem
+       nenhuma barra de rolagem — testado com Playwright forçando
+       "scrollTop", e o menu realmente não rolava (scrollTop voltava pra
+       0), deixando "Estrutura", "Instagram", "Onde estamos" e o botão
+       "Falar no WhatsApp" impossíveis de alcançar nessas telas.
+       Corrigido dando rolagem própria pro menu quando ele for mais alto
+       que a tela: */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; /* rolagem mais suave no iOS */
   }
 
   /* Classe adicionada via JavaScript quando o menu está aberto */
