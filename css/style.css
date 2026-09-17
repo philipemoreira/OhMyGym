@@ -998,6 +998,18 @@ h1, h2, h3 {
   max-width: 60ch;
 }
 
+/* Divisória entre o texto da modalidade (em cima) e o filtro + resultado
+   (horário ou grade de aulas, embaixo) — pedido do Philipe (16/09/2026):
+   juntar os dois blocos num card só, que cresce pra baixo, em vez de
+   ficarem separados na página (ver comentário grande no HTML sobre o
+   motivo). Linha bem sutil, na mesma linguagem dos divisores já usados
+   dentro do ".horario-funcionamento__lista". */
+.card-modalidade-destaque__divisor {
+  margin: 1.75rem 0;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
 /* A etiqueta ".card-diferencial__tag" (já reaproveitada aqui) fica
    dentro do wrapper ".card-modalidade-destaque__cabecalho" (ver acima),
    que já cuida da margem/alinhamento — por isso NÃO tem mais uma regra
@@ -1049,11 +1061,16 @@ h1, h2, h3 {
   display: none; /* Chrome, Safari, Edge */
 }
 
-/* SEM sombra aqui na base/mobile — motivo (03/09/2026): dentro do
-   carrossel (".filtro-modalidades" com "overflow-x: auto"), a sombra
-   dava bug feio especificamente no Safari do iPhone (aparecia como um
-   retângulo cinza duro atrás do botão, em vez de sombra suave — bug
-   de renderização do WebKit quando "overflow" + "border-radius" +
+/* Botões do filtro agora vivem DENTRO do card vinho de destaque (ver
+   comentário grande no HTML, 16/09/2026) — por isso o estilo mudou de
+   "botão claro sobre fundo claro" pra "botão translúcido sobre fundo
+   vinho", parecido com o botão branco (".btn--white") já usado em
+   outros lugares do site sobre fundo vinho sólido. SEM sombra aqui na
+   base/mobile — motivo (03/09/2026): dentro do carrossel
+   (".filtro-modalidades" com "overflow-x: auto"), a sombra dava bug
+   feio especificamente no Safari do iPhone (aparecia como um retângulo
+   cinza duro atrás do botão, em vez de sombra suave — bug de
+   renderização do WebKit quando "overflow" + "border-radius" +
    "box-shadow" se combinam dentro de um container com scroll). Já
    tentamos ajustar padding pra resolver, mas o bug era específico do
    Safari mobile (no PC/Chrome nunca apareceu) e não some só com
@@ -1062,10 +1079,10 @@ h1, h2, h3 {
    botões já não ficam dentro de um container com overflow. */
 .filtro-modalidades__btn {
   padding: 0.6rem 1.25rem;
-  border: 1.5px solid transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
   border-radius: 999px;
-  background-color: var(--cor-branco);
-  color: var(--cor-vinho-escuro);
+  background-color: rgba(255, 255, 255, 0.12);
+  color: var(--cor-branco);
   font-family: var(--fonte-corpo);
   font-weight: 500;
   font-size: 0.9rem;
@@ -1081,12 +1098,13 @@ h1, h2, h3 {
               border-color 0.2s ease;
 }
 
-/* Estado ativo (modalidade selecionada no momento): preenche com a cor
-   principal da marca, igual aos outros destaques do site */
+/* Estado ativo (modalidade selecionada no momento): preenche com
+   branco sólido, pra destacar contra o fundo vinho do card (igual ao
+   ".btn--white" usado em outros CTAs sobre fundo vinho no site) */
 .filtro-modalidades__btn.is-ativo {
-  background-color: var(--cor-vinho-principal);
-  border-color: var(--cor-vinho-principal);
-  color: var(--cor-branco);
+  background-color: var(--cor-branco);
+  border-color: var(--cor-branco);
+  color: var(--cor-vinho-principal);
 }
 
 /* Dica "Arraste para o lado", só no celular (onde o filtro é um
@@ -1094,25 +1112,25 @@ h1, h2, h3 {
    kids. Pedido do Philipe (03/09/2026): deixar esse gesto óbvio pra
    quem não perceber sozinho que dá pra arrastar. Puxa a margem pra
    cima da grade de horários (que vem logo depois) pra não sobrar
-   espaço demais entre os dois. */
+   espaço demais entre os dois. Cor clara (16/09/2026): agora vive
+   sobre o fundo vinho do card, não mais sobre o fundo claro da
+   página. */
 .filtro-modalidades__dica {
   margin-bottom: 2.5rem;
-  color: rgba(90, 18, 49, 0.55);
+  color: rgba(255, 255, 255, 0.65);
   font-size: 0.75rem;
   text-align: center;
 }
 
-/* Card de "Horário de funcionamento": aparece no lugar da grade de aulas
+/* Bloco "Horário de funcionamento": aparece no lugar da grade de aulas
    quando o filtro "Musculação" está ativo (padrão da seção — ver HTML).
-   Usa o mesmo estilo "vinho sólido" do card de destaque logo acima, pra
-   ficar igualmente chamativo — pedido explícito do Philipe (04/09/2026):
-   "tem que estar bem visto, escondido ninguém vai saber". */
+   Até 15/09/2026 era um card vinho sólido próprio; a partir de
+   16/09/2026 ele mora DENTRO do card de destaque (que já é vinho) —
+   por isso perdeu o próprio fundo/padding/sombra, e vira só um bloco de
+   conteúdo que herda a cor do card pai (ver comentário grande no
+   HTML). */
 .horario-funcionamento {
-  margin-bottom: 1.25rem;
-  padding: 2rem;
-  border-radius: var(--raio-padrao);
-  background-color: var(--cor-vinho-principal);
-  box-shadow: 0 14px 34px -16px rgba(110, 33, 56, 0.65);
+  margin-bottom: 0;
 }
 
 .horario-funcionamento[hidden] {
@@ -1215,11 +1233,15 @@ h1, h2, h3 {
   opacity: 0.35;
 }
 
+/* Sombra mais escura/neutra (era num tom vinho) — desde 16/09/2026 esses
+   cards ficam sobre o fundo vinho do card de destaque (não mais sobre o
+   fundo claro da página), então uma sombra na mesma família de cor do
+   fundo praticamente não aparecia. */
 .grade-horarios__dia {
   padding: 1.5rem;
   border-radius: var(--raio-padrao);
   background-color: var(--cor-branco);
-  box-shadow: 0 10px 30px -20px rgba(43, 16, 22, 0.4);
+  box-shadow: 0 10px 26px -14px rgba(0, 0, 0, 0.4);
 }
 
 /* Esconde por completo o card de um dia quando nenhuma aula dele
@@ -1817,9 +1839,12 @@ h1, h2, h3 {
      acima), não tem container com scroll cortando nada, então a
      sombra funciona normal — inclusive sem o bug de renderização que
      dava no carrossel do Safari mobile (ver comentário em
-     ".filtro-modalidades__btn" na seção 6). */
+     ".filtro-modalidades__btn" na seção 6). Sombra escura padrão
+     (rgba com preto) em vez da sombra "vinho" antiga — desde
+     16/09/2026 os botões vivem sobre um fundo vinho, então uma sombra
+     na mesma cor do fundo não apareceria. */
   .filtro-modalidades__btn {
-    box-shadow: 0 6px 18px -14px rgba(43, 16, 22, 0.5);
+    box-shadow: 0 6px 16px -10px rgba(0, 0, 0, 0.45);
     transition: background-color 0.2s ease, color 0.2s ease,
                 border-color 0.2s ease, transform 0.15s ease,
                 box-shadow 0.2s ease;
@@ -1827,7 +1852,8 @@ h1, h2, h3 {
 
   .filtro-modalidades__btn:hover {
     transform: translateY(-2px) scale(1.03);
-    box-shadow: 0 10px 22px -14px rgba(43, 16, 22, 0.6);
+    background-color: rgba(255, 255, 255, 0.22);
+    box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.5);
   }
 
   .filtro-modalidades__btn:active {
@@ -1835,7 +1861,11 @@ h1, h2, h3 {
   }
 
   .filtro-modalidades__btn.is-ativo {
-    box-shadow: 0 10px 24px -12px rgba(110, 33, 56, 0.6);
+    box-shadow: 0 10px 22px -10px rgba(0, 0, 0, 0.4);
+  }
+
+  .filtro-modalidades__btn.is-ativo:hover {
+    background-color: var(--cor-branco);
   }
 
   /* A dica de "arraste pro lado" só faz sentido no celular (onde o
@@ -2724,6 +2754,48 @@ h1, h2, h3 {
 
 .contato__valor:hover .contato__valor-icone {
   background-color: var(--cor-vinho-escuro);
+}
+
+/* Variante pro Endereço (16/09/2026) — não é um link (não tem "pra
+   onde ir" clicável direto, o link de verdade é o ".contato__valor-link"
+   "Ver no mapa" logo abaixo), então sem sublinhado e com peso de fonte
+   normal, mais parecido com texto corrido. "align-items: flex-start"
+   (em vez de "center", herdado de ".contato__valor") porque o endereço
+   quebra em 2 linhas — com "center" o ícone ficaria descentralizado em
+   relação ao bloco de texto inteiro. */
+.contato__valor--texto {
+  align-items: flex-start;
+  color: var(--cor-texto);
+  font-weight: 600;
+  font-size: 1.05rem;
+  line-height: 1.5;
+  text-decoration: none;
+  cursor: default;
+}
+
+.contato__valor--texto .contato__valor-icone {
+  margin-top: 0.1rem;
+}
+
+/* "Ver no mapa" — link secundário, discreto, alinhado com o texto do
+   endereço (não com o ícone — por isso a margem esquerda soma a
+   largura do ícone + o espaço entre eles). Abre a rota completa no
+   Google Maps (diferente do mapa embutido ao lado, que é só pra
+   visualização rápida). */
+.contato__valor-link {
+  display: inline-block;
+  margin-top: 0.5rem;
+  margin-left: calc(34px + 0.6rem);
+  color: var(--cor-vinho-principal);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.contato__valor-link:hover {
+  color: var(--cor-vinho-escuro);
 }
 
 /* Mapa incorporado (Google Maps) — pedido do Philipe (15/09/2026):

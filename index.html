@@ -367,6 +367,48 @@
 
       <!-- Card de destaque: Musculação (treino livre) -->
       <div class="card-modalidade-destaque">
+        <!-- Filtro de modalidades: cada botão marca o conteúdo abaixo pra
+             mostrar só aquela modalidade. "Musculação" é o filtro ATIVO
+             POR PADRÃO (pedido do Philipe, 04/09/2026: quando a pessoa
+             rola a página e a seção aparece, já quer ver o horário de
+             funcionamento ali, sem precisar clicar em nada — "tem que
+             estar bem visto, escondido ninguém vai saber"). "Todos"
+             mostra a grade de aulas inteira. A lógica de filtrar
+             (mostrar/esconder) fica no script.js.
+             Posição do filtro dentro do card (pedido do Philipe,
+             16/09/2026): fica no TOPO do card, antes até do texto que
+             explica a modalidade — assim a opção clicada aparece em
+             cima, e a explicação de "o que é aquilo" vem logo abaixo
+             dela, seguida do resultado (horário ou grade). Antes disso o
+             filtro tinha ficado no meio, entre o texto e o resultado, o
+             que o Philipe achou confuso ("quero em cima da explicação
+             doque é"). Ordem final: filtro → texto da modalidade →
+             resultado. -->
+        <div class="filtro-modalidades" role="group" aria-label="Filtrar por modalidade">
+          <button type="button" class="filtro-modalidades__btn" data-filtro="todos">Todos</button>
+          <button type="button" class="filtro-modalidades__btn is-ativo" data-filtro="musculacao">Musculação</button>
+          <button type="button" class="filtro-modalidades__btn" data-filtro="jump">Jump</button>
+          <button type="button" class="filtro-modalidades__btn" data-filtro="funcional">Funcional</button>
+          <button type="button" class="filtro-modalidades__btn" data-filtro="pilates-solo">Pilates solo</button>
+          <button type="button" class="filtro-modalidades__btn" data-filtro="ritmos">Ritmos</button>
+          <button type="button" class="filtro-modalidades__btn" data-filtro="ritmos-gospel">Ritmos gospel</button>
+          <button type="button" class="filtro-modalidades__btn" data-filtro="ballet-fitness">Ballet fitness</button>
+          <button type="button" class="filtro-modalidades__btn" data-filtro="ballet-infantil">Ballet infantil</button>
+        </div>
+
+        <!-- Dica de "arraste pro lado", só aparece no celular (onde o
+             filtro é um carrossel de verdade — ver CSS/JS) — pedido do
+             Philipe (03/09/2026): deixar bem óbvio que dá pra arrastar,
+             "pensando sempre que o usuário é burro" (ou seja: nada de
+             depender só do usuário perceber sozinho). -->
+        <p class="filtro-modalidades__dica" aria-hidden="true">Arraste para o lado →</p>
+
+        <!-- Divisória sutil dentro do próprio card, separando o filtro
+             (acima) do texto da modalidade + resultado (horário ou grade,
+             abaixo) — ver comentário grande no filtro sobre a ordem final
+             escolhida pelo Philipe (16/09/2026). -->
+        <hr class="card-modalidade-destaque__divisor">
+
         <div class="card-modalidade-destaque__texto">
           <div class="card-modalidade-destaque__cabecalho" id="modalidade-destaque-cabecalho">
           <span class="card-diferencial__icon" id="modalidade-destaque-icon">
@@ -381,7 +423,7 @@
           <span class="card-diferencial__tag" id="modalidade-destaque-tag">Modalidade em destaque</span>
           </div>
           <!-- Ícone, título e texto abaixo mudam de acordo com o filtro
-               escolhido logo abaixo (ver ".filtro-modalidades" e script.js)
+               escolhido logo acima (ver ".filtro-modalidades" e script.js)
                — pedido do Philipe (04/09/2026): ao clicar em cada
                modalidade, esse card passa a falar sobre ELA (ícone +
                título + texto), e a etiqueta "Modalidade em destaque" some
@@ -410,41 +452,24 @@
             transformar o corpo no seu ritmo.
           </p>
         </div>
-      </div>
 
-      <!-- Filtro de modalidades: cada botão marca o conteúdo abaixo pra
-           mostrar só aquela modalidade. "Musculação" é o filtro ATIVO
-           POR PADRÃO (pedido do Philipe, 04/09/2026: quando a pessoa
-           rola a página e a seção aparece, já quer ver o horário de
-           funcionamento ali, sem precisar clicar em nada — "tem que
-           estar bem visto, escondido ninguém vai saber"). "Todos"
-           mostra a grade de aulas inteira. A lógica de filtrar
-           (mostrar/esconder) fica no script.js. -->
-      <div class="filtro-modalidades" role="group" aria-label="Filtrar por modalidade">
-        <button type="button" class="filtro-modalidades__btn" data-filtro="todos">Todos</button>
-        <button type="button" class="filtro-modalidades__btn is-ativo" data-filtro="musculacao">Musculação</button>
-        <button type="button" class="filtro-modalidades__btn" data-filtro="jump">Jump</button>
-        <button type="button" class="filtro-modalidades__btn" data-filtro="funcional">Funcional</button>
-        <button type="button" class="filtro-modalidades__btn" data-filtro="pilates-solo">Pilates solo</button>
-        <button type="button" class="filtro-modalidades__btn" data-filtro="ritmos">Ritmos</button>
-        <button type="button" class="filtro-modalidades__btn" data-filtro="ritmos-gospel">Ritmos gospel</button>
-        <button type="button" class="filtro-modalidades__btn" data-filtro="ballet-fitness">Ballet fitness</button>
-        <button type="button" class="filtro-modalidades__btn" data-filtro="ballet-infantil">Ballet infantil</button>
-      </div>
+        <!-- 2ª divisória (mesmo estilo da primeira), agora separando o
+             texto da modalidade (acima) do resultado do filtro — horário
+             ou grade de aulas (abaixo). Pedido do Philipe (16/09/2026):
+             "divide bonitinho, deixa o espaço, faz o negócio bonito" —
+             antes o texto emendava direto no início do bloco de horário,
+             sem respiro nem separação visual. Com essa 2ª linha, o card
+             fica dividido em 3 partes bem definidas: filtro (o que você
+             clica) → texto (o que é aquilo) → resultado (horário/grade),
+             cada uma com seu espaço próprio. -->
+        <hr class="card-modalidade-destaque__divisor">
 
-      <!-- Dica de "arraste pro lado", só aparece no celular (onde o
-           filtro é um carrossel de verdade — ver CSS/JS) — pedido do
-           Philipe (03/09/2026): deixar bem óbvio que dá pra arrastar,
-           "pensando sempre que o usuário é burro" (ou seja: nada de
-           depender só do usuário perceber sozinho). -->
-      <p class="filtro-modalidades__dica" aria-hidden="true">Arraste para o lado →</p>
-
-      <!-- Horário de funcionamento: aparece no lugar da grade de aulas
-           quando o filtro "Musculação" está ativo (que é o padrão — ver
-           comentário no filtro acima). Pedido explícito do Philipe
-           (04/09/2026): tem que ficar bem visível, não escondido no
-           rodapé. Fonte: respostas da Milena (ver briefing). -->
-      <div class="horario-funcionamento" id="horario-funcionamento">
+        <!-- Horário de funcionamento: aparece no lugar da grade de aulas
+             quando o filtro "Musculação" está ativo (que é o padrão — ver
+             comentário no filtro acima). Pedido explícito do Philipe
+             (04/09/2026): tem que ficar bem visível, não escondido no
+             rodapé. Fonte: respostas da Milena (ver briefing). -->
+        <div class="horario-funcionamento" id="horario-funcionamento">
         <div class="horario-funcionamento__cabecalho">
           <span class="horario-funcionamento__icon">
             <svg viewBox="0 0 75.16 104.41" fill="currentColor">
@@ -483,77 +508,79 @@
             </span>
           </li>
         </ul>
+        </div>
+
+        <!-- Grade de horários das aulas coletivas.
+             Em vez de uma tabela larga (difícil de deixar responsiva sem
+             rolagem horizontal), cada dia da semana vira um "card", o que
+             empilha bem em qualquer tamanho de tela.
+             Cada aula tem "data-filtro" com o mesmo valor usado nos botões
+             acima — é isso que o script.js usa pra saber o que mostrar/
+             esconder quando alguém clica num filtro.
+             Fica ESCONDIDA por padrão porque "Musculação" (que mostra o
+             horário de funcionamento acima) é o filtro ativo por padrão —
+             o script.js mostra essa grade de novo assim que outro filtro
+             é escolhido. -->
+        <div class="grade-horarios" hidden>
+
+          <div class="grade-horarios__dia">
+            <h4>Segunda-feira</h4>
+            <ul>
+              <li data-filtro="funcional"><span>06:00</span> Funcional</li>
+              <li data-filtro="pilates-solo"><span>08:00</span> Pilates</li>
+              <li data-filtro="funcional"><span>18:15</span> Funcional</li>
+              <li data-filtro="pilates-solo"><span>19:00</span> Pilates</li>
+            </ul>
+          </div>
+
+          <div class="grade-horarios__dia">
+            <h4>Terça-feira</h4>
+            <ul>
+              <li data-filtro="pilates-solo"><span>08:00</span> Pilates</li>
+              <li data-filtro="ritmos-gospel"><span>18:15</span> Dança Gospel</li>
+              <li data-filtro="jump"><span>19:00</span> Jump</li>
+            </ul>
+          </div>
+
+          <div class="grade-horarios__dia">
+            <h4>Quarta-feira</h4>
+            <ul>
+              <li data-filtro="funcional"><span>06:00</span> Funcional</li>
+              <li data-filtro="funcional"><span>18:15</span> Funcional</li>
+              <li data-filtro="pilates-solo"><span>19:00</span> Pilates</li>
+              <li data-filtro="ballet-fitness"><span>20:00</span> Ballet fitness</li>
+            </ul>
+          </div>
+
+          <div class="grade-horarios__dia">
+            <h4>Quinta-feira</h4>
+            <ul>
+              <li data-filtro="pilates-solo"><span>08:00</span> Pilates</li>
+              <li data-filtro="ritmos-gospel"><span>18:15</span> Dança Gospel</li>
+              <li data-filtro="jump"><span>19:00</span> Jump</li>
+            </ul>
+          </div>
+
+          <div class="grade-horarios__dia">
+            <h4>Sexta-feira</h4>
+            <ul>
+              <li data-filtro="pilates-solo"><span>08:00</span> Pilates</li>
+              <li data-filtro="ballet-infantil"><span>18:30</span> Ballet Infantil</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <!-- Mensagem que aparece só quando um filtro não encontra nenhuma
+             aula na grade (ex: modalidade sem horário fixo cadastrado
+             ainda) — fica escondida (hidden) por padrão. -->
+        <p class="grade-horarios__vazio" id="grade-vazio" hidden>
+          Não encontramos aula fixa dessa modalidade na grade atual —
+          <a href="https://wa.me/554488488888?text=Oi!%20Vim%20pelo%20site%20e%20queria%20saber%20o%20hor%C3%A1rio%20dessa%20modalidade" target="_blank" rel="noopener">fala com a gente pelo WhatsApp</a>
+          que a gente te ajuda.
+        </p>
+
       </div>
-
-      <!-- Grade de horários das aulas coletivas.
-           Em vez de uma tabela larga (difícil de deixar responsiva sem
-           rolagem horizontal), cada dia da semana vira um "card", o que
-           empilha bem em qualquer tamanho de tela.
-           Cada aula tem "data-filtro" com o mesmo valor usado nos botões
-           acima — é isso que o script.js usa pra saber o que mostrar/
-           esconder quando alguém clica num filtro.
-           Fica ESCONDIDA por padrão porque "Musculação" (que mostra o
-           horário de funcionamento acima) é o filtro ativo por padrão —
-           o script.js mostra essa grade de novo assim que outro filtro
-           é escolhido. -->
-      <div class="grade-horarios" hidden>
-
-        <div class="grade-horarios__dia">
-          <h4>Segunda-feira</h4>
-          <ul>
-            <li data-filtro="funcional"><span>06:00</span> Funcional</li>
-            <li data-filtro="pilates-solo"><span>08:00</span> Pilates</li>
-            <li data-filtro="funcional"><span>18:15</span> Funcional</li>
-            <li data-filtro="pilates-solo"><span>19:00</span> Pilates</li>
-          </ul>
-        </div>
-
-        <div class="grade-horarios__dia">
-          <h4>Terça-feira</h4>
-          <ul>
-            <li data-filtro="pilates-solo"><span>08:00</span> Pilates</li>
-            <li data-filtro="ritmos-gospel"><span>18:15</span> Dança Gospel</li>
-            <li data-filtro="jump"><span>19:00</span> Jump</li>
-          </ul>
-        </div>
-
-        <div class="grade-horarios__dia">
-          <h4>Quarta-feira</h4>
-          <ul>
-            <li data-filtro="funcional"><span>06:00</span> Funcional</li>
-            <li data-filtro="funcional"><span>18:15</span> Funcional</li>
-            <li data-filtro="pilates-solo"><span>19:00</span> Pilates</li>
-            <li data-filtro="ballet-fitness"><span>20:00</span> Ballet fitness</li>
-          </ul>
-        </div>
-
-        <div class="grade-horarios__dia">
-          <h4>Quinta-feira</h4>
-          <ul>
-            <li data-filtro="pilates-solo"><span>08:00</span> Pilates</li>
-            <li data-filtro="ritmos-gospel"><span>18:15</span> Dança Gospel</li>
-            <li data-filtro="jump"><span>19:00</span> Jump</li>
-          </ul>
-        </div>
-
-        <div class="grade-horarios__dia">
-          <h4>Sexta-feira</h4>
-          <ul>
-            <li data-filtro="pilates-solo"><span>08:00</span> Pilates</li>
-            <li data-filtro="ballet-infantil"><span>18:30</span> Ballet Infantil</li>
-          </ul>
-        </div>
-
-      </div>
-
-      <!-- Mensagem que aparece só quando um filtro não encontra nenhuma
-           aula na grade (ex: modalidade sem horário fixo cadastrado
-           ainda) — fica escondida (hidden) por padrão. -->
-      <p class="grade-horarios__vazio" id="grade-vazio" hidden>
-        Não encontramos aula fixa dessa modalidade na grade atual —
-        <a href="https://wa.me/554488488888?text=Oi!%20Vim%20pelo%20site%20e%20queria%20saber%20o%20hor%C3%A1rio%20dessa%20modalidade" target="_blank" rel="noopener">fala com a gente pelo WhatsApp</a>
-        que a gente te ajuda.
-      </p>
 
     </div>
   </section>
@@ -1320,11 +1347,35 @@
 
       <div class="contato__wrapper">
 
-        <!-- Coluna de texto: Contato (telefone/WhatsApp) + Redes
-             Sociais (Instagram) — ordem exata pedida pelo Philipe. Ícone
-             na frente de cada valor (pedido 15/09/2026) — mesmos SVGs já
-             usados no rodapé, pra manter consistência visual. -->
+        <!-- Coluna de texto: Endereço + Contato (telefone/WhatsApp) +
+             Redes Sociais (Instagram). Endereço adicionado em 16/09/2026
+             — pedido do Philipe: a coluna estava "muito vaga" só com
+             Contato e Redes Sociais, numa seção chamada "Onde nos
+             encontrar". Ícone na frente de cada valor (pedido
+             15/09/2026) — mesmos SVGs já usados no rodapé (WhatsApp,
+             Instagram), pra manter consistência visual; o ícone de
+             endereço é um pino de mapa genérico, no mesmo estilo de
+             linha do ícone do Instagram (não é nenhuma marca
+             registrada). -->
         <div class="contato__info">
+          <div>
+            <h3 class="contato__bloco-titulo">Endereço</h3>
+            <p class="contato__valor contato__valor--texto">
+              <span class="contato__valor-icone">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                  <path d="M12 21s7-7.2 7-12a7 7 0 1 0-14 0c0 4.8 7 12 7 12Z"></path>
+                  <circle cx="12" cy="9" r="2.5"></circle>
+                </svg>
+              </span>
+              Av. Santa Catarina, 546 — em frente à prefeitura<br>Cianorte/PR
+            </p>
+            <a
+              href="https://www.google.com/maps/search/?api=1&query=Oh+My+Gym+Cianorte"
+              class="contato__valor-link"
+              target="_blank"
+              rel="noopener"
+            >Ver no mapa</a>
+          </div>
           <div>
             <h3 class="contato__bloco-titulo">Contato</h3>
             <a
