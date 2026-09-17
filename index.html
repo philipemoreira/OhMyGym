@@ -22,15 +22,31 @@
   <link rel="stylesheet" href="css/style.css">
 
   <!-- Favicon (ícone da marca na aba do navegador) — adicionado em
-       17/09/2026. Símbolo escolhido: a coroa, um dos ícones oficiais de
+       17/09/2026, ajustado no mesmo dia (rodada seguinte) a pedido do
+       Philipe. Símbolo escolhido: a coroa, um dos ícones oficiais de
        linha do manual de identidade visual (mesmo arquivo já usado no
        site, na seção Diferenciais, no card "ambiente 100% feminino") —
        carrega o tom de empoderamento da marca, em vez de uma letra
        solta que o manual não define. Cor vinho-escuro (--cor-vinho-
-       escuro, #5A1231) sobre fundo-claro (--cor-fundo-claro, #FCEEEB) —
-       a combinação de maior contraste dentro da paleta oficial, testada
-       porque em tamanho de favicon (16px) um desenho com tanto detalhe
-       (pontas da coroa) perde legibilidade fácil com cores próximas.
+       escuro, #5A1231) — a mais escura da paleta oficial, pra manter
+       legibilidade mesmo com tanto detalhe fino (pontas da coroa) num
+       ícone tão pequeno.
+       AJUSTE (17/09/2026, rodada seguinte): Philipe achou a coroa
+       pequena e o quadrado rosa de fundo esquisito — o fundo sólido
+       saiu, a coroa cresceu bastante dentro do quadrado (de ~74% pra
+       ~92% da área) e o PNG passou a ser transparente (sem fundo),
+       deixando só a coroa visível na aba do navegador. Única exceção:
+       o "apple-touch-icon" (ícone quando alguém salva o site na tela
+       inicial do iPhone) MANTÉM um fundo sólido claro (--cor-fundo-
+       claro, #FCEEEB) — o iOS não lida bem com transparência nesse
+       ícone específico (preenche a área transparente com um quadrado
+       preto sólido por trás, o que ficaria pior que o quadrado rosa
+       antigo), então esse caso continua com fundo, só que com a coroa
+       maior também. Vale ter em mente: coroa vinho-escuro sobre fundo
+       TRANSPARENTE fica com contraste mais baixo em navegador no modo
+       escuro (tema escuro da aba) — é uma limitação inerente de ícone
+       de uma cor só sem fundo, não um bug; se incomodar, dá pra
+       reavaliar depois.
        Conjunto padrão de tamanhos (16/32/180/192/512px) gerado a partir
        de um mestre em alta resolução, pra ficar nítido em qualquer
        navegador/dispositivo (aba do Chrome, atalho no iPhone/Android
