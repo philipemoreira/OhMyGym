@@ -1421,13 +1421,21 @@
              recentes logo abaixo — capa extraída direto do vídeo no
              Instagram e link apontando pro reel específico (não pro
              perfil geral), pra quem clicar cair direto naquele vídeo.
+             As capas usam o frame de resolução mais alta que o
+             Instagram guarda pra cada vídeo (640×1136 — bem mais nítido
+             que a miniatura pequena de 360×640 usada na primeira
+             tentativa, que o Philipe achou borrada).
              Ajuste de 18/09/2026 (pedido do Philipe: "no celular coloca
              carrossel também, um embaixo do outro ficou feio") — essa
-             grade agora vira CARROSSEL no celular (mesmo padrão do
-             carrossel de posts recentes logo abaixo: rolagem horizontal
-             + seta + "arraste para o lado"), e continua virando grade
-             normal lado a lado a partir de 640px (2 colunas) e 900px (3
-             colunas) — ver media queries no CSS. -->
+             grade virou CARROSSEL no celular (mesmo padrão do carrossel
+             de posts recentes logo abaixo: rolagem horizontal + seta +
+             "arraste para o lado"). Ajuste de 19/09/2026 (pedido do
+             Philipe: "coloca em carrossel também essas fotos") — o
+             carrossel deixou de desfazer a partir de 640px/900px (antes
+             virava grade de 2/3 colunas sem rolagem); agora continua
+             carrossel em QUALQUER tela, exatamente como o de posts
+             recentes — ver media queries no CSS (a regra que desfazia
+             foi removida, não só escondida). -->
         <div class="instagram__grupo-titulo">
           <h3 class="instagram__grupo-titulo-nome">Vídeos em destaque</h3>
           <p class="instagram__grupo-titulo-texto">

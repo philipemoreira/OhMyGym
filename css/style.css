@@ -2799,7 +2799,21 @@ h1, h2, h3 {
    ajuste pra 3 por vez pedido pelo Philipe é só no desktop (ver media
    query de 900px, mais abaixo). Depoimentos não tem mais nada
    responsivo aqui desde 15/09/2026 (virou mensagem única, sem
-   carrossel). */
+   carrossel).
+   Ajuste de 19/09/2026 (pedido do Philipe: "coloca em carrossel
+   também essas fotos" — sobre o grupo "Vídeos em destaque"): o grupo
+   de vídeos fixos DEIXOU de desfazer o carrossel a partir daqui — antes
+   virava uma grade normal (2, depois 3 colunas) sem rolagem; agora
+   segue exatamente o mesmo comportamento do carrossel de posts
+   recentes logo abaixo (".instagram__grid"): carrossel em TODAS as
+   telas, sem breakpoint que desfaça. Por isso as regras que antes
+   viravam ".instagram__destaques-grid" em "display: grid" e escondiam
+   as setas foram removidas — sem regra nenhuma aqui, o grupo de
+   destaques simplesmente continua herdando o "display:flex" +
+   "overflow-x:auto" da regra base (".instagram__destaques-grid" no
+   topo desta seção), e as setas (".instagram__seta--destaques-prev/
+   next") continuam visíveis o tempo todo, herdando o estilo base de
+   ".instagram__seta". */
 @media (min-width: 640px) {
   .instagram__post {
     width: 44%;
@@ -2808,52 +2822,18 @@ h1, h2, h3 {
   .instagram__dica {
     display: none;
   }
-
-  /* Grupo de vídeos fixos: desfaz o carrossel do celular (rolagem
-     horizontal) e vira grade normal de 2 colunas lado a lado — mesmo
-     raciocínio de ".planos__grid" desfazendo o carrossel a partir
-     daqui. */
-  .instagram__destaques-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    /* Reseta os dois eixos (não só "overflow-x"): se só um eixo virasse
-       "visible" e o outro continuasse "hidden" (herdado da base, pro
-       carrossel do celular), o navegador trata o eixo "visible" como se
-       fosse "auto" — regra específica da spec de CSS. Resetando os dois
-       juntos evita essa pegadinha. */
-    overflow: visible;
-    padding: 0;
-    margin-bottom: 2rem;
-  }
-
-  /* Sem carrossel aqui, cada card volta a preencher 100% da própria
-     coluna da grade, em vez da largura de "%" pensada pro carrossel */
-  .instagram__destaques-grid .instagram__post {
-    width: 100%;
-  }
-
-  /* Sem carrossel, as setas não fazem mais sentido — somem a partir
-     daqui (mesmo padrão de ".planos__controles") */
-  .instagram__seta--destaques-prev,
-  .instagram__seta--destaques-next {
-    display: none;
-  }
 }
 
-/* A partir de telas grandes: o carrossel do Instagram continua
-   carrossel (não desfaz — ver comentário grande no HTML, 15/09/2026: 6
-   posts), mas no desktop os cards ficam menores pra mostrar 3 por vez
-   em vez de 2 — pedido à parte do Philipe (15/09/2026: "3 no
-   computador, nas telas menores deixa do jeito que estava"), só a
-   partir daqui. */
+/* A partir de telas grandes: os dois carrosséis do Instagram (destaques
+   E recentes) continuam carrossel (não desfazem — ver comentário grande
+   no HTML, 15/09/2026: 6 posts), mas no desktop os cards ficam menores
+   pra mostrar 3 por vez em vez de 2 — pedido à parte do Philipe
+   (15/09/2026: "3 no computador, nas telas menores deixa do jeito que
+   estava"), só a partir daqui. ".instagram__post" já é compartilhado
+   pelos dois grupos, então essa regra sozinha já ajusta os dois. */
 @media (min-width: 900px) {
   .instagram__post {
     width: 28%;
-  }
-
-  /* Grupo de vídeos fixos ganha 3 colunas a partir daqui */
-  .instagram__destaques-grid {
-    grid-template-columns: repeat(3, 1fr);
   }
 }
 
