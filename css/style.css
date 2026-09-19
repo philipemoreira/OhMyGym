@@ -2681,6 +2681,119 @@ h1, h2, h3 {
   justify-content: center;
 }
 
+/* ---------------------------------------------------------------------
+   Grupo "vídeos em destaque" (fixos) — pedido da Milena, 18/09/2026 (ver
+   comentário grande no HTML). Reaproveita a mesma linguagem visual já
+   usada pra separar 2 grupos lá nos Planos (".planos__divisor" e
+   ".planos__grupo-titulo"), só que com o prefixo "instagram__" — cada
+   seção mantém suas próprias classes, mesmo quando o visual é parecido,
+   pra não ficar uma seção "emprestando" nome de classe de outra. ------------------------------------------------------------------- */
+.instagram__grupo-titulo {
+  max-width: 46ch;
+  margin: 0 auto 1.5rem;
+  text-align: center;
+}
+
+.instagram__grupo-titulo-nome {
+  margin-bottom: 0.4rem;
+  color: var(--cor-vinho-escuro);
+  font-size: clamp(1.3rem, 2.5vw, 1.6rem);
+}
+
+.instagram__grupo-titulo-texto {
+  color: var(--cor-vinho-medio);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+/* Linha divisória entre o grupo de vídeos fixos e o grupo de posts
+   recentes — mesmo estilo/raciocínio de ".planos__divisor". */
+.instagram__divisor {
+  width: 100%;
+  max-width: 640px;
+  height: 1px;
+  margin: 0 auto 2rem;
+  border: none;
+  background-color: rgba(110, 33, 56, 0.16);
+}
+
+/* Envolve as setas + a grade de vídeos fixos — precisa de "position:
+   relative" pras setas ficarem por cima do carrossel (mesmo padrão de
+   ".instagram__carrossel", usado no grupo de posts recentes). */
+.instagram__destaques-carrossel {
+  position: relative;
+}
+
+/* Grade dos vídeos FIXOS — vira CARROSSEL no celular (ajuste de
+   18/09/2026, pedido do Philipe: "no celular coloca carrossel também,
+   um embaixo do outro ficou feio" — antes era uma grade de 1 coluna só,
+   que empilhava os cards verticalmente), mesmo padrão técnico do
+   carrossel de posts recentes logo abaixo (".instagram__grid"):
+   rolagem horizontal + scroll-snap + seta. A partir de 640px desfaz o
+   carrossel e vira grade normal lado a lado (2 colunas, depois 3 a
+   partir de 900px — ver media queries no fim do arquivo), porque nessas
+   telas já cabem os poucos itens lado a lado sem precisar rolar. */
+.instagram__destaques-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: 8%;
+  gap: 1rem;
+  padding: 0.5rem 8% 1rem;
+  margin-bottom: 0.5rem;
+  scrollbar-width: none; /* Firefox */
+}
+
+.instagram__destaques-grid::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Edge */
+}
+
+/* No celular, cada card de vídeo fixo usa a mesma largura padrão de
+   ".instagram__post" (84%, ver regra base mais acima) — dá o mesmo
+   "gostinho" do próximo card espiando na borda que o carrossel de
+   posts recentes já tem. Só a partir de 640px (dentro da media query)
+   é que o card passa a preencher 100% da própria coluna da grade. */
+
+/* Card FIXO ainda sem vídeo real — aguardando a Milena escolher e
+   mandar quais quer fixar aqui (mesmo raciocínio de "moldura pronta"
+   já usado antes dos posts recentes virarem reais, ver comentário
+   grande no HTML). Borda na cor de destaque da marca, reforçando
+   visualmente que esse grupo é diferente/mais importante que os posts
+   comuns logo abaixo. */
+.instagram__post--placeholder {
+  flex-direction: column;
+  gap: 0.6rem;
+  border: 2px solid var(--cor-rosa-queimado);
+}
+
+/* Texto "Vídeo em breve": usa o rosa claro (não o vinho médio, que é
+   ilegível em cima do fundo vinho escuro do card — mesmo cuidado de
+   contraste já tomado no favicon adaptável). */
+.instagram__post-placeholder-texto {
+  position: relative;
+  z-index: 1;
+  color: var(--cor-rosa-claro);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 0 0.5rem;
+}
+
+/* Etiqueta "Destaque" no canto de cada card fixo — reaproveita o mesmo
+   componente visual já usado nos cards de plano/diferenciais
+   (".card-diferencial__tag": pílula branca translúcida, pensada pra
+   ficar sobre fundo escuro — funciona aqui porque ".instagram__post"
+   já tem fundo vinho sólido por padrão). Posicionada no canto porque
+   ".instagram__post" já é "position: relative". */
+.instagram__post-tag {
+  position: absolute;
+  top: 0.6rem;
+  left: 0.6rem;
+  z-index: 1;
+}
+
 /* A partir de tablets: o do Instagram estreita pro mesmo tamanho
    usado na Estrutura (no máximo 2 por vez) — igual já era antes; o
    ajuste pra 3 por vez pedido pelo Philipe é só no desktop (ver media
@@ -2695,6 +2808,36 @@ h1, h2, h3 {
   .instagram__dica {
     display: none;
   }
+
+  /* Grupo de vídeos fixos: desfaz o carrossel do celular (rolagem
+     horizontal) e vira grade normal de 2 colunas lado a lado — mesmo
+     raciocínio de ".planos__grid" desfazendo o carrossel a partir
+     daqui. */
+  .instagram__destaques-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Reseta os dois eixos (não só "overflow-x"): se só um eixo virasse
+       "visible" e o outro continuasse "hidden" (herdado da base, pro
+       carrossel do celular), o navegador trata o eixo "visible" como se
+       fosse "auto" — regra específica da spec de CSS. Resetando os dois
+       juntos evita essa pegadinha. */
+    overflow: visible;
+    padding: 0;
+    margin-bottom: 2rem;
+  }
+
+  /* Sem carrossel aqui, cada card volta a preencher 100% da própria
+     coluna da grade, em vez da largura de "%" pensada pro carrossel */
+  .instagram__destaques-grid .instagram__post {
+    width: 100%;
+  }
+
+  /* Sem carrossel, as setas não fazem mais sentido — somem a partir
+     daqui (mesmo padrão de ".planos__controles") */
+  .instagram__seta--destaques-prev,
+  .instagram__seta--destaques-next {
+    display: none;
+  }
 }
 
 /* A partir de telas grandes: o carrossel do Instagram continua
@@ -2706,6 +2849,11 @@ h1, h2, h3 {
 @media (min-width: 900px) {
   .instagram__post {
     width: 28%;
+  }
+
+  /* Grupo de vídeos fixos ganha 3 colunas a partir daqui */
+  .instagram__destaques-grid {
+    grid-template-columns: repeat(3, 1fr);
   }
 }
 

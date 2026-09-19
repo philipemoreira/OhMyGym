@@ -861,6 +861,22 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".instagram__seta--next")
   );
 
+  // Carrossel dos vídeos EM DESTAQUE do Instagram (18/09/2026, pedido do
+  // Philipe: "no celular coloca carrossel também") — mesma lógica do
+  // carrossel de posts recentes logo acima, só que com classes próprias
+  // (".instagram__seta--destaques-prev/next") pra não confundir com as
+  // setas do outro carrossel, já que "document.querySelector" pega só o
+  // primeiro elemento que encontrar. Também só existe visualmente até
+  // 639px (a partir de 640px o CSS desfaz o carrossel e esconde essas
+  // setas, ver style.css) — mesmo raciocínio do comentário logo acima:
+  // em tela grande não tem overflow pra rolar, então não tem problema
+  // deixar ligado sem "if" nenhum.
+  ativarCarrosselDeSetas(
+    document.querySelector(".instagram__destaques-grid"),
+    document.querySelector(".instagram__seta--destaques-prev"),
+    document.querySelector(".instagram__seta--destaques-next")
+  );
+
   // A confirmação antes de abrir o WhatsApp (ícone do cabeçalho mobile)
   // foi removida em 15/09/2026, junto com o próprio ícone — ver
   // comentário no HTML (header) e no CSS. Motivo: o botão flutuante de
