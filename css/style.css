@@ -2794,6 +2794,31 @@ h1, h2, h3 {
   z-index: 1;
 }
 
+/* Nome da modalidade em cada card de vídeo em destaque (pedido do
+   Philipe, 19/09/2026: "quero escrever em baixo, tipo musculação, para
+   os destaque saber quais videos são esses") — faixa colada na base do
+   card (mesmo raciocínio de posicionamento de ".instagram__post-tag"
+   acima: ".instagram__post" já é "position: relative"). Usa um
+   GRADIENTE (não um fundo sólido cobrindo o card inteiro) indo de vinho
+   escuro semitransparente embaixo até transparente no topo da faixa,
+   pra funcionar sobre QUALQUER foto de fundo (clara ou escura) sem
+   esconder a foto toda nem precisar escolher uma cor caso a caso. */
+.instagram__post-modalidade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  padding: 1.5rem 0.75rem 0.6rem;
+  background: linear-gradient(to top, rgba(43, 16, 22, 0.85), rgba(43, 16, 22, 0));
+  color: var(--cor-branco);
+  font-family: var(--fonte-corpo);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-align: center;
+  letter-spacing: 0.02em;
+}
+
 /* A partir de tablets: o do Instagram estreita pro mesmo tamanho
    usado na Estrutura (no máximo 2 por vez) — igual já era antes; o
    ajuste pra 3 por vez pedido pelo Philipe é só no desktop (ver media

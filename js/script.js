@@ -844,37 +844,46 @@ document.addEventListener("DOMContentLoaded", function () {
     document.querySelector(".estrutura__seta--prev"),
     document.querySelector(".estrutura__seta--next")
   );
-  // Carrossel de posts do Instagram (14/09/2026, pedido do Philipe) — só
-  // existe visualmente até 899px (a partir de 900px o CSS desfaz o
-  // carrossel e esconde as setas, ver style.css seção 12), mas ligar
-  // aqui sem "if" nenhum não tem problema: em tela grande o
-  // ".instagram__grid" simplesmente não tem overflow pra rolar
-  // (scrollWidth = clientWidth), então clicar nas setas escondidas (se
-  // de alguma forma fossem clicadas) não faria nada visível mesmo.
+  // Carrossel de posts do Instagram (14/09/2026, pedido do Philipe) —
+  // desde 19/09/2026 rola em QUALQUER tela (ver comentário grande no
+  // HTML), então essas setas ficam ativas e visíveis o tempo todo.
+  //
+  // BUG corrigido em 19/09/2026 (pedido do Philipe: "mexendo na seta do
+  // destaque, mexe no outro também"): antes essas duas linhas usavam
+  // "document.querySelector('.instagram__seta--prev')" sem escopo
+  // nenhum — como as setas do carrossel de DESTAQUE (logo abaixo)
+  // também têm essa mesma classe genérica (usada só pra posicionar a
+  // seta à esquerda/direita, ver ".instagram__seta--prev/next" no CSS)
+  // E aparecem primeiro no HTML, o "querySelector" pegava (por engano)
+  // as setas do destaque pra controlar ESSE carrossel de recentes — daí
+  // clicar na seta do destaque também rolava o carrossel errado. Corrigido
+  // limitando a busca ao container certo (".instagram__carrossel", que
+  // envolve só o grupo de recentes), garantindo que pega a seta certa
+  // não importa a ordem no HTML nem classes repetidas.
   //
   // O carrossel de depoimentos que existia aqui saiu em 15/09/2026 —
   // virou um único bloco "em breve" sem nenhum carrossel (pedido do
   // Philipe), então essa chamada foi removida.
   ativarCarrosselDeSetas(
-    document.querySelector(".instagram__grid"),
-    document.querySelector(".instagram__seta--prev"),
-    document.querySelector(".instagram__seta--next")
+    document.querySelector(".instagram__carrossel .instagram__grid"),
+    document.querySelector(".instagram__carrossel .instagram__seta--prev"),
+    document.querySelector(".instagram__carrossel .instagram__seta--next")
   );
 
   // Carrossel dos vídeos EM DESTAQUE do Instagram (18/09/2026, pedido do
-  // Philipe: "no celular coloca carrossel também") — mesma lógica do
-  // carrossel de posts recentes logo acima, só que com classes próprias
-  // (".instagram__seta--destaques-prev/next") pra não confundir com as
-  // setas do outro carrossel, já que "document.querySelector" pega só o
-  // primeiro elemento que encontrar. Também só existe visualmente até
-  // 639px (a partir de 640px o CSS desfaz o carrossel e esconde essas
-  // setas, ver style.css) — mesmo raciocínio do comentário logo acima:
-  // em tela grande não tem overflow pra rolar, então não tem problema
-  // deixar ligado sem "if" nenhum.
+  // Philipe: "no celular coloca carrossel também"; 19/09/2026: "coloca em
+  // carrossel também essas fotos" — passou a rolar em qualquer tela,
+  // igual ao de recentes acima). Mesmo ajuste de escopo do bug corrigido
+  // logo acima: busca limitada a ".instagram__destaques-carrossel" (o
+  // container que envolve só esse grupo), em vez de confiar cegamente em
+  // "document.querySelector" pegar o elemento certo só por causa da
+  // classe própria (".instagram__seta--destaques-prev/next") — mais
+  // seguro contra esse tipo de colisão se o HTML mudar de ordem no
+  // futuro.
   ativarCarrosselDeSetas(
-    document.querySelector(".instagram__destaques-grid"),
-    document.querySelector(".instagram__seta--destaques-prev"),
-    document.querySelector(".instagram__seta--destaques-next")
+    document.querySelector(".instagram__destaques-carrossel .instagram__destaques-grid"),
+    document.querySelector(".instagram__destaques-carrossel .instagram__seta--destaques-prev"),
+    document.querySelector(".instagram__destaques-carrossel .instagram__seta--destaques-next")
   );
 
   // A confirmação antes de abrir o WhatsApp (ícone do cabeçalho mobile)
